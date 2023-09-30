@@ -34,7 +34,13 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newThread = new Thread();
+        $newThread->title = 'Thread Title';
+        $newThread->content = 'Thread content';
+        $newThread->sub_category_id = 1; // Set the subcategory ID
+        $newThread->user_id = auth()->user()->id; // Set the user ID of the creator
+        $newThread->last_poster_id = auth()->user()->id; // Set the initial last poster
+        $newThread->save();
     }
 
     /**
