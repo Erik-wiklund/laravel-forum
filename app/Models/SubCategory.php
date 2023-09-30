@@ -13,4 +13,9 @@ class SubCategory extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function threads()
+    {
+        return $this->hasMany(Thread::class);
+    }
 }
