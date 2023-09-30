@@ -36,8 +36,8 @@ Route::get('/subcategories/{subcategory}/threads/{thread}', [ThreadController::c
     Route::get('/threads/{id}/content', [ThreadController::class, 'show'])
     ->name('thread-content.show');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/', function () {
+    return redirect()->route('forum.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
