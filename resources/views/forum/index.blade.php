@@ -34,18 +34,26 @@
 
                                             </a>
                                         </h3>
-                                        <p class="mb-0">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                            Soluta, laboriosam.
-                                        </p>
+
                                     </td>
                                     <td>
-                                        <h4 class="h6 font-weight-bold mb-0">
-                                            <a href="#">Post name</a>
-                                        </h4>
-                                        <div><a href="#">Author name</a></div>
-                                        <div>06/07/ 2021 20:04</div>
+                                        @foreach ($category->subcategories as $subcategory)
+                                        <!-- Output subcategory details -->
+                                    
+                                        @if ($subcategory->threads->isNotEmpty())
+                                            @php
+                                                $lastThread = $subcategory->threads->sortByDesc('updated_at')->first();
+                                            @endphp
+                                    
+                                            <h4 class="h6 font-weight-bold mb-0">
+                                                <a href="#">{{ $lastThread->title }}</a>
+                                            </h4>
+                                            <div><a href="#">{{ $lastThread->lastPoster->name }}</a></div>
+                                            <div>{{ $lastThread->updated_at->format('d/m/Y H:i') }}</div>
+                                        @endif
+                                    @endforeach
                                     </td>
+
                                 </tr>
                             </tbody>
                         </table>
