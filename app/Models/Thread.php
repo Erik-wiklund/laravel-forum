@@ -18,4 +18,9 @@ class Thread extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function lastPoster()
+{
+    return $this->belongsTo(User::class, 'last_poster_id');
+}
 }
