@@ -26,22 +26,38 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+        // Assuming you retrieve the subcategory here, adjust this based on your actual logic
+        $subcategory = SubCategory::find(1); // Replace 1 with the actual subcategory ID or your logic to fetch it
+    
+        return view('forum.threads.create', compact('subcategory'));
     }
+    
+    
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $newThread = new Thread();
-        $newThread->title = 'Thread Title';
-        $newThread->content = 'Thread content';
-        $newThread->sub_category_id = 1; // Set the subcategory ID
-        $newThread->user_id = auth()->user()->id; // Set the user ID of the creator
-        $newThread->last_poster_id = auth()->user()->id; // Set the initial last poster
-        $newThread->save();
-    }
+    public function store(Request $request, SubCategory $subcategory)
+{
+    // Validate the form data
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+    ]);
+
+    // Create a new thread and associate it with the subcategory
+    $thread = new Thread();
+    $thread->title = $request->input('title');
+    $thread->content = $request->input('content');
+    $thread->sub_category_id = $subcategory->id; // Associate with the current subcategory
+    $thread->created_by = auth()->user()->id; // Set the user ID of the creator
+    $thread->last_poster_id = auth()->user()->id; // Set the initial last poster
+    $thread->save();
+
+    // Redirect to the newly created thread or another appropriate page
+    return redirect()->route('subcategories.threads.index', ['subcategory' => $subcategory, 'thread' => $thread]);
+}
+
 
     /**
      * Display the specified resource.
