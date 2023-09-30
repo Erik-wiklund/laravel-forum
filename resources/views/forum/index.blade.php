@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <div class="row">
                 @foreach ($categories as $category)
                     <!-- Category -->
@@ -36,22 +36,26 @@
                                         </h3>
 
                                     </td>
-                                    <td>
+                                    <td style="width: 350px">
                                         @foreach ($category->subcategories as $subcategory)
-                                        <!-- Output subcategory details -->
-                                    
-                                        @if ($subcategory->threads->isNotEmpty())
-                                            @php
-                                                $lastThread = $subcategory->threads->sortByDesc('updated_at')->first();
-                                            @endphp
-                                    
-                                            <h4 class="h6 font-weight-bold mb-0">
-                                                <a href="#">{{ $lastThread->title }}</a>
-                                            </h4>
-                                            <div><a href="#">{{ $lastThread->lastPoster->name }}</a></div>
-                                            <div>{{ $lastThread->updated_at->format('d/m/Y H:i') }}</div>
-                                        @endif
-                                    @endforeach
+                                            <!-- Output subcategory details -->
+
+                                            @if ($subcategory->threads->isNotEmpty())
+                                                @php
+                                                    $lastThread = $subcategory->threads->sortByDesc('updated_at')->first();
+                                                @endphp
+                                                <div>
+                                                    <h4 class="h6 font-weight-bold mb-0">
+                                                        Latest: <a href="#">{{ $lastThread->title }}</a>
+                                                    </h4>
+                                                    <div class="flex items-center"><a
+                                                            href="#">{{ $lastThread->lastPoster->name }}</a>,
+                                                        <div style="color:grey; 14px; margin-left:2px">{{ $lastThread->updated_at->format('M d, Y') }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2" style="border-bottom: 2px solid lightgrey;"></div>
+                                            @endif
+                                        @endforeach
                                     </td>
 
                                 </tr>
@@ -61,7 +65,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-2">
             <aside>
                 <div class="card">
                     <div class="card-body">
