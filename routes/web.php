@@ -29,12 +29,19 @@ Route::resource('forum', ForumController::class)
 Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'index'])
     ->name('subcategories.threads.index');
 
-// Route for displaying an individual thread
-Route::get('/subcategories/{subcategory}/threads/{thread}', [ThreadController::class, 'show'])
-    ->name('subcategories.threads.show');
+
 
     Route::get('/threads/{id}/content', [ThreadController::class, 'show'])
     ->name('thread-content.show');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/subcategories/{subcategory}/threads/create', [ThreadController::class,'create'])
+            ->name('threads.create');
+        Route::post('/subcategories/{subcategory}/threads', [ThreadController::class,'store'])
+            ->name('threads.store');
+    });
+
+
+
 
 Route::get('/', function () {
     return redirect()->route('forum.index');
