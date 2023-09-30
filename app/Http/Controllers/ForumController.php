@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -11,13 +12,17 @@ class ForumController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    // Fetch all categories with their subcategories
-    $categories = Category::with('subcategories')->get();
+    {
+        // Fetch all threads with their associated users
+        $threads = Thread::with('user')->get(); // Changed $thread to $threads
 
-    return view('forum.index', compact('categories'));
-}
-    
+        // Fetch all categories with their subcategories
+        $categories = Category::with('subcategories')->get();
+
+        return view('forum.index', compact('categories', 'threads'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
