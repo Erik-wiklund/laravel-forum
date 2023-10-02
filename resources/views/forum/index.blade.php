@@ -92,11 +92,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Members Online</h4>
                         <ul class="list-unstyled mb-0">
-                            <li><a href="#">Member name</a></li>
-                            <li><a href="#">Member name</a></li>
-                            <li><a href="#">Member name</a></li>
-                            <li><a href="#">Member name</a></li>
-                            <li><a href="#">Member name</a></li>
+                            @foreach ($onlineUsers as $user)
+                            <li><a href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a></li>
+                        @endforeach
                         </ul>
                     </div>
                     <div class="card-footer">

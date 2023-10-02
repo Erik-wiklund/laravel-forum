@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Message;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -23,7 +24,9 @@ class ForumController extends Controller
         // Fetch chat messages (you may want to limit the number of messages displayed)
         $messages = Message::latest()->take(50)->get();
 
-        return view('forum.index', compact('categories', 'threads', 'messages'));
+        $onlineUsers = User::where('last_seen', '>=', now()->subMinutes(5))->get();
+
+        return view('forum.index', compact('categories', 'threads', 'messages', 'onlineUsers'));
     }
 
 
