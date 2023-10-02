@@ -1,6 +1,6 @@
-@extends('layouts.dashboard')
+@extends('admin.header')
 
-@section('content')
+@section('admin_content')
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper">
