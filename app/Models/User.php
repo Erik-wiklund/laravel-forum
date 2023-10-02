@@ -12,6 +12,16 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function chatRooms()
+    {
+        return $this->belongsToMany(ChatRoom::class, 'user_chat_room');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
