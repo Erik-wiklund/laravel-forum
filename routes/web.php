@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -56,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
     // Handle sending chat messages
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 });
+
+Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
 
 
 require __DIR__.'/auth.php';
