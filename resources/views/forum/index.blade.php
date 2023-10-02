@@ -4,6 +4,26 @@
     <div class="row">
         <div class="col-lg-10">
             <div class="row">
+                @auth
+<!-- Display chat messages -->
+<div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
+    @foreach ($messages->reverse() as $message)
+        <div class="message" style="border-bottom: solid lightgrey 1px;">
+            <div>{{ $message->user->name }} - {{ $message->content }}</div>
+        </div>
+    @endforeach
+</div>
+
+<!-- Input form for sending messages -->
+<form method="post" action="{{ route('chat.send') }}" style="display: flex; flex-direction: row; width:100%; padding:10px;">
+    @csrf
+    <input type="text" name="content" placeholder="Type your message"
+        style="flex: 1; margin-right: 10px;" />
+    <button type="submit" style="background: red; padding:10px; border-radius: 7px">Send</button>
+</form>
+@endauth
+
+
                 @foreach ($categories as $category)
                     <!-- Category -->
                     <div class="col-lg-12">
@@ -50,7 +70,8 @@
                                                     </h4>
                                                     <div class="flex items-center"><a
                                                             href="#">{{ $lastThread->lastPoster->name }}</a>,
-                                                        <div style="color:grey; 14px; margin-left:2px">{{ $lastThread->updated_at->format('M d, Y') }}</div>
+                                                        <div style="color:grey; 14px; margin-left:2px">
+                                                            {{ $lastThread->updated_at->format('M d, Y') }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="mt-2" style="border-bottom: 2px solid lightgrey;"></div>
