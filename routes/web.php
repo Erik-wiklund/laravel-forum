@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThreadController;
@@ -42,15 +43,19 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
 
 
 
-
-Route::get('/', function () {
-    return redirect()->route('forum.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth'])->group(function () {
+    // Show the chatbox
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+
+    // Handle sending chat messages
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+});
+
 
 require __DIR__.'/auth.php';
