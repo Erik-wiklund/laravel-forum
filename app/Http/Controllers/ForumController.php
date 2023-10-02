@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Message;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,10 @@ class ForumController extends Controller
         // Fetch all categories with their subcategories
         $categories = Category::with('subcategories')->get();
 
-        return view('forum.index', compact('categories', 'threads'));
+        // Fetch chat messages (you may want to limit the number of messages displayed)
+        $messages = Message::latest()->take(50)->get();
+
+        return view('forum.index', compact('categories', 'threads', 'messages'));
     }
 
 
