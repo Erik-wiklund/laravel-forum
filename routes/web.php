@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ProfileController;
@@ -39,6 +42,12 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
             ->name('threads.create');
         Route::post('/subcategories/{subcategory}/threads', [ThreadController::class,'store'])
             ->name('threads.store');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
+        Route::get('/users', [AdminUsersController::class, 'users'])->name('admin.users');
+        Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
     });
 
 
