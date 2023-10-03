@@ -13,13 +13,14 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function isOnline()
-    {
-        // Define your criteria for determining if a user is online
-        $onlineThreshold = now()->subMinutes(5); // For example, consider a user online if they were active in the last 5 minutes
+    // public function isOnline()
+    // {
+    //     // Define your criteria for determining if a user is online
+    //     $onlineThreshold = now()->subMinutes(5); // For example, consider a user online if they were active in the last 5 minutes
 
-        return $this->last_seen >= $onlineThreshold;
-    }
+    //     return $this->last_seen >= $onlineThreshold;
+    // }
+
 
     public function chatRooms()
     {
@@ -40,7 +41,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'last_seen'
+        'last_seen',
     ];
 
     /**
