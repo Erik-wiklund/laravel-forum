@@ -34,4 +34,12 @@ class ChatController extends Controller
 
         return redirect()->route('forum.index')->with('success', 'Message sent successfully.');
     }
+
+    public function destroy($id)
+    {
+        $message = Message::find($id);
+        $message->delete();
+
+        return redirect('/');
+    }
 }
