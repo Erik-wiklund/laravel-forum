@@ -6,4 +6,3 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-require('../views/lbc/assets/js/app')

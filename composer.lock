@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd6f01cf9bc133871a74cf2a8a73a70d",
+    "content-hash": "111a203bc667b690f519e9ae0618ca20",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1270,73 +1270,6 @@
                 }
             ],
             "time": "2023-08-27T10:19:19+00:00"
-        },
-        {
-            "name": "highideas/laravel-users-online",
-            "version": "3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/highideas/laravel-users-online.git",
-                "reference": "046daa78473e4b3706f5cd8d7e0292d33e03483b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/highideas/laravel-users-online/zipball/046daa78473e4b3706f5cd8d7e0292d33e03483b",
-                "reference": "046daa78473e4b3706f5cd8d7e0292d33e03483b",
-                "shasum": ""
-            },
-            "require-dev": {
-                "codacy/coverage": "dev-master",
-                "illuminate/auth": "^6.0",
-                "illuminate/cache": "^6.0",
-                "illuminate/database": "^6.0",
-                "illuminate/session": "^6.0",
-                "illuminate/support": "^6.0",
-                "orchestra/testbench": "^4.0",
-                "phpunit/phpunit": "^8"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "HighIdeas\\UsersOnline\\Providers\\UsersOnlineEventServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "HighIdeas\\Tests\\": "tests/",
-                    "HighIdeas\\UsersOnline\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gabriel Goncalves",
-                    "email": "gabrielll_07@hotmail.com",
-                    "homepage": "http://gabrieldeveloper.com.br",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Marco Araujo",
-                    "email": "marco.araujo.junior@gmail.com",
-                    "homepage": "http://marcojunior.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "This package will provide an online users management.",
-            "keywords": [
-                "Users",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/highideas/laravel-users-online/issues",
-                "source": "https://github.com/highideas/laravel-users-online/tree/3.0.1"
-            },
-            "time": "2019-10-07T08:40:06+00:00"
         },
         {
             "name": "intervention/image",
@@ -8616,16 +8549,16 @@
         },
         {
             "name": "sebastian/complexity",
-            "version": "3.0.1",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/complexity.git",
-                "reference": "c70b73893e10757af9c6a48929fa6a333b56a97a"
+                "reference": "68cfb347a44871f01e33ab0ef8215966432f6957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/complexity/zipball/c70b73893e10757af9c6a48929fa6a333b56a97a",
-                "reference": "c70b73893e10757af9c6a48929fa6a333b56a97a",
+                "url": "https://api.github.com/repos/sebastianbergmann/complexity/zipball/68cfb347a44871f01e33ab0ef8215966432f6957",
+                "reference": "68cfb347a44871f01e33ab0ef8215966432f6957",
                 "shasum": ""
             },
             "require": {
@@ -8638,7 +8571,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "3.0-dev"
+                    "dev-main": "3.1-dev"
                 }
             },
             "autoload": {
@@ -8662,7 +8595,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/complexity/issues",
                 "security": "https://github.com/sebastianbergmann/complexity/security/policy",
-                "source": "https://github.com/sebastianbergmann/complexity/tree/3.0.1"
+                "source": "https://github.com/sebastianbergmann/complexity/tree/3.1.0"
             },
             "funding": [
                 {
@@ -8670,7 +8603,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-31T09:55:53+00:00"
+            "time": "2023-09-28T11:50:59+00:00"
         },
         {
             "name": "sebastian/diff",
