@@ -100,15 +100,15 @@
                     <div class="card-footer">
                         <dl class="row">
                             <dt class="col-8 mb-0">Total:</dt>
-                            <dd class="col-4 mb-0">10</dd>
+                            <dd class="col-4 mb-0">{{ $totalUserCount }}</dd>
                         </dl>
                         <dl class="row">
                             <dt class="col-8 mb-0">Members:</dt>
-                            <dd class="col-4 mb-0">10</dd>
+                            <dd class="col-4 mb-0">{{ $totalUsers }}</dd>
                         </dl>
                         <dl class="row">
                             <dt class="col-8 mb-0">Guests:</dt>
-                            <dd class="col-4 mb-0">3</dd>
+                            <dd class="col-4 mb-0">{{ $visitors }}</dd>
                         </dl>
                     </div>
                 </div>

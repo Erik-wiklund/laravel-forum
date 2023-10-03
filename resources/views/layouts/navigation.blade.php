@@ -26,17 +26,17 @@
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
                 
-                <a href="{{ route('login') }}">Login</a>
-                <a href="">Register</a>
+                <a class="text-gray-500" href="{{ route('login') }}">Login</a>
+                <a class="text-gray-500" href="{{ route('register') }}">Register</a>
             </div>
 
-            <div class="mt-3 space-y-1">
+            {{-- <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
               
-            </div>
+            </div> --}}
         </div>
     </div>
             @endguest
