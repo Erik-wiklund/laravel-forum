@@ -1,6 +1,6 @@
-@extends('admin.header')
+@extends('layouts.dashboard')
 
-@section('admin_content')
+@section('content')
       <!--main content start-->
       <section id="main-content">
         <section class="wrapper">
@@ -37,7 +37,7 @@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
               <div class="info-box brown-bg">
                 <i class="fa fa-users"></i>
-              {{-- <div class="count">{{count($data['all_users'])}}</div> --}}
+              <div class="count"></div>
                 <div class="title">Users</div>
               </div>
               <!--/.info-box-->
@@ -92,26 +92,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {{-- @if (count($data['users'])> 0)
-                            @foreach ($data['users'] as $user)
-                            <tr>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->rank}}</td>
-                                <td><a href="/dashboard/users/{{$user->id}}"><i class="fa fa-eye text-success"></i></a></td>
-                                
-                                <td><form action="{{ route('user.delete', ['id' => $user->id]) }}" method="POST" >
-                                  @csrf
-                                  <input type="submit" class="btn btn-sm btn-danger" value="Delete">
-                                </form></td>
-                               
-                              </tr>
-                            @endforeach
-                        @endif --}}
+                        
                     </tbody>
                   </table>
 
-                  {{-- {{ $data['users']->links() }} --}}
+                  
                 </div>
   
               </div>
