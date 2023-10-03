@@ -8,6 +8,7 @@ use App\Models\Thread;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
@@ -17,7 +18,7 @@ class ForumController extends Controller
     public function index(Request $request)
     {
         // Fetch all threads with their associated users
-        $threads = Thread::with('user')->get(); // Changed $thread to $threads
+        $threads = Thread::with('user')->get();
 
         // Fetch all categories with their subcategories
         $categories = Category::with('subcategories')->get();
@@ -25,20 +26,37 @@ class ForumController extends Controller
         // Fetch chat messages (you may want to limit the number of messages displayed)
         $messages = Message::latest()->take(50)->get();
 
-        $onlineUsers = User::where('last_seen', '>=', now()->subMinutes(5))->get();
+        // Check if the user is logged in
+        $onlineUsers = [];
         $totalUsers = User::count();
+        $totalUserCount = $totalUsers;
+        $visitors = 0;
+        $membersOnline = 0;
+        $totalOnline = 0;
 
-        $ip = $request->ip();
-    $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
-    $visitor->increment('visits');
-    $visitor->save();
+        if (Auth::check()) {
+            // User is logged in, fetch online users excluding the current user
+            $onlineUsers = User::where('id', '!=', Auth::user()->id)
+                ->where('last_seen', '>=', now()->subMinutes(5))
+                ->get();
+            $membersOnline = User::where('last_seen', '>=', now()->subMinutes(5))->get()->count();
+            $totalOnline = $membersOnline + $visitors;
+        } else {
+            // User is not logged in
+            $ip = $request->ip();
+            $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
+            $visitor->increment('visits');
+            $visitor->save();
 
-    $visitors = Visitor::count();
+            $visitors = Visitor::count();
+            $totalUserCount = $totalUsers + $visitors;
+            $totalOnline = $membersOnline + $visitors;
+        }
 
-    $totalUserCount = $totalUsers + $visitors;
+        return view('forum.index', compact('totalOnline','membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
 
-        return view('forum.index', compact('categories', 'threads', 'messages', 'onlineUsers','totalUsers','visitors','totalUserCount'));
     }
+
 
 
 

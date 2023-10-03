@@ -5,23 +5,24 @@
         <div class="col-lg-10">
             <div class="row">
                 @auth
-<!-- Display chat messages -->
-<div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
-    @foreach ($messages->reverse() as $message)
-        <div class="message" style="border-bottom: solid lightgrey 1px;">
-            <div>{{ $message->user->name }} - {{ $message->content }}</div>
-        </div>
-    @endforeach
-</div>
+                    <!-- Display chat messages -->
+                    <div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
+                        @foreach ($messages->reverse() as $message)
+                            <div class="message" style="border-bottom: solid lightgrey 1px;">
+                                <div>{{ $message->user->name }} - {{ $message->content }}</div>
+                            </div>
+                        @endforeach
+                    </div>
 
-<!-- Input form for sending messages -->
-<form method="post" action="{{ route('chat.send') }}" style="display: flex; flex-direction: row; width:100%; padding:10px;">
-    @csrf
-    <input type="text" name="content" placeholder="Type your message"
-        style="flex: 1; margin-right: 10px;" />
-    <button type="submit" style="background: red; padding:10px; border-radius: 7px">Send</button>
-</form>
-@endauth
+                    <!-- Input form for sending messages -->
+                    <form method="post" action="{{ route('chat.send') }}"
+                        style="display: flex; flex-direction: row; width:100%; padding:10px;">
+                        @csrf
+                        <input type="text" name="content" placeholder="Type your message"
+                            style="flex: 1; margin-right: 10px;" />
+                        <button type="submit" style="background: red; padding:10px; border-radius: 7px">Send</button>
+                    </form>
+                @endauth
 
 
                 @foreach ($categories as $category)
@@ -89,28 +90,38 @@
         <div class="col-lg-2">
             <aside>
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Members Online</h4>
-                        <ul class="list-unstyled mb-0">
-                            @foreach ($onlineUsers as $user)
-                            <li><a href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a></li>
-                        @endforeach
-                        </ul>
-                    </div>
+
                     <div class="card-footer">
-                        <dl class="row">
-                            <dt class="col-8 mb-0">Total:</dt>
-                            <dd class="col-4 mb-0">{{ $totalUserCount }}</dd>
-                        </dl>
-                        <dl class="row">
-                            <dt class="col-8 mb-0">Members:</dt>
-                            <dd class="col-4 mb-0">{{ $totalUsers }}</dd>
-                        </dl>
-                        <dl class="row">
-                            <dt class="col-8 mb-0">Guests:</dt>
-                            <dd class="col-4 mb-0">{{ $visitors }}</dd>
+                        <div class="card-body">
+                            <h4 class="card-title"
+                                style="border-radius: 5px; background: dodgerblue; padding: 6px; text-align: center">Members
+                                In chat</h4>
+                            <ul class="list-unstyled mb-0">
+                                @foreach ($onlineUsers as $user)
+                                    <li><a style="color: #aaa;"
+                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <dl>
+                            <h3 style="border-radius: 5px;background: dodgerblue; padding: 6px; text-align: center">Members
+                                Online Now</h3>
+                            <ul class="list-unstyled mb-0">
+                                @foreach ($onlineUsers as $user)
+                                    <li><a style="color: #aaa;"
+                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <div>
+                                Total: {{ $totalOnline }},
+                                members: {{ $membersOnline }},
+                                guests: {{ $visitors }},
+                            </div>
                         </dl>
                     </div>
+
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -125,7 +136,7 @@
                         </dl>
                         <dl class="row">
                             <dt class="col-8 mb-0">Total members:</dt>
-                            <dd class="col-4 mb-0">200</dd>
+                            <dd class="col-4 mb-0">{{ $totalUsers }}</dd>
                         </dl>
                     </div>
                     <div class="card-footer">
