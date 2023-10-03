@@ -9,7 +9,15 @@
                     <div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
                         @foreach ($messages->reverse() as $message)
                             <div class="message" style="border-bottom: solid lightgrey 1px;">
-                                <div>{{ $message->user->name }} - {{ $message->content }}</div>
+                                <div class="flex justify-between">{{ $message->user->name }} - {{ $message->content }}
+                                    <div>
+                                        <form method="POST" action="{{ route('chat.destroy', ['message' => $message]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit">Delete Message</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
