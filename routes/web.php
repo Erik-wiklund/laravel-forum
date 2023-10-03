@@ -3,10 +3,12 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +50,10 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
         Route::get('/users', [AdminUsersController::class, 'users'])->name('admin.users');
         Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
+        Route::get('/admin/dashboard/category/new', [CategoryController::class, 'create'])->name('category.new');
+        Route::post('/admin/dashboard/category/new', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/admin/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
+        Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
     });
 
 
