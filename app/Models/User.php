@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->belongsTo(User_role::class, 'role_id');
     }
 
+    public function isAdmin()
+    {
+        return $this->role->name === 'Administrator' || $this->role->name === 'Moderator';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,6 +52,7 @@ class User extends Authenticatable
         'email',
         'password',
         'last_seen',
+        'role_id',
     ];
 
     /**
