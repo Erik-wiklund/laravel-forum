@@ -54,6 +54,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::post('/admin/dashboard/category/new', [CategoryController::class, 'store'])->name('category.store');
         Route::get('/admin/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
         Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
+        Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
     });
 
 
