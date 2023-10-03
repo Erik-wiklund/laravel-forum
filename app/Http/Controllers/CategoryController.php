@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        
+        $categories = Category::latest()->paginate(20);
+
+        return view('admin.pages.categories', compact(['categories']));
     }
 
 
@@ -17,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.new_category');
     }
 
     /**
@@ -25,7 +29,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+            'order' => 'required',
+            'image' => 'required',
+        ]);
+        $category = new Category;
+        $category->title = $request->title;
+        $category->desc = $request->desc;
+        $category->order = $request->order;
+        $category->user_id = auth()->id();
+        $category->image = "vdsonsfnaeiofa";
+        $category->save();
+        Session::flash('message', 'Category created successfully');
+        Session::flash('alert-class', 'alert-success');
+        return back();
     }
 
     /**
