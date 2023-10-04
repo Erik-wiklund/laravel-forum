@@ -9,14 +9,30 @@
                     <div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
                         @foreach ($messages->reverse() as $message)
                             <div class="message" style="border-bottom: solid lightgrey 1px;">
-                                <div class="flex justify-between">{{ $message->user->name }} - {{ $message->content }}
-                                    <div>
-                                        <form method="POST" action="{{ route('chat.destroy', ['message' => $message]) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit">Delete Message</button>
-                                        </form>
-                                    </div>
+                                <div class="flex justify-between items-center">{{ $message->user->name }} - {{ $message->content }}
+                                    @if(auth()->user()->isAdmin())
+                                    <div class="dropdown">
+                                        <button style="background-color: #6c757d !important"
+                                            class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <form class="text-center dropdown-item" method="POST"
+                                                action="{{ route('chat.destroy', ['message' => $message]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Delete Message</button>
+                                            </form>
+                                            <form class="text-center dropdown-item" method="POST"
+                                                action="{{ route('chat.purge', ['id' => $message->user->id]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Purge user</button>
+                                            </form>
+                                        </div>
+                                    </div> 
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -104,10 +120,10 @@
                             <h4 class="card-title"
                                 style="border-radius: 5px; background: dodgerblue; padding: 6px; text-align: center">Members
                                 In chat</h4>
-                            <ul class="list-unstyled mb-0">
+                            <ul class="list-unstyled mb-0 flex">
                                 @foreach ($onlineUsers as $user)
                                     <li><a style="color: #aaa;"
-                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a>
+                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }},</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -115,10 +131,10 @@
                         <dl>
                             <h3 style="border-radius: 5px;background: dodgerblue; padding: 6px; text-align: center">Members
                                 Online Now</h3>
-                            <ul class="list-unstyled mb-0">
+                            <ul class="list-unstyled mb-0 flex">
                                 @foreach ($onlineUsers as $user)
                                     <li><a style="color: #aaa;"
-                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }}</a>
+                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }},</a>
                                     </li>
                                 @endforeach
                             </ul>
