@@ -53,4 +53,29 @@ class ChatController extends Controller
 
         return redirect('/');
     }
+
+    public function ban($id, $userId)
+    {
+        // Find all chat messages by user ID and delete them
+        Message::where('user_id', $id)->delete();
+
+        // Find the chat room by ID (assuming it's ID 1)
+        $chatRoom = ChatRoom::find(1);
+
+        // Get the current banned users as an array
+        $bannedUsers = $chatRoom->banned_users ?? [];
+
+        // Add the user to the banned users array
+        if (!in_array($userId, $bannedUsers)) {
+            $bannedUsers[] = $userId;
+        }
+
+        // Update the chat room's banned_users attribute with the new array
+        $chatRoom->banned_users = $bannedUsers;
+
+        // Save the chat room
+        $chatRoom->save();
+
+        return view('forum.index', [ 'userId' => $id]);
+    }
 }
