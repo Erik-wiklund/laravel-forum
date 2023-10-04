@@ -18,4 +18,9 @@ class ChatRoom extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function bannedUsers()
+    {
+        return $this->belongsToMany(User::class, 'chat_room_user_bans')->withTimestamps();
+    }
 }
