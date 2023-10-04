@@ -36,16 +36,18 @@ class ForumController extends Controller
 
         if (Auth::check()) {
             // User is logged in, fetch online users excluding the current user
-            $onlineUsers = User::where('id', '!=', Auth::user()->id)
-                ->where('last_seen', '>=', now()->subMinutes(5))
-                ->get();
+            $onlineUsers = User::where('last_seen', '>=', now()->subMinutes(5))->get();
             $membersOnline = User::where('last_seen', '>=', now()->subMinutes(5))->get()->count();
             $totalOnline = $membersOnline + $visitors;
+            $ip = $request->ip();
+            $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
+            $visitor->visits = 0; // Set visitor count to 1 for guests
+            $visitor->save();
         } else {
             // User is not logged in
             $ip = $request->ip();
             $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
-            $visitor->increment('visits');
+            $visitor->visits = 1; // Set visitor count to 1 for guests
             $visitor->save();
 
             $visitors = Visitor::count();
@@ -53,8 +55,7 @@ class ForumController extends Controller
             $totalOnline = $membersOnline + $visitors;
         }
 
-        return view('forum.index', compact('totalOnline','membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
-
+        return view('forum.index', compact('totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
     }
 
 
