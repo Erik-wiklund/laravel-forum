@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                         @if (count($categories)> 0)
-                            @foreach ($categories as $category)
+                            @foreach ($categories->reverse() as $category)
                             <tr>
                                 <td>{{$category->title}}</td>
                                 <td>{{$category->image}}</td>
