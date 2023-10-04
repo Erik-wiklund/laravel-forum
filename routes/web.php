@@ -46,7 +46,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
             ->name('threads.store');
     });
 
-    Route::group(['middleware' => 'is.admin','middleware' => 'web'], function () {
+    Route::group(['middleware' => 'is.admin'], function () {
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
         Route::get('/users', [AdminUsersController::class, 'users'])->name('admin.users');
         Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
@@ -55,6 +55,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::get('/admin/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
         Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
         Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
+        Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
     });
 
 
