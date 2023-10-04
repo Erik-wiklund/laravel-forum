@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\ChatRoom;
 use App\Models\Message;
 use App\Models\Thread;
 use App\Models\User;
@@ -19,6 +20,9 @@ class ForumController extends Controller
     {
         // Fetch all threads with their associated users
         $threads = Thread::with('user')->get();
+
+        $chatRoom = ChatRoom::find(1);
+        $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
 
         // Fetch all categories with their subcategories
         $categories = Category::with('subcategories')->get();
@@ -55,7 +59,7 @@ class ForumController extends Controller
             $totalOnline = $membersOnline + $visitors;
         }
 
-        return view('forum.index', compact('totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
+        return view('forum.index', compact('bannedUserIds','totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
     }
 
 
