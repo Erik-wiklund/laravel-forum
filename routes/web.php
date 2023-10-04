@@ -46,7 +46,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
             ->name('threads.store');
     });
 
-    Route::group(['middleware' => 'is.admin'], function () {
+    Route::group(['middleware' => 'is.admin','middleware' => 'web'], function () {
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
         Route::get('/users', [AdminUsersController::class, 'users'])->name('admin.users');
         Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
