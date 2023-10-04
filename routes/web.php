@@ -57,6 +57,8 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
         Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
         Route::post('/chat/banuser/{id}/{userId}', [ChatController::class, 'ban'])->name('chat.ban');
+        Route::get('/admin/shoutbox/bans/{userId}', [UserController::class, 'del_shoutbox_ban'])->name('chat.unban');
+        Route::post('/admin/shoutbox/banuser/{userId}', [UserController::class, 'add_shoutbox_ban'])->name('chat.banUser');
     });
 
 
