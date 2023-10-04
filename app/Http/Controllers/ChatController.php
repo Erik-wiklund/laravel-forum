@@ -42,4 +42,15 @@ class ChatController extends Controller
 
         return redirect('/');
     }
+
+    public function purge($id)
+    {
+        // Find all chat messages by user ID
+        $messages = Message::where('user_id', $id)->get();
+
+        // Delete all found messages
+        $messages->each->delete();
+
+        return redirect('/');
+    }
 }
