@@ -21,6 +21,8 @@ class ForumController extends Controller
         // Fetch all threads with their associated users
         $threads = Thread::with('user')->get();
 
+        $latestuser = User::latest()->first();
+
         $chatRoom = ChatRoom::find(1);
         $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
 
@@ -59,7 +61,7 @@ class ForumController extends Controller
             $totalOnline = $membersOnline + $visitors;
         }
 
-        return view('forum.index', compact('bannedUserIds','totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
+        return view('forum.index', compact('latestuser','bannedUserIds','totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
     }
 
 
