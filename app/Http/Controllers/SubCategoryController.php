@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SubCategoryController extends Controller
 {
@@ -11,7 +13,9 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $subcategories = SubCategory::latest()->paginate(20);
+
+        return view('admin.pages.subcategories', compact(['subcategories']));
     }
 
     /**
@@ -19,7 +23,7 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.new_subcategory');
     }
 
     /**
@@ -27,7 +31,22 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'desc' => 'required',
+            'order' => 'required',
+        ]);
+
+        $subcategory = new SubCategory();
+        $subcategory->title = $request->title;
+        $subcategory->desc = $request->desc;
+        $subcategory->order = $request->order;
+        $subcategory->user_id = auth()->id();
+        $subcategory->save();
+
+        Session::flash('message', 'Sub-Category created successfully');
+        Session::flash('alert-class', 'alert-success');
+        return back();
     }
 
     /**
@@ -41,17 +60,34 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $subcategoryId)
     {
-        //
+        $subcategory = SubCategory::find($subcategoryId);
+        return view('admin.pages.edit_subcategory', compact(['subcategory']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $subcategoryId)
     {
-        //
+
+        $subcategory = SubCategory::find($subcategoryId);
+        if ($request->title) {
+            $subcategory->title = $request->title;
+        }
+        if ($request->desc) {
+            $subcategory->desc = $request->desc;
+        }
+        if ($request->order) {
+            $subcategory->order = $request->order;
+        }
+        
+
+        $subcategory->save();
+        Session::flash('message', 'Sub-Category updated successfully');
+        Session::flash('alert-class', 'alert-success');
+        return back();
     }
 
     /**
