@@ -9,7 +9,7 @@
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>DRO -Digital Agency</title>
+    <title>Admin</title>
 
     <!-- Bootstrap CSS -->
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -52,9 +52,15 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu">
                     <li class="active">
-                        <a class="" href="/dashboard/home">
+                        <a class="" href="{{ route('admin.home') }}">
                             <i class="icon_house_alt"></i>
                             <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a class="" href="/">
+                            <i class="icon_house_alt"></i>
+                            <span>Forum index</span>
                         </a>
                     </li>
                     <li class="sub-menu">
