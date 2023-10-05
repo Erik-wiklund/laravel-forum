@@ -35,6 +35,7 @@
                                         <th>Title</th>
                                         <th>Order</th>
                                         <th>Description</th>
+                                        <th>Category</th>
                                         <th>View</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -48,6 +49,7 @@
                                                 <td>{{ $subcategory->title }}</td>
                                                 <td>{{ $subcategory->order }}</td>
                                                 <td>{{ $subcategory->desc }}</td>
+                                                <td>{{  $subcategory->category->title }}</td>
                                                 <td><a href="/dashboard/users/{{ $subcategory->id }}"><i
                                                             class="fa fa-eye text-success"></i></a></td>
                                                 <td><a href="{{ route('subcategory.edit', ['subcategoryId' => $subcategory->id]) }}"><i
