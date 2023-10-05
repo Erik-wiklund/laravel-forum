@@ -60,6 +60,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::post('/admin/dashboard/subcategory/new', [SubCategoryController::class, 'store'])->name('subcategory.store');
         Route::get('/admin/dashboard/subcategories', [SubCategoryController::class, 'index'])->name('sub-categories');
         Route::get('/admin/dashboard/subcategory/edit/{subcategoryId}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
+        Route::post('/admin/dashboard/subcategory/update/{subcategoryId}', [SubCategoryController::class, 'update'])->name('subcategory.update');
         Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
         Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
         Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
