@@ -4,7 +4,7 @@
     </div>
 
     <!--logo start-->
-    <a href="/dashboard/home" class="logo" style="color:  #fff;">BBIS</span></a>
+    <a href="{{ route('admin.home') }}" class="logo" style="color:  #fff;">Forum administration</span></a>
     <!--logo end-->
 
     <div class="nav search-row" id="top_menu">
