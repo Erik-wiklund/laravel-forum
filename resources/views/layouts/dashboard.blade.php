@@ -112,7 +112,7 @@
                   </li>
 
                   <li>
-                    <a class="" href="{{ route('sub-categories') }}">
+                    <a class="" href="{{ route('subcategories') }}">
                         <i class="fa fa-users"></i>
                         <span>Sub-Categories</span>
                     </a>
