@@ -182,7 +182,7 @@
                     </div>
                     <div class="card-footer">
                         <div>Newest Member</div>
-                        <div><a href="#">Member Name</a></div>
+                        <div><a href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $latestuser->name }}</a></div>
                     </div>
                 </div>
             </aside>
