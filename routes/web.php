@@ -52,6 +52,8 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
         Route::get('/admin/dashboard/category/new', [CategoryController::class, 'create'])->name('category.new');
         Route::post('/admin/dashboard/category/new', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/admin/dashboard/category/edit/{categoryId}', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::post('/admin/dashboard/category/update/{categoryId}', [CategoryController::class, 'update'])->name('category.update');
         Route::get('/admin/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
         Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
         Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
