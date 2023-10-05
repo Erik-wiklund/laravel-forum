@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,8 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
         Route::get('/admin/dashboard/category/edit/{categoryId}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/admin/dashboard/category/update/{categoryId}', [CategoryController::class, 'update'])->name('category.update');
         Route::get('/admin/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
+        Route::get('/admin/dashboard/sub-categories', [SubCategoryController::class, 'index'])->name('sub-categories');
+        Route::get('/admin/dashboard/subcategory/edit/{subcategoryId}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
         Route::get('/admin/dashboard/users', [UserController::class, 'index'])->name('users');
         Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
         Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
