@@ -64,8 +64,9 @@ class SubCategoryController extends Controller
      */
     public function edit(string $subcategoryId)
     {
+        $categories = Category::all();
         $subcategory = SubCategory::find($subcategoryId);
-        return view('admin.pages.edit_subcategory', compact(['subcategory']));
+        return view('admin.pages.edit_subcategory', compact(['subcategory','categories']));
     }
 
     /**
@@ -83,6 +84,9 @@ class SubCategoryController extends Controller
         }
         if ($request->order) {
             $subcategory->order = $request->order;
+        }
+        if ($request->category_id) {
+            $subcategory->category_id = $request->category_id;
         }
         
 
