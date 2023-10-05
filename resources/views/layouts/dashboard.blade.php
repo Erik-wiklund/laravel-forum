@@ -73,9 +73,6 @@
                                 <ul class="sub">
                                     <li><a href="{{ route('category.new') }}">Create</a></li>
                                 </ul>
-                                <ul class="sub">
-                                    <li><a href="#">Edit</a></li>
-                                </ul>
                             </li>
                             <li class="sub-menu">
                                 <a href="javascript:;" class="">
@@ -86,8 +83,15 @@
                                 <ul class="sub">
                                     <li><a href="#">Create</a></li>
                                 </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="fa fa-edit"></i>
+                                    <span>Users</span>
+                                    <span class="menu-arrow arrow_carrot-right"></span>
+                                </a>
                                 <ul class="sub">
-                                    <li><a href="#">Edit</a></li>
+                                    <li><a href="#">Create</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -106,6 +110,13 @@
                           <span>Categories</span>
                       </a>
                   </li>
+
+                  <li>
+                    <a class="" href="{{ route('sub-categories') }}">
+                        <i class="fa fa-users"></i>
+                        <span>Sub-Categories</span>
+                    </a>
+                </li>
 
 
 
