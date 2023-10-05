@@ -39,6 +39,7 @@
                 <i class="fa fa-users"></i>
               <div class="count"></div>
                 <div class="title">Users</div>
+                <div style="font-size: 32px">{{ $users }}</div>
               </div>
               <!--/.info-box-->
             </div>
@@ -66,7 +67,7 @@
   
           </div>
           <!--/.row-->
-          <div class="row">
+          {{-- <div class="row">
 
             <div class="col-lg-12 col-md-12">
               <div class="panel panel-default">
@@ -106,7 +107,7 @@
             </div>
             <!--/col-->
   
-          </div>
+          </div> --}}
   
 
 
