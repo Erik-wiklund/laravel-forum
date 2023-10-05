@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -23,7 +24,8 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.new_subcategory');
+        $categories = Category::all();
+        return view('admin.pages.new_subcategory', compact(['categories']));
     }
 
     /**
@@ -41,7 +43,7 @@ class SubCategoryController extends Controller
         $subcategory->title = $request->title;
         $subcategory->desc = $request->desc;
         $subcategory->order = $request->order;
-        $subcategory->user_id = auth()->id();
+        $subcategory->category_id = $request->category_id;
         $subcategory->save();
 
         Session::flash('message', 'Sub-Category created successfully');
