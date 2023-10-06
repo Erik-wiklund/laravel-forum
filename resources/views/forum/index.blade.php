@@ -182,8 +182,60 @@
                     </div>
                     <div class="card-footer">
                         <div>Newest Member</div>
-                        <div><a href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $latestuser->name }}</a></div>
-                    </div>
+                        <div>
+                            <a href="#" id="openProfileModal" data-user-id="{{ $latestuser->id }}">{{ $latestuser->name }}</a>
+                        </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" id="profileModalBody">
+                                        <!-- Content will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                            $(document).ready(function () {
+                                $('#openProfileModal').on('click', function (e) {
+                                    e.preventDefault();
+                        
+                                    // Get the user ID from the data attribute
+                                    var userId = $(this).data('user-id');
+                        
+                                    // Create the URL using the named route
+                                    var url = "{{ route('profile.show', ['user' => ':userId']) }}";
+                                    url = url.replace(':userId', userId);
+                        
+                                    // Make an AJAX request to load the profile content
+                                    $.ajax({
+                                        url: url,
+                                        method: 'GET',
+                                        success: function (data) {
+                                            // Populate the modal body with the loaded content
+                                            $('#profileModalBody').html(data);
+                        
+                                            // Show the modal manually
+                                            $('#profileModal').modal('show');
+                                        },
+                                        error: function (xhr, status, error) {
+                                            console.error(xhr.responseText);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                        
+
+
                 </div>
             </aside>
         </div>
