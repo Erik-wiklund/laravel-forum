@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
@@ -83,6 +84,7 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
 
 
 Route::middleware('auth','web')->group(function () {
+    Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -90,7 +92,7 @@ Route::middleware('auth','web')->group(function () {
 
 // Outside auth to display modal profile for guests
 Route::middleware('web')->group(function () {
-Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show_modal');
 });
 
 Route::middleware(['auth'])->group(function () {
