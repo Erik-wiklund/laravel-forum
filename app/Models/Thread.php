@@ -15,12 +15,17 @@ class Thread extends Model
     }
 
     public function user()
-{
-    return $this->belongsTo(User::class, 'user_id');
-}
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function lastPoster()
-{
-    return $this->belongsTo(User::class, 'last_poster_id');
-}
+    {
+        return $this->belongsTo(User::class, 'last_poster_id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
