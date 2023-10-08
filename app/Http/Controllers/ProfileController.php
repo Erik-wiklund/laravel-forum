@@ -13,9 +13,15 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
 
+    public function index(string $userId)
+    {
+        $user = User::find($userId);
+        return view('profile.index', compact('user'));
+    }
+
     public function show(User $user)
     {
-        return view('profile.show', compact('user'));
+        return view('profile.show_modal', compact('user'));
     }
 
     /**
