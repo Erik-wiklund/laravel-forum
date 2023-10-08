@@ -63,7 +63,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.index', [ 'userId' => $user->id])">
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         @if (auth()->user()->isAdmin())
