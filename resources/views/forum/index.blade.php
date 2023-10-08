@@ -140,7 +140,7 @@
                             <ul class="list-unstyled mb-0 flex">
                                 @foreach ($onlineUsers as $user)
                                     <li><a style="color: #aaa;"
-                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }},</a>
+                                        href="#" class="openProfileModal" data-user-id="{{ $message->user->id }}">{{ $user->name }},</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -151,7 +151,7 @@
                             <ul class="list-unstyled mb-0 flex">
                                 @foreach ($onlineUsers as $user)
                                     <li><a style="color: #aaa;"
-                                            href="{{ route('profile.show', ['user' => $user->id]) }}">{{ $user->name }},</a>
+                                        href="#" class="openProfileModal" data-user-id="{{ $user->id }}">{{ $user->name }},</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -183,7 +183,7 @@
                     <div class="card-footer">
                         <div>Newest Member</div>
                         <div>
-                            <a href="#" id="openProfileModal" data-user-id="{{ $latestuser->id }}">{{ $latestuser->name }}</a>
+                            <a href="#" class="openProfileModal" data-user-id="{{ $latestuser->id }}">{{ $latestuser->name }}</a>
                         </div>
                         
                         <!-- Modal -->
@@ -205,14 +205,14 @@
                         
                         <script>
                             $(document).ready(function () {
-                                $('#openProfileModal').on('click', function (e) {
+                                $('.openProfileModal').on('click', function (e) {
                                     e.preventDefault();
                         
                                     // Get the user ID from the data attribute
                                     var userId = $(this).data('user-id');
                         
                                     // Create the URL using the named route
-                                    var url = "{{ route('profile.show', ['user' => ':userId']) }}";
+                                    var url = "{{ route('profile.show_modal', ['user' => ':userId']) }}";
                                     url = url.replace(':userId', userId);
                         
                                     // Make an AJAX request to load the profile content
@@ -233,6 +233,7 @@
                                 });
                             });
                         </script>
+                        
                         
 
 
