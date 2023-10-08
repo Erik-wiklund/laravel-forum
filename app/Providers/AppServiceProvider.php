@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.navigation', function ($view) {
+            // Fetch the currently authenticated user or null if no user is logged in
+            $user = auth()->user();
+    
+            // Share the $user variable with the navigation view
+            $view->with('user', $user);
+        });
     }
 }
