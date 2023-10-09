@@ -8,6 +8,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
@@ -39,14 +40,17 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
 
 
 
-    Route::get('/threads/{id}/content', [ThreadController::class, 'show'])
+    Route::get('/threads/{id}/content', [ReplyController::class, 'show'])
     ->name('thread-content.show');
     Route::middleware(['auth'])->group(function () {
         Route::get('/subcategories/{subcategory}/threads/create', [ThreadController::class,'create'])
             ->name('threads.create');
         Route::post('/subcategories/{subcategory}/threads', [ThreadController::class,'store'])
             ->name('threads.store');
+            Route::post('/reply/create/{threadId}', [ReplyController::class, 'create'])->name('reply.create');
     });
+    Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
+    ->name('thread-content.index');
 
     Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
         // Admin Dashboard Routes
@@ -90,7 +94,7 @@ Route::middleware('auth','web')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Outside auth to display modal profile for guests
+// Outside auth to display for guests
 Route::middleware('web')->group(function () {
 Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show_modal');
 });
