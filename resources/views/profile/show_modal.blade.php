@@ -3,8 +3,14 @@
 @section('content')
     <div class="container">
         <div>
-            <img src="" alt="" style="max-width: 15px;">
+            @if (!empty($user->image))
+                                                        <img src="{{ asset('images/' . $user->image) }}"
+                                                            alt="User Image" style="max-width: 50px;">
+                                                    @else
+                                                        No Image
+                                                    @endif
             <h1>User Profile: {{ $user->name }}</h1>
+            <div>{{ optional($user->role)->name }}</div>
             <span>Last seen:
                 @if ($user->last_seen)
                     @php
