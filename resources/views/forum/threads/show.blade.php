@@ -64,7 +64,7 @@
                                                 <a href="{{ route('subcategories.threads.index', ['subcategory' => $subcategory]) }}"
                                                     class="text-uppercase">
                                                     <a
-                                                        href="{{ route('thread-content.show', $thread) }}">{{ $thread->title }}</a>
+                                                        href="{{ route('thread-content.index', $thread) }}">{{ $thread->title }}</a>
                                                 </a>
                                                 @php
                                                     $createdBy = $subcategory->threads('created_by')->first();
