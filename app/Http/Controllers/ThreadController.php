@@ -64,15 +64,15 @@ class ThreadController extends Controller
      */
     public function show(int $id)
     {
-        // Retrieve the thread using the provided integer ID
-        $thread = Thread::find($id);
+        // // Retrieve the thread using the provided integer ID
+        // $thread = Thread::find($id);
 
-        if (!$thread) {
-            // Handle the case where the thread with the given ID is not found (e.g., show an error page)
-            abort(404); // You can customize the error handling as needed
-        }
+        // if (!$thread) {
+        //     // Handle the case where the thread with the given ID is not found (e.g., show an error page)
+        //     abort(404); // You can customize the error handling as needed
+        // }
 
-        return view('forum.threads.thread-content.show', compact('thread'));
+        // return view('forum.threads.thread-content.show', compact('thread'));
     }
 
     /**
