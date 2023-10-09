@@ -30,7 +30,7 @@ Route::get('/', function () {
 });
 
 Route::resource('forum', ForumController::class)
-->only('index', 'show');
+    ->only('index', 'show');
 
 // routes/web.php
 
@@ -40,63 +40,63 @@ Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'in
 
 
 
-    Route::get('/threads/{id}/content', [ReplyController::class, 'show'])
+Route::get('/threads/{id}/content', [ReplyController::class, 'show'])
     ->name('thread-content.show');
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/subcategories/{subcategory}/threads/create', [ThreadController::class,'create'])
-            ->name('threads.create');
-        Route::post('/subcategories/{subcategory}/threads', [ThreadController::class,'store'])
-            ->name('threads.store');
-            Route::post('/reply/create/{threadId}', [ReplyController::class, 'create'])->name('reply.create');
-    });
-    Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
+Route::middleware(['auth'])->group(function () {
+    Route::get('/subcategories/{subcategory}/threads/create', [ThreadController::class, 'create'])
+        ->name('threads.create');
+    Route::post('/subcategories/{subcategory}/threads', [ThreadController::class, 'store'])
+        ->name('threads.store');
+    Route::post('/reply/create/{threadId}', [ReplyController::class, 'create'])->name('reply.create');
+});
+Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
     ->name('thread-content.index');
 
-    Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
-        // Admin Dashboard Routes
-        Route::get('/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
-        Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
-    
-        // User Routes
-        Route::get('/users', [UserController::class, 'index'])->name('users');
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-        // ... other user-related routes ...
-    
-        // Category Routes
-        Route::get('/dashboard/category/new', [CategoryController::class, 'create'])->name('category.new');
-        Route::post('/dashboard/category/new', [CategoryController::class, 'store'])->name('category.store');
-        Route::get('/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
-        Route::get('/dashboard/category/edit/{categoryId}', [CategoryController::class, 'edit'])->name('category.edit');
-        Route::post('/dashboard/category/update/{categoryId}', [CategoryController::class, 'update'])->name('category.update');
-    
-        // Subcategory Routes
-        Route::get('/dashboard/subcategory/new', [SubCategoryController::class, 'create'])->name('subcategory.new');
-        Route::post('/dashboard/subcategory/new', [SubCategoryController::class, 'store'])->name('subcategory.store');
-        Route::get('/dashboard/subcategories', [SubCategoryController::class, 'index'])->name('subcategories');
-        Route::get('/dashboard/subcategory/edit/{subcategoryId}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
-        Route::post('/dashboard/subcategory/update/{subcategoryId}', [SubCategoryController::class, 'update'])->name('subcategory.update');
-    
-        // Chat Routes
-        Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
-        Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
-        Route::post('/chat/banuser/{id}/{userId}', [ChatController::class, 'ban'])->name('chat.ban');
-        Route::get('/shoutbox/bans/{userId}', [UserController::class, 'del_shoutbox_ban'])->name('chat.unban');
-        Route::post('/shoutbox/banuser/{userId}', [UserController::class, 'add_shoutbox_ban'])->name('chat.banUser');
-    });
-    
+Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
+    // Admin Dashboard Routes
+    Route::get('/dashboard', [AdminDashboardController::class, 'home'])->name('admin.home');
+    Route::get('/settings', [AdminSettingsController::class, 'settings'])->name('admin.settings');
+
+    // User Routes
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    // ... other user-related routes ...
+
+    // Category Routes
+    Route::get('/dashboard/category/new', [CategoryController::class, 'create'])->name('category.new');
+    Route::post('/dashboard/category/new', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/dashboard/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/dashboard/category/edit/{categoryId}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/dashboard/category/update/{categoryId}', [CategoryController::class, 'update'])->name('category.update');
+
+    // Subcategory Routes
+    Route::get('/dashboard/subcategory/new', [SubCategoryController::class, 'create'])->name('subcategory.new');
+    Route::post('/dashboard/subcategory/new', [SubCategoryController::class, 'store'])->name('subcategory.store');
+    Route::get('/dashboard/subcategories', [SubCategoryController::class, 'index'])->name('subcategories');
+    Route::get('/dashboard/subcategory/edit/{subcategoryId}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
+    Route::post('/dashboard/subcategory/update/{subcategoryId}', [SubCategoryController::class, 'update'])->name('subcategory.update');
+
+    // Chat Routes
+    Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
+    Route::delete('/chat/purge/{id}', [ChatController::class, 'purge'])->name('chat.purge');
+    Route::post('/chat/banuser/{id}/{userId}', [ChatController::class, 'ban'])->name('chat.ban');
+    Route::get('/shoutbox/bans/{userId}', [UserController::class, 'del_shoutbox_ban'])->name('chat.unban');
+    Route::post('/shoutbox/banuser/{userId}', [UserController::class, 'add_shoutbox_ban'])->name('chat.banUser');
+});
 
 
 
-Route::middleware('auth','web')->group(function () {
+
+Route::middleware('auth', 'web')->group(function () {
     Route::get('/profile/{userId}', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/{userId}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Outside auth to display for guests
 Route::middleware('web')->group(function () {
-Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show_modal');
+    Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show_modal');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -110,4 +110,4 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
