@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
@@ -37,17 +39,41 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request, string $userId)
     {
-        $request->user()->fill($request->validated());
+        $image = '';
+        $imageFileName = '';
+        $newImageFileName = '';
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->image) {
+            $image = $request->image;
+            $imageFileName = $image->getClientOriginalName();
+            $newImageFileName = time() . $imageFileName;
+
+            // Move the uploaded image to the public/images folder with the new filename
+            $imagePath = public_path('images/' . $newImageFileName);
+            $request->image->move(public_path('images'), $newImageFileName);
+
+            // Open the uploaded image using Intervention Image and resize it to fit within a 300x300 pixel box
+            Image::make($imagePath)->fit(300, 300)->save($imagePath);
         }
 
-        $request->user()->save();
+        $user = User::find($userId);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        if ($request->filled('email')) {
+            $user->email = $request->email;
+        }
+
+        if ($request->image) {
+            $user->image = $newImageFileName;
+        }
+
+        $user->save();
+
+        Session::flash('message', 'User updated successfully');
+        Session::flash('alert-class', 'alert-success');
+
+        return back();
     }
 
     /**
