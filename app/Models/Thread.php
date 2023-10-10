@@ -9,6 +9,10 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'views_count',
+    ];
+
     public function subcategory()
     {
         return $this->belongsTo(SubCategory::class);
@@ -32,5 +36,10 @@ class Thread extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function incrementViewCount()
+    {
+        $this->increment('views_count');
     }
 }
