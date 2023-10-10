@@ -109,5 +109,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
 
+Route::middleware('web')->group(function () {
+    Route::get('/subcategories/{subcategory}/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
+    // Other thread-related routes
+});;
+
 
 require __DIR__ . '/auth.php';
