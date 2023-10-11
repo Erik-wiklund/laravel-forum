@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('threads.create');
     Route::post('/subcategories/{subcategory}/threads', [ThreadController::class, 'store'])
         ->name('threads.store');
-    Route::post('/reply/create/{threadId}', [ReplyController::class, 'create'])->name('reply.create');
+    Route::post('/subcategories/{subcategory}/threads/{thread}', [ReplyController::class, 'create'])->name('reply.create');
 });
 Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
     ->name('thread-content.index');
