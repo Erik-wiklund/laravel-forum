@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\PageView;
 use App\Models\SubCategory;
 use App\Models\Thread;
@@ -18,6 +19,7 @@ class ThreadController extends Controller
     public function index(SubCategory $subcategory)
     {
         // Retrieve all threads related to the provided subcategory
+
         $threads = Thread::where('sub_category_id', $subcategory->id)->get();
 
         return view('forum.threads.index', compact('threads', 'subcategory'));
@@ -67,30 +69,32 @@ class ThreadController extends Controller
     /**
      * Display the specified resource.
      */
-    
 
-    public function show(SubCategory $subcategory, Thread $thread, Request $request)
-    {
-        // Retrieve the thread by its ID
-        $thread = Thread::findOrFail($thread->id);
 
-        // Check if the user is logged in and has not exceeded the rate limit
-        if (Auth::check() && !RateLimiter::tooManyAttempts('view-thread:' . $request->user()->id, 1)) {
-            // Increment the view count for this thread
-            $thread->incrementViewCount();
+     public function show(SubCategory $subcategory, Thread $thread, Request $request, Category $category)
+     {
+         // Retrieve the thread by its ID
+         $thread = Thread::findOrFail($thread->id);
+         $category = Category::findOrFail($subcategory->id);
 
-            // Define the rate limit key and duration in minutes (e.g., 60 minutes)
-            $rateLimitKey = 'view-thread:' . $request->user()->id;
-            $rateLimitDuration = 60;
-
-            // Apply rate limiting
-            RateLimiter::hit($rateLimitKey, $rateLimitDuration);
-        }
-
-        $replies = $thread->replies;
-
-        return view('forum.threads.show', compact('request', 'thread', 'subcategory', 'replies'));
-    }
+         // Check if the user is logged in and has not exceeded the rate limit
+         if (Auth::check() && !RateLimiter::tooManyAttempts('view-thread:' . $request->user()->id, 1)) {
+             // Increment the view count for this thread
+             $thread->incrementViewCount();
+     
+             // Define the rate limit key and duration in minutes (e.g., 60 minutes)
+             $rateLimitKey = 'view-thread:' . $request->user()->id;
+             $rateLimitDuration = 60;
+     
+             // Apply rate limiting
+             RateLimiter::hit($rateLimitKey, $rateLimitDuration);
+         }
+     
+         $replies = $thread->replies()->paginate(20);
+     
+         return view('forum.threads.show', compact('request', 'thread', 'subcategory', 'replies','category'));
+     }
+     
 
 
 
