@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reply;
+use App\Models\SubCategory;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 
@@ -29,22 +30,23 @@ class ReplyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request, string $threadId)
-    {
-        // Validate the form data (message content)
-        $request->validate([
-            'content' => 'required|string|max:255',
-        ]);
+    public function create(Request $request, SubCategory $subcategory, string $threadId)
+{
+    // Validate the form data (message content)
+    $request->validate([
+        'content' => 'required|string|max:255',
+    ]);
 
-        // Create a new reply
-        $reply = new Reply();
-        $reply->content = $request->input('content');
-        $reply->thread_id = $threadId; // Associate with the thread
-        $reply->user_id = auth()->user()->id; // Associate with the user who sent the reply
-        $reply->save();
+    // Create a new reply
+    $reply = new Reply();
+    $reply->content = $request->input('content');
+    $reply->thread_id = $threadId; // Associate with the thread
+    $reply->user_id = auth()->user()->id; // Associate with the user who sent the reply
+    $reply->save();
 
-        return redirect()->route('thread-content.index', ['id' => $threadId])->with('success', 'Reply sent successfully.');
-    }
+    return redirect()->route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $threadId])->with('success', 'Reply sent successfully.');
+}
+
 
     /**
      * Store a newly created resource in storage.
