@@ -140,7 +140,7 @@
                             <ul class="list-unstyled mb-0 flex">
                                 @foreach ($onlineUsers as $user)
                                     <li><a style="color: #aaa;"
-                                        href="#" class="openProfileModal" data-user-id="{{ $message->user->id }}">{{ $user->name }},</a>
+                                        href="#" class="openProfileModal" data-user-id="{{ $user->id }}">{{ $user->name }},</a>
                                     </li>
                                 @endforeach
                             </ul>
