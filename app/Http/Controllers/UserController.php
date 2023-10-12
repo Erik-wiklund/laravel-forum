@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ChatRoom;
 use App\Models\User;
+use Intervention\Image\Facades\Image;
+use App\Models\User_role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -25,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $user_roles = User_role::all();
+        return view('admin.pages.new_user', compact(['user_roles']));
     }
 
     /**
@@ -33,8 +39,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role_id' => 'required',
+            'image' => 'image', // Add validation rule for the image upload
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role_id;
+        $user->password = Hash::make($request->password);
+
+        if ($request->hasFile('image')) {
+            // An image was uploaded
+            // Generate a unique filename for the uploaded image
+            $imageFileName = time() . '.' . $request->image->extension();
+
+            // Move the uploaded image to the public/images folder with the generated filename
+            $imagePath = public_path('images/' . $imageFileName);
+            $request->image->move(public_path('images'), $imageFileName);
+
+            // Open the uploaded image using Intervention Image and resize it to fit within a 300x300 pixel box
+            Image::make($imagePath)->fit(300, 300)->save($imagePath);
+
+            $user->image = $imageFileName;
+        } else {
+            // No image was uploaded, use the default image
+            $user->image = 'default_image.webp'; // Set to the default image filename
+        }
+
+        $user->save();
+
+        Session::flash('message', 'User created successfully');
+        Session::flash('alert-class', 'alert-success');
+        return back();
     }
+
 
     /**
      * Display the specified resource.
@@ -89,25 +132,25 @@ class UserController extends Controller
     }
 
     public function add_shoutbox_ban($userId)
-{
-    // Find the chat room by ID (assuming it's ID 1)
-    $chatRoom = ChatRoom::find(1);
+    {
+        // Find the chat room by ID (assuming it's ID 1)
+        $chatRoom = ChatRoom::find(1);
 
-    // Get the current banned users as an array
-    $bannedUsers = json_decode($chatRoom->banned_users) ?? [];
+        // Get the current banned users as an array
+        $bannedUsers = json_decode($chatRoom->banned_users) ?? [];
 
-    // Add the user to the banned users array
-    if (!in_array($userId, $bannedUsers)) {
-        $bannedUsers[] = $userId;
+        // Add the user to the banned users array
+        if (!in_array($userId, $bannedUsers)) {
+            $bannedUsers[] = $userId;
+        }
+
+        // Update the chat room's banned_users attribute with the new array
+        $chatRoom->banned_users = $bannedUsers;
+
+        // Save the chat room
+        $chatRoom->save();
+
+        // Redirect back to the user list page
+        return redirect()->route('users')->with('success', 'Shoutbox ban added successfully');
     }
-
-    // Update the chat room's banned_users attribute with the new array
-    $chatRoom->banned_users = $bannedUsers;
-
-    // Save the chat room
-    $chatRoom->save();
-
-    // Redirect back to the user list page
-    return redirect()->route('users')->with('success', 'Shoutbox ban added successfully');
-}
 }
