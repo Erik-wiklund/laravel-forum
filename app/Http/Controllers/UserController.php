@@ -9,6 +9,7 @@ use App\Models\User_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 class UserController extends Controller
@@ -84,23 +85,81 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $userId)
     {
-        //
+        $users = User::find($userId);
+        $user_roles = User_role::all();
+        return view('admin.pages.edit_user', compact(['users', 'user_roles']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $userId)
     {
-        //
+
+        $user = User::find($userId);
+
+        $request->validate([
+            
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            
+        ]);
+
+        if ($request->has('password')) {
+            // New password is provided, validate and update it
+            $request->validate([
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+
+        $image = '';
+        $imageFileName = '';
+        $newImageFileName = '';
+
+        if ($request->image) {
+            $image = $request->image;
+            $imageFileName = $image->getClientOriginalName();
+            $newImageFileName = time() . $imageFileName;
+
+            // Move the uploaded image to the public/images folder with the new filename
+            $imagePath = public_path('images/' . $newImageFileName);
+            $request->image->move(public_path('images'), $newImageFileName);
+
+            // Open the uploaded image using Intervention Image and resize it to fit within a 300x300 pixel box
+            Image::make($imagePath)->fit(300, 300)->save($imagePath);
+        }
+
+        if ($request->name) {
+            $user->name = $request->name;
+        }
+        if ($request->email) {
+            $user->email = $request->email;
+        }
+        if ($request->image) {
+            $user->image = $newImageFileName;
+        }
+        if ($request->role_id) {
+            $user->role_id = $request->role_id;
+        }
+        // if ($request->has('password')) {
+        //     $user->password = Hash::make($request->password);
+        // }
+
+
+        $user->save();
+        Session::flash('message', 'User updated successfully');
+        Session::flash('alert-class', 'alert-success');
+        return back();
     }
 
     /**
