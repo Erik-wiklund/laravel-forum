@@ -79,6 +79,8 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     // User Routes in admin
     Route::get('/dashboard/users/new', [UserController::class,'create'])->name('user.new');
     Route::post('/dashboard/users/new', [UserController::class,'store'])->name('user.store');
+    Route::get('/dashboard/users/edit/{userId}', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/dashboard/users/update/{userId}', [UserController::class, 'update'])->name('user.update');
 
     // Chat Routes
     Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
