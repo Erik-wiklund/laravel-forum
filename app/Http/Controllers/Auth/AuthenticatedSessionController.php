@@ -24,13 +24,26 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        // Check if the user is banned
+        $user = Auth::user();
+        if ($user->isforumbanned == 1) {
+            Auth::logout();
+            return redirect()->route('login')
+                ->with('error', 'Your account has been banned. Please contact the administrator for assistance.');
+        }
 
         $request->session()->regenerate();
-
         return redirect()->intended(RouteServiceProvider::HOME);
     }
+
+    return back()->withErrors([
+        'email' => 'The provided credentials do not match our records.',
+    ]);
+}
 
     /**
      * Destroy an authenticated session.
