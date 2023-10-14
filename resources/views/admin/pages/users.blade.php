@@ -34,6 +34,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Forumban</th>
                                         <th>Shoutboxbanned</th>
                                         <th>User Role</th>
                                         <th>View</th>
@@ -48,6 +49,24 @@
                                             <tr>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
+                                                <td>
+                                                     @if($user->isforumbanned == 1)
+                                                     Yes
+                                                     <form  method="POST"
+                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
+                                                     @csrf
+                                                     @method('GET')
+                                                     <button type="submit">Remove ban</button>
+                                                 </form>
+                                                 @else
+                                                 No <form  method="POST"
+                                                            action="{{ route('forum.ban', ['userId' => $user->id]) }}">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <button type="submit">Add ban</button>
+                                                        </form>
+                                                     @endif
+                                                </td>
                                                 <td>
                                                     @if (in_array($user->id, $bannedUserIds))
                                                         Yes
