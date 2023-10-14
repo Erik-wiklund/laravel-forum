@@ -81,6 +81,8 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     Route::post('/dashboard/users/new', [UserController::class,'store'])->name('user.store');
     Route::get('/dashboard/users/edit/{userId}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/dashboard/users/update/{userId}', [UserController::class, 'update'])->name('user.update');
+    Route::post('/forum/banuser/{userId}', [UserController::class,'add_forum_ban'])->name('forum.ban');
+    Route::get('/forum/banuser/{userId}', [UserController::class,'del_forum_ban'])->name('forum.unban');
 
     // Chat Routes
     Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
