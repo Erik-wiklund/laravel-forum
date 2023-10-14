@@ -212,4 +212,26 @@ class UserController extends Controller
         // Redirect back to the user list page
         return redirect()->route('users')->with('success', 'Shoutbox ban added successfully');
     }
+
+    public function add_forum_ban($userId)
+    {
+        $user = User::find($userId);
+
+        $user->isforumbanned = 1;
+
+        $user->save();
+
+        return redirect()->route('users')->with('success', 'Forum ban added successfully');
+    }
+
+    public function del_forum_ban($userId)
+    {
+        $user = User::find($userId);
+
+        $user->isforumbanned = 0;
+
+        $user->save();
+
+        return redirect()->route('users')->with('success', 'Forum ban added successfully');
+    }
 }
