@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Session;
                                 <p class="alert alert-danger">{{ $message }}</p>
                             @enderror
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">User Role</label>
+                                <label class="col-lg-2 control-label">User Main Role</label>
                                 <div class="col-lg-10">
                                     <select name="role_id" id="role_id" class="form-control">
                                         <option value="">Select a Role</option>
