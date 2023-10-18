@@ -60,7 +60,7 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     // User Routes
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    // ... other user-related routes ...
+    Route::get('/users/{userId}', [UserController::class, 'show'])->name('user.show');
 
     // Category Routes
     Route::get('/dashboard/category/new', [CategoryController::class, 'create'])->name('category.new');
