@@ -83,8 +83,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $userId)
     {
+        $chatRoom = ChatRoom::find(1);
+        $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
+        $users = User::find($userId);
+        $user_roles = User_role::all();
+        return view('admin.pages.view_user', compact(['users', 'user_roles','chatRoom','bannedUserIds']));
     }
 
     /**
