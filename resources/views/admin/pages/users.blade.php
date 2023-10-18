@@ -34,9 +34,8 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Forumban</th>
-                                        <th>Shoutboxbanned</th>
-                                        <th>User Role</th>
+                                        <th>Main role</th>
+                                        <th>Ban Actions</th>
                                         <th>View</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -49,46 +48,56 @@
                                             <tr>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
-                                                <td>
-                                                     @if($user->isforumbanned == 1)
-                                                     Yes
-                                                     <form  method="POST"
-                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
-                                                     @csrf
-                                                     @method('GET')
-                                                     <button type="submit">Remove ban</button>
-                                                 </form>
-                                                 @else
-                                                 No <form  method="POST"
-                                                            action="{{ route('forum.ban', ['userId' => $user->id]) }}">
-                                                            @csrf
-                                                            @method('POST')
-                                                            <button type="submit">Add ban</button>
-                                                        </form>
-                                                     @endif
-                                                </td>
-                                                <td>
-                                                    @if (in_array($user->id, $bannedUserIds))
-                                                        Yes
-                                                            <form  method="POST"
-                                                            action="{{ route('chat.unban', ['userId' => $user->id]) }}">
-                                                            @csrf
-                                                            @method('GET')
-                                                            <button type="submit">Remove ban</button>
-                                                        </form>
-                                                    @else
-                                                        No <form  method="POST"
-                                                            action="{{ route('chat.banUser', ['userId' => $user->id]) }}">
-                                                            @csrf
-                                                            @method('POST')
-                                                            <button type="submit">Add ban</button>
-                                                        </form>
-                                                    @endif
-                                                </td>
                                                 <td>{{ optional($user->role)->name }}</td>
-                                                <td><a href="/dashboard/users/{{ $user->id }}"><i
+                                                <td>
+                                                    <div>
+                                                        <div style="margin-bottom: 4px;">
+                                                            @if ($user->isforumbanned == 1)
+                                                                <form method="POST"
+                                                                    action="{{ route('forum.unban', ['userId' => $user->id]) }}">
+                                                                    @csrf
+                                                                    @method('GET')
+                                                                    <button style="background: red" type="submit">Remove
+                                                                        Forum
+                                                                        Ban</button>
+                                                                </form>
+                                                            @else
+                                                                <form method="POST"
+                                                                    action="{{ route('forum.ban', ['userId' => $user->id]) }}">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <button style="background: green" type="submit">Forum
+                                                                        Ban
+                                                                        User</button>
+                                                                </form>
+                                                            @endif
+                                                        </div>
+                                                        <div style="margin-top: 4px;">
+                                                            @if (in_array($user->id, $bannedUserIds))
+                                                                <form method="POST"
+                                                                    action="{{ route('chat.unban', ['userId' => $user->id]) }}">
+                                                                    @csrf
+                                                                    @method('GET')
+                                                                    <button style="background: red" type="submit">Remove
+                                                                        Shoutbox Ban</button>
+                                                                </form>
+                                                            @else
+                                                                <form method="POST"
+                                                                    action="{{ route('chat.banUser', ['userId' => $user->id]) }}">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <button style="background: green"
+                                                                        type="submit">shoutbox
+                                                                        Ban User</button>
+                                                                </form>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><a href="{{ route('user.show',['userId' => $user->id]) }}"><i
                                                             class="fa fa-eye text-success"></i></a></td>
-                                                <td><a href="{{ route('user.edit',['userId' => $user->id]) }}"><i class="fa fa-edit text-info"></i></a></td>
+                                                <td><a href="{{ route('user.edit', ['userId' => $user->id]) }}"><i
+                                                            class="fa fa-edit text-info"></i></a></td>
                                                 <td><a href="#" class="text-danger"><i
                                                             class="fa fa-trash"></i>Delete</a></td>
 
