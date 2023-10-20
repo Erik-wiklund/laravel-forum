@@ -46,6 +46,9 @@
             @yield('content')
         </main>
     </div>
+    <footer>
+        <div style="margin-top: 200px;">test</div>
+    </footer>
 </body>
 
 </html>
