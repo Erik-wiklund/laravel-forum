@@ -153,16 +153,26 @@
         </div>
     </div>
     @if (Auth::check())
-        <form method="post"
-            action="{{ route('reply.create', ['subcategory' => $subcategory->id, 'thread' => $thread->id]) }}"
-            style="width: 100%; padding: 10px;">
-            @csrf
-            <!-- Add a textarea for user's reply -->
-            <textarea class="w-full" name="content" id="reply-textarea" cols="30" rows="10"></textarea>
-
-            <button class="float-right" type="submit"
-                style="background: red; padding: 10px; border-radius: 7px">Reply</button>
-        </form>
+    <div class="quickReplyForm" style="border: gray 1px solid">
+        <div class="quickReplyContainer" style="display: flex; align-items: center;">
+            <div class="quickReplyerAvatar" style="margin-right: 10px; margin-left: 10px;">
+                <img src="{{ asset('images/' . $reply->createdBy->image) }}" alt="User Image" style="max-width: 140px;">
+            </div>
+            <form method="post"
+                action="{{ route('reply.create', ['subcategory' => $subcategory->id, 'thread' => $thread->id]) }}"
+                style="width: 100%; padding: 10px;">
+                @csrf
+                <!-- Add a textarea for user's reply -->
+                <textarea class="w-full" name="content" id="reply-textarea" cols="30" rows="10"></textarea>
+                <div style="text-align: right; margin-top: 8px;">
+                    <button type="submit" style="background: red; padding: 10px; border-radius: 7px; text-align: right">
+                        Post Reply
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     @else
         <div class="text-center"><a href="{{ route('login') }}">You must register or login to reply here</a></div>
     @endif
