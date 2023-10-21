@@ -111,18 +111,26 @@
                     </li>
 
                     <li>
-                      <a class="" href="{{ route('categories') }}">
-                          <i class="fa fa-users"></i>
-                          <span>Categories</span>
-                      </a>
-                  </li>
+                        <a class="" href="{{ route('categories') }}">
+                            <i class="fa fa-users"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
 
-                  <li>
-                    <a class="" href="{{ route('subcategories') }}">
-                        <i class="fa fa-users"></i>
-                        <span>Sub-Categories</span>
-                    </a>
-                </li>
+                    <li>
+                        <a class="" href="{{ route('subcategories') }}">
+                            <i class="fa fa-users"></i>
+                            <span>Sub-Categories</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="" href="{{ route('contact.index') }}">
+                            <i class="fa fa-envelope"></i>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+
 
 
 
