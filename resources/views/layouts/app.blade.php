@@ -47,7 +47,7 @@
         </main>
     </div>
     <footer>
-        <div style="margin-top: 200px;">test</div>
+        @include('layouts.footer')
     </footer>
 </body>
 
