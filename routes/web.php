@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProfileController;
@@ -120,7 +121,13 @@ Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('
 Route::middleware('web')->group(function () {
     Route::get('/subcategories/{subcategory}/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
     // Other thread-related routes
-});;
+});
+
+// Handle messages from contactform and reply to user
+Route::get('/dashboard/contact-messages', [ContactController::class,'index'])->name('contact.index');
+Route::get('/dashboard/contact-message/{messageId}', [ContactController::class,'show'])->name('contact.show');
+Route::get('/misc/contact', [ContactController::class,'create'])->name('contact.create');
+Route::post('/misc/contact/message', [ContactController::class,'store'])->name('contact.store');
 
 
 require __DIR__ . '/auth.php';
