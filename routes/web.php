@@ -78,12 +78,12 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     Route::post('/dashboard/subcategory/update/{subcategoryId}', [SubCategoryController::class, 'update'])->name('subcategory.update');
 
     // User Routes in admin
-    Route::get('/dashboard/users/new', [UserController::class,'create'])->name('user.new');
-    Route::post('/dashboard/users/new', [UserController::class,'store'])->name('user.store');
+    Route::get('/dashboard/users/new', [UserController::class, 'create'])->name('user.new');
+    Route::post('/dashboard/users/new', [UserController::class, 'store'])->name('user.store');
     Route::get('/dashboard/users/edit/{userId}', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/dashboard/users/update/{userId}', [UserController::class, 'update'])->name('user.update');
-    Route::post('/forum/banuser/{userId}', [UserController::class,'add_forum_ban'])->name('forum.ban');
-    Route::get('/forum/banuser/{userId}', [UserController::class,'del_forum_ban'])->name('forum.unban');
+    Route::post('/forum/banuser/{userId}', [UserController::class, 'add_forum_ban'])->name('forum.ban');
+    Route::get('/forum/banuser/{userId}', [UserController::class, 'del_forum_ban'])->name('forum.unban');
 
     // Chat Routes
     Route::delete('/chat/{message}', [ChatController::class, 'destroy'])->name('chat.destroy');
@@ -91,6 +91,10 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     Route::post('/chat/banuser/{id}/{userId}', [ChatController::class, 'ban'])->name('chat.ban');
     Route::get('/shoutbox/bans/{userId}', [UserController::class, 'del_shoutbox_ban'])->name('chat.unban');
     Route::post('/shoutbox/banuser/{userId}', [UserController::class, 'add_shoutbox_ban'])->name('chat.banUser');
+
+    // Contact form messages 
+    Route::get('/dashboard/contact-messages', [ContactController::class, 'index'])->name('contact.index');
+    Route::get('/dashboard/contact-message/{messageId}', [ContactController::class, 'show'])->name('contact.show');
 });
 
 
@@ -123,11 +127,9 @@ Route::middleware('web')->group(function () {
     // Other thread-related routes
 });
 
-// Handle messages from contactform and reply to user
-Route::get('/dashboard/contact-messages', [ContactController::class,'index'])->name('contact.index');
-Route::get('/dashboard/contact-message/{messageId}', [ContactController::class,'show'])->name('contact.show');
-Route::get('/misc/contact', [ContactController::class,'create'])->name('contact.create');
-Route::post('/misc/contact/message', [ContactController::class,'store'])->name('contact.store');
+// Contact form and save to db
+Route::get('/misc/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/misc/contact/message', [ContactController::class, 'store'])->name('contact.store');
 
 
 require __DIR__ . '/auth.php';
