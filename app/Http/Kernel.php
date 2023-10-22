@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // ...
         'is.admin' => \App\Http\Middleware\IsAdmin::class,
+        'is.mod' => \App\Http\Middleware\IsMod::class,
         'view.count' => \App\Http\Middleware\ViewCountMiddleware::class,
     ];
 
