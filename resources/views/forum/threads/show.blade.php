@@ -40,12 +40,19 @@
                                             <li><a href="#">Move Thread</a></li>
                                         </ul>
                                         <ul>
-                                            <li><a href="#" class="openmodModal"
+                                            {{-- <li><a href="#" class="openmodModal"
                                                     data-user-id="{{ $latestuser->id }}">Moderator Actions</a></li>
-                                            <li>
+                                            <li> --}}
+                                            <input type="hidden" name="context" value="thread">
+                                            <form method="POST" action="{{ route('update-thread-checkbox', ['thread' => $thread->id]) }}">
+                                                @csrf
+                                                <input type="hidden" name="context" value="lockThread">
                                                 <input type="checkbox" id="LockedOrNot" value="{{ $thread->lockedOrNot }}"
-                                                    onchange="updateCheckboxValue(this)"
-                                                    {{ $thread->lockedOrNot == 1 ? 'checked' : '' }}> Open
+                                                onchange="updateCheckboxValue(this)"
+                                                {{ $thread->lockedOrNot == 1 ? 'checked' : '' }}> Open /
+                                                <label for="LockedOrNot">Lock Thread</label>
+                                                <button hidden type="submit" style="background: green">Update</button>
+                                            </form>
                                             </li>
                                             <li><input type="checkbox"> Select for Thread Moderation</li>
                                         </ul>
@@ -99,6 +106,8 @@
                                                 @if (auth()->check() &&
                                                         (auth()->user()->isAdmin() ||
                                                             auth()->user()->isMod()))
+                                                    <input type="hidden" name="context" value="lockThread">
+                                                    <input type="hidden" name="thread_id" value="{{ $thread->id }}">
                                                     <input type="checkbox" name="lockedOrNot" id="">
                                                 @endif
                                                 <span href="#">{{ $thread->createdBy->name }}</span>
@@ -165,6 +174,8 @@
                                                 @if (auth()->check() &&
                                                         (auth()->user()->isAdmin() ||
                                                             auth()->user()->isMod()))
+                                                    <input type="hidden" name="context" value="lockThread">
+                                                    <input type="hidden" name="thread_id" value="{{ $thread->id }}">
                                                     <input type="checkbox" name="lockedOrNot" id="">
                                                 @endif
                                                 <span href="#">{{ $reply->createdBy->name }}</span>
@@ -363,24 +374,31 @@
 
 
 
-        function updateCheckboxValue(checkbox) {
-            const threadId = {{ $thread->id }}; // Replace with the actual thread ID
-            const value = checkbox.checked ? '1' : '0';
+    
+    function updateCheckboxValue(checkbox) {
+        const threadId = {{ $thread->id }};
+        const value = checkbox.checked ? '1' : '0';
+        const context = checkbox.checked ? 'lockThread' : 'unlockThread';
 
-            // Send an AJAX request to update the checkbox value in the database
-            axios.post(`/update-thread-checkbox/${threadId}`, {
-                    value
-                })
-                .then(response => {
-                    // Handle a successful response here, if needed
-                    // Reload the window after a successful response
-                    location.reload();
-                })
-                .catch(error => {
-                    // Handle errors if the request fails
-                    console.error('Error:', error);
-                });
-        }
+        // Send an AJAX request to update the checkbox value in the database
+        axios.post(`/update-thread-checkbox/${threadId}`, {
+            value,
+            context
+        })
+        .then(response => {
+            // Handle a successful response here, if needed
+            // Reload the window after a successful response
+            location.reload();
+        })
+        .catch(error => {
+            // Handle errors if the request fails
+            console.error('Error:', error);
+        });
+    }
+
+
+
+
 
 
         const quoteButtons = document.querySelectorAll('.quote-button');
