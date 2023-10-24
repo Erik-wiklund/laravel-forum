@@ -131,6 +131,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a class="" href="{{ route('logs.index') }}">
+                            <i class="fa fa-envelope"></i>
+                            <span>Logs</span>
+                        </a>
+                    </li>
+
 
 
 
