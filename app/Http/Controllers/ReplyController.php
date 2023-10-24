@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Reply;
 use App\Models\SubCategory;
 use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReplyController extends Controller
 {
@@ -17,6 +19,9 @@ class ReplyController extends Controller
 
         $thread = Thread::find($threadId);
         $replies = $thread->replies;
+
+       
+        
 
         if (!$thread) {
             // Handle the case where the thread with the given ID is not found (e.g., show an error page)

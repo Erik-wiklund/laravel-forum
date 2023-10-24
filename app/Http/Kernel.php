@@ -52,6 +52,7 @@ class Kernel extends HttpKernel
         'is.admin' => \App\Http\Middleware\IsAdmin::class,
         'is.mod' => \App\Http\Middleware\IsMod::class,
         'view.count' => \App\Http\Middleware\ViewCountMiddleware::class,
+        'is.admin.or.mod' => \App\Http\Middleware\IsAdminOrMod::class,
     ];
 
     /**

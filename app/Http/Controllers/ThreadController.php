@@ -7,6 +7,7 @@ use App\Models\PageView;
 use App\Models\SubCategory;
 use App\Models\Thread;
 use App\Models\ThreadView;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -65,36 +66,51 @@ class ThreadController extends Controller
         return redirect()->route('subcategories.threads.index', ['subcategory' => $subcategory, 'thread' => $thread]);
     }
 
+    public function updateCheckboxValue(Request $request, Thread $thread)
+    {
+        $value = $request->input('value');
+
+        // Update the 'lockedOrNot' value in the database
+        $thread->lockedOrNot = $value;
+        $thread->save();
+
+        return response()->json(['message' => 'Checkbox value updated successfully']);
+    }
+
 
     /**
      * Display the specified resource.
      */
 
 
-     public function show(SubCategory $subcategory, Thread $thread, Request $request, Category $category)
-     {
-         // Retrieve the thread by its ID
-         $thread = Thread::findOrFail($thread->id);
-         $category = Category::findOrFail($subcategory->id);
+    public function show(SubCategory $subcategory, Thread $thread, Request $request, Category $category)
+    {
+        // Retrieve the thread by its ID
+        $thread = Thread::findOrFail($thread->id);
+        $category = Category::findOrFail($subcategory->id);
 
-         // Check if the user is logged in and has not exceeded the rate limit
-         if (Auth::check() && !RateLimiter::tooManyAttempts('view-thread:' . $request->user()->id, 1)) {
-             // Increment the view count for this thread
-             $thread->incrementViewCount();
-     
-             // Define the rate limit key and duration in minutes (e.g., 60 minutes)
-             $rateLimitKey = 'view-thread:' . $request->user()->id;
-             $rateLimitDuration = 60;
-     
-             // Apply rate limiting
-             RateLimiter::hit($rateLimitKey, $rateLimitDuration);
-         }
-     
-         $replies = $thread->replies()->paginate(20);
-     
-         return view('forum.threads.show', compact('request', 'thread', 'subcategory', 'replies','category'));
-     }
-     
+        // Check if the user is logged in and has not exceeded the rate limit
+        if (Auth::check() && !RateLimiter::tooManyAttempts('view-thread:' . $request->user()->id, 1)) {
+            // Increment the view count for this thread
+            $thread->incrementViewCount();
+
+            // Define the rate limit key and duration in minutes (e.g., 60 minutes)
+            $rateLimitKey = 'view-thread:' . $request->user()->id;
+            $rateLimitDuration = 60;
+
+            // Apply rate limiting
+            RateLimiter::hit($rateLimitKey, $rateLimitDuration);
+        }
+
+        $replies = $thread->replies()->paginate(20);
+
+        $loggedInUserId = Auth::id();
+        $user = User::find($loggedInUserId); // Replace with your user model
+    
+
+        return view('forum.threads.show', compact('request', 'thread', 'subcategory', 'replies', 'category','user'));
+    }
+
 
 
 
