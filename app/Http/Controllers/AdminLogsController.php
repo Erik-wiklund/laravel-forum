@@ -35,23 +35,26 @@ class AdminLogsController extends Controller
             'unbanForum' => 'Remove Forum Ban',
             'shoutbox' => 'Shoutbox Ban',
             'unbanShoutbox' => 'Remove Shoutbox Ban',
+            'lockThread' => 'Locked Thread',  // Updated key
+            'unlockThread' => 'Unlocked Thread',  // Updated key
         ];
-        
-
+    
         // Determine the context based on the 'context' input
         $context = $request->input('context');
         $actionDescription = $contextDescriptions[$context] ?? 'Unknown Action';
-
+    
         // Log the action with the determined context
         AdminLog::create([
             'user_id' => $request->user_id,
             'action' => $actionDescription,
-            'resource_type' => $request->resource_type, // Specify the resource type
-            'resource_id' => $request->resource_id,     // Specify the resource ID
+            'resource_type' => $request->resource_type,
+            'resource_id' => $request->resource_id,
+            'thread_id' => $request->thread_id,
         ]);
-
+    
         return redirect()->route('logs.index');
     }
+    
 
 
     /**
