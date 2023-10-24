@@ -89,7 +89,7 @@ class UserController extends Controller
         $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
         $users = User::find($userId);
         $user_roles = User_role::all();
-        return view('admin.pages.view_user', compact(['users', 'user_roles','chatRoom','bannedUserIds']));
+        return view('admin.pages.view_user', compact(['users', 'user_roles', 'chatRoom', 'bannedUserIds']));
     }
 
     /**
@@ -111,12 +111,12 @@ class UserController extends Controller
         $user = User::find($userId);
 
         $request->validate([
-            
+
             'email' => [
                 'required',
                 Rule::unique('users')->ignore($user->id),
             ],
-            
+
         ]);
 
         if ($request->has('password')) {
@@ -190,6 +190,8 @@ class UserController extends Controller
             // Update the banned users list in the chat room
             $chatRoom->banned_users = json_encode(array_values($bannedUserIds));
             $chatRoom->save();
+            $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'unbanShoutbox']);
+            app(AdminLogsController::class)->store($request);
         }
 
         return redirect()->route('users'); // Redirect back to the user list page
@@ -197,6 +199,7 @@ class UserController extends Controller
 
     public function add_shoutbox_ban($userId)
     {
+
         // Find the chat room by ID (assuming it's ID 1)
         $chatRoom = ChatRoom::find(1);
 
@@ -214,6 +217,8 @@ class UserController extends Controller
         // Save the chat room
         $chatRoom->save();
 
+        $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'shoutbox']);
+        app(AdminLogsController::class)->store($request);
         // Redirect back to the user list page
         return redirect()->route('users')->with('success', 'Shoutbox ban added successfully');
     }
@@ -226,6 +231,9 @@ class UserController extends Controller
 
         $user->save();
 
+        $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'forum']);
+        app(AdminLogsController::class)->store($request);
+
         return redirect()->route('users')->with('success', 'Forum ban added successfully');
     }
 
@@ -236,6 +244,8 @@ class UserController extends Controller
         $user->isforumbanned = 0;
 
         $user->save();
+        $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'unbanForum']);
+        app(AdminLogsController::class)->store($request);
 
         return redirect()->route('users')->with('success', 'Forum ban added successfully');
     }
