@@ -41,14 +41,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($adminLogs as $log)
-                                    <tr>
-                                        <td>{{ $log->admin->name }}</td> <!-- Access the user's name via the relationship -->
-                                        <td>{{ $log->admin->role->name }}</td>
-                                        <td>{{ $log->targetUser->name }}</td> <!-- Adjust this according to your user structure -->
-                                        <td>{{ $log->action }}</td>
-                                        <td>{{ $log->created_at }}</td>
-                                    </tr>
-                                @endforeach
+                                        <tr>
+                                            <td>{{ $log->admin->name }}</td>
+                                            <!-- Access the user's name via the relationship -->
+                                            <td>{{ $log->admin->role->name }}</td>
+                                            <td>
+                                                @if ($log->resource_type === 'thread' && $log->threadName)
+                                                    {{ $log->threadName->title }}
+                                                @elseif ($log->resource_type === 'thread' && !$log->threadName)
+                                                    {{ 'Unknown Thread' }}
+                                                @else
+                                                    {{ $log->targetUser->name }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $log->action }}</td>
+                                            <td>{{ $log->created_at }}</td>
+                                        </tr>
+                                    @endforeach
+
                                 </tbody>
                             </table>
 
