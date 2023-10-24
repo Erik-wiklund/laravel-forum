@@ -57,6 +57,7 @@
                                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('GET')
+                                                                    <input type="hidden" name="context" value="unbanForum">
                                                                     <button style="background: red" type="submit">Remove
                                                                         Forum
                                                                         Ban</button>
@@ -66,6 +67,7 @@
                                                                     action="{{ route('forum.ban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('POST')
+                                                                    <input type="hidden" name="context" value="forum">
                                                                     <button style="background: green" type="submit">Forum
                                                                         Ban
                                                                         User</button>
@@ -78,6 +80,7 @@
                                                                     action="{{ route('chat.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('GET')
+                                                                    <input type="hidden" name="context" value="unbanShoutbox">
                                                                     <button style="background: red" type="submit">Remove
                                                                         Shoutbox Ban</button>
                                                                 </form>
@@ -86,6 +89,7 @@
                                                                     action="{{ route('chat.banUser', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('POST')
+                                                                    <input type="hidden" name="context" value="shoutbox">
                                                                     <button style="background: green"
                                                                         type="submit">shoutbox
                                                                         Ban User</button>
