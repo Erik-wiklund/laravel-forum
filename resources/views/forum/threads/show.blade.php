@@ -40,7 +40,8 @@
                                             <li><a href="#">Move Thread</a></li>
                                         </ul>
                                         <ul>
-                                            <li><a href="#">Moderator Actions</a></li>
+                                            <li><a href="#" class="openmodModal"
+                                                    data-user-id="{{ $latestuser->id }}">Moderator Actions</a></li>
                                             <li>
                                                 <input type="checkbox" id="LockedOrNot" value="{{ $thread->lockedOrNot }}"
                                                     onchange="updateCheckboxValue(this)"
@@ -237,6 +238,26 @@
     @endif
 
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModeratorActionsModal" tabindex="-1" role="dialog" aria-labelledby="modModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modModalLabel">Moderation Actions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modModalBody">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
         .quoted-message {
             background-color: #f0f0f0;
@@ -311,6 +332,37 @@
     </style>
 
     <script>
+        $(document).ready(function() {
+            $('.openmodModal').on('click', function(e) {
+                e.preventDefault();
+
+                // Get the user ID from the data attribute
+                var userId = $(this).data('user-id');
+
+                // Create the URL using the named route
+                var url = "{{ route('profile.show_modal', ['user' => ':userId']) }}";
+                url = url.replace(':userId', userId);
+
+                // Make an AJAX request to load the profile content
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function(data) {
+                        // Populate the modal body with the loaded content
+                        $('#modModalBody').html(data);
+
+                        // Show the modal manually with the correct ID
+                        $('#ModeratorActionsModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+
+
         function updateCheckboxValue(checkbox) {
             const threadId = {{ $thread->id }}; // Replace with the actual thread ID
             const value = checkbox.checked ? '1' : '0';
