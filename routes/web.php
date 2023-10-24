@@ -55,7 +55,7 @@ Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
     ->name('thread-content.index');
 
     Route::middleware(['is.admin.or.mod'])->group(function () {
-        Route::post('/update-thread-checkbox/{thread}', [ThreadController::class, 'updateCheckboxValue']);
+        Route::post('/update-thread-checkbox/{thread}', [ThreadController::class, 'updateCheckboxValue'])->name('update-thread-checkbox');
     });
         
 
