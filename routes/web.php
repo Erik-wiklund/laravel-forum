@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminLogsController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
@@ -102,6 +103,10 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     // Contact form messages 
     Route::get('/dashboard/contact-messages', [ContactController::class, 'index'])->name('contact.index');
     Route::get('/dashboard/contact-message/{messageId}', [ContactController::class, 'show'])->name('contact.show');
+
+    // Admin logs
+    Route::get('/dashboard/admin-logs', [AdminLogsController::class, 'index'])->name('logs.index');
+    Route::post('/dashboard/logs', [AdminLogsController::class, 'store'])->name('logs.store');
 });
 
 
