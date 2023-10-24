@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminLog;
 use App\Models\Category;
 use App\Models\PageView;
 use App\Models\SubCategory;
@@ -66,16 +67,32 @@ class ThreadController extends Controller
         return redirect()->route('subcategories.threads.index', ['subcategory' => $subcategory, 'thread' => $thread]);
     }
 
-    public function updateCheckboxValue(Request $request, Thread $thread)
+    public function updateCheckboxValue(Request $request, $thread)
     {
         $value = $request->input('value');
-
-        // Update the 'lockedOrNot' value in the database
-        $thread->lockedOrNot = $value;
+        $context = $request->input('context');
+    
+        // Update the 'lockedOrNot' value based on the checkbox value
+        $thread = Thread::find($thread);
+        $thread->lockedOrNot = $value; // Set the value based on the checkbox
+    
+        // Create an admin log entry
+        $adminLog = new AdminLog();
+        $adminLog->user_id = auth()->user()->id;
+        $adminLog->action = $context === 'lockThread' ? 'Lock Thread' : 'Unlock Thread';
+        $adminLog->resource_type = 'thread';
+        // $adminLog->resource_id = $thread->id;
+        $adminLog->thread_id = $thread->id;
+        // $adminLog->context = 'thread'; // Customize the context as needed
+        $adminLog->save();
+    
+        // Save the thread after setting the 'lockedOrNot' value
         $thread->save();
-
-        return response()->json(['message' => 'Checkbox value updated successfully']);
+    
+        return response()->json(['message' => 'Checkbox value and action updated successfully']);
     }
+    
+
 
 
     /**
