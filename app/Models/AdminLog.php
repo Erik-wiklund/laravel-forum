@@ -10,7 +10,7 @@ class AdminLog extends Model
     protected $table = 'admin_logs';
 
     // Define the fillable columns
-    protected $fillable = ['user_id', 'action', 'resource_type', 'resource_id'];
+    protected $fillable = ['user_id', 'action', 'resource_type', 'resource_id','thread_id'];
     public function admin()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -19,5 +19,10 @@ class AdminLog extends Model
     public function targetUser()
     {
         return $this->belongsTo(User::class, 'resource_id');
+    }
+
+    public function threadName()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id');
     }
 }
