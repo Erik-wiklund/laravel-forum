@@ -42,4 +42,19 @@ class Thread extends Model
     {
         $this->increment('views_count');
     }
+
+    public function lockedBy()
+    {
+        return $this->belongsTo(AdminLog::class, 'user_id');
+    }
+
+    public function adminLogs()
+    {
+        return $this->hasMany(AdminLog::class, 'thread_id');
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(AdminLog::class, 'user_id');
+    }
 }
