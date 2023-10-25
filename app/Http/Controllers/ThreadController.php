@@ -71,27 +71,27 @@ class ThreadController extends Controller
     {
         $value = $request->input('value');
         $context = $request->input('context');
-    
+
         // Update the 'lockedOrNot' value based on the checkbox value
         $thread = Thread::find($thread);
         $thread->lockedOrNot = $value; // Set the value based on the checkbox
-    
+
         // Create an admin log entry
         $adminLog = new AdminLog();
         $adminLog->user_id = auth()->user()->id;
         $adminLog->action = $context === 'lockThread' ? 'Lock Thread' : 'Unlock Thread';
         $adminLog->resource_type = 'thread';
-        // $adminLog->resource_id = $thread->id;
+        $adminLog->resource_id = null;
         $adminLog->thread_id = $thread->id;
         // $adminLog->context = 'thread'; // Customize the context as needed
         $adminLog->save();
-    
+
         // Save the thread after setting the 'lockedOrNot' value
         $thread->save();
-    
+
         return response()->json(['message' => 'Checkbox value and action updated successfully']);
     }
-    
+
 
 
 
@@ -105,6 +105,18 @@ class ThreadController extends Controller
         // Retrieve the thread by its ID
         $thread = Thread::findOrFail($thread->id);
         $category = Category::findOrFail($subcategory->id);
+        $adminLogs = $thread->adminLogs; // Get the admin logs associated with the thread
+
+        // Initialize the admin name variable
+        $adminName = null;
+        $lockedDate = null;
+        if ($thread->lockedOrNot) {
+            $lockLog = $thread->adminLogs()->where('action', 'Lock Thread')->first();
+            if ($lockLog) {
+                $adminName = $lockLog->admin->name; // Assuming the admin's name is in the 'name' field
+                $lockedDate = $lockLog->created_at; // You may need to adjust the field name depending on your schema
+            }
+        }
 
         // Check if the user is logged in and has not exceeded the rate limit
         if (Auth::check() && !RateLimiter::tooManyAttempts('view-thread:' . $request->user()->id, 1)) {
@@ -123,9 +135,9 @@ class ThreadController extends Controller
 
         $loggedInUserId = Auth::id();
         $user = User::find($loggedInUserId); // Replace with your user model
-    
 
-        return view('forum.threads.show', compact('request', 'thread', 'subcategory', 'replies', 'category','user'));
+
+        return view('forum.threads.show', compact('lockedDate','adminName', 'request', 'thread', 'subcategory', 'replies', 'category', 'user'));
     }
 
 
