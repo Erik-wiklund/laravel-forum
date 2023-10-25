@@ -25,4 +25,9 @@ class AdminLog extends Model
     {
         return $this->belongsTo(Thread::class, 'thread_id');
     }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id');
+    }
 }
