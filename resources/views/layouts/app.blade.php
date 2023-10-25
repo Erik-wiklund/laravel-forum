@@ -21,7 +21,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    <x-head.tinymce-config/>
+    <x-head.tinymce-config />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/chat.js'])
 </head>
 
@@ -42,10 +42,22 @@
         @endif
 
         <!-- Page Content -->
+
+        <!-- Page Content -->
         <main>
-            @yield('content')
+            <div class="container">
+                <div class="row therow">
+                    <div class="col-md-10">
+                        @yield('content')
+                    </div>
+                    <div class="col-md-2">
+                        @include('layouts.sidebar')
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
+
     <footer>
         @include('layouts.footer')
     </footer>
