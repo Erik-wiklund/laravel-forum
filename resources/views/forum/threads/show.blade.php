@@ -19,7 +19,7 @@
                     @if (Auth::check() && $thread->lockedOrNot == 1)
                         <div class="threadAlert p-1 mx-0 my-2"
                             style="border: 1px solid #494949;border-radius: 2px;background-image: none;background-color: #3a3a3a;">
-                            <span>Thread status:
+                            <span class="text-white">Thread status:
                                 <span class="text-gray-500">Not open for further replies.</span>
                             </span>
                         </div>
@@ -40,19 +40,21 @@
                                             <li><a href="#">Move Thread</a></li>
                                         </ul>
                                         <ul>
-                                            {{-- <li><a href="#" class="openmodModal"
-                                                    data-user-id="{{ $latestuser->id }}">Moderator Actions</a></li>
-                                            <li> --}}
-                                            <input type="hidden" name="context" value="thread">
-                                            <form method="POST" action="{{ route('update-thread-checkbox', ['thread' => $thread->id]) }}">
-                                                @csrf
-                                                <input type="hidden" name="context" value="lockThread">
-                                                <input type="checkbox" id="LockedOrNot" value="{{ $thread->lockedOrNot }}"
-                                                onchange="updateCheckboxValue(this)"
-                                                {{ $thread->lockedOrNot == 1 ? 'checked' : '' }}> Open /
-                                                <label for="LockedOrNot">Lock Thread</label>
-                                                <button hidden type="submit" style="background: green">Update</button>
-                                            </form>
+                                            <li><a href="#" class="openmodModal" data-user-id="">Moderator Actions</a>
+                                            </li>
+                                            <li>
+                                                <input type="hidden" name="context" value="thread">
+                                                <form method="POST"
+                                                    action="{{ route('update-thread-checkbox', ['thread' => $thread->id]) }}">
+                                                    @csrf
+                                                    <input type="hidden" name="context" value="lockThread">
+                                                    <input type="checkbox" id="LockedOrNot"
+                                                        value="{{ $thread->lockedOrNot }}"
+                                                        onchange="updateCheckboxValue(this)"
+                                                        {{ $thread->lockedOrNot == 1 ? 'checked' : '' }}> Open /
+                                                    <label for="LockedOrNot">Lock Thread</label>
+                                                    <button hidden type="submit" style="background: green">Update</button>
+                                                </form>
                                             </li>
                                             <li><input type="checkbox"> Select for Thread Moderation</li>
                                         </ul>
@@ -248,7 +250,15 @@
         <div class="text-center"><a href="{{ route('login') }}">You must register or login to reply here</a></div>
     @endif
 
-    </div>
+    @if (Auth::check() && $thread->lockedOrNot == 1)
+        <div class="threadAlert p-1 mx-0 my-2"
+            style="border: 1px solid #494949;border-radius: 2px;background-image: none;background-color: #3a3a3a;">
+            <span class="text-white">Thread status:
+                <span class="text-gray-500">Not open for further replies.</span>
+            </span>
+        </div>
+    @endif
+
 
 
     <!-- Modal -->
@@ -263,7 +273,12 @@
                     </button>
                 </div>
                 <div class="modal-body" id="modModalBody">
-                    <!-- Content will be loaded here -->
+                    @if ($thread->lockedOrNot)
+                        <p>Thread is locked by: {{ $adminName }}</p>
+                        <p>Locked on: {{ $lockedDate }}</p>
+                    @else
+                        <p>Thread is not locked.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -347,54 +362,41 @@
             $('.openmodModal').on('click', function(e) {
                 e.preventDefault();
 
-                // Get the user ID from the data attribute
-                var userId = $(this).data('user-id');
+                // Get the thread status info from the hidden div
+                var threadStatusInfo = $('#user-info').html();
 
-                // Create the URL using the named route
-                var url = "{{ route('profile.show_modal', ['user' => ':userId']) }}";
-                url = url.replace(':userId', userId);
+                // Set the modal content to the thread status info
+                $('#modModalBody').html(threadStatusInfo);
 
-                // Make an AJAX request to load the profile content
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        // Populate the modal body with the loaded content
-                        $('#modModalBody').html(data);
-
-                        // Show the modal manually with the correct ID
-                        $('#ModeratorActionsModal').modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                // Show the modal
+                $('#ModeratorActionsModal').modal('show');
             });
         });
 
 
 
-    
-    function updateCheckboxValue(checkbox) {
-        const threadId = {{ $thread->id }};
-        const value = checkbox.checked ? '1' : '0';
-        const context = checkbox.checked ? 'lockThread' : 'unlockThread';
 
-        // Send an AJAX request to update the checkbox value in the database
-        axios.post(`/update-thread-checkbox/${threadId}`, {
-            value,
-            context
-        })
-        .then(response => {
-            // Handle a successful response here, if needed
-            // Reload the window after a successful response
-            location.reload();
-        })
-        .catch(error => {
-            // Handle errors if the request fails
-            console.error('Error:', error);
-        });
-    }
+
+        function updateCheckboxValue(checkbox) {
+            const threadId = {{ $thread->id }};
+            const value = checkbox.checked ? '1' : '0';
+            const context = checkbox.checked ? 'lockThread' : 'unlockThread';
+
+            // Send an AJAX request to update the checkbox value in the database
+            axios.post(`/update-thread-checkbox/${threadId}`, {
+                    value,
+                    context
+                })
+                .then(response => {
+                    // Handle a successful response here, if needed
+                    // Reload the window after a successful response
+                    location.reload();
+                })
+                .catch(error => {
+                    // Handle errors if the request fails
+                    console.error('Error:', error);
+                });
+        }
 
 
 
