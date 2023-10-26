@@ -10,20 +10,6 @@
                     <h4>
                         {{ $subcategory->title }}
                     </h4>
-                    @guest
-                        <a href="{{ route('register') }}"
-                            class="ml-auto bg-red-600 text-white text-center py-2 px-4 hover:bg-red-700"
-                            style="border-radius: 4px">
-                            Sign up
-                        </a>
-                    @endguest
-                    @auth()
-                        <label for=""
-                            style="text-align: center; line-height: 40px; display: block; cursor: pointer; height: 40px;">
-                            <a href="{{ route('threads.create', ['subcategory' => $subcategory]) }}"
-                                class="bg-red-600 block px-4 py-2 rounded-lg">Create new thread</a>
-                        </label>
-                    @endauth
                 </div>
 
                 <table class="table table-striped ">
