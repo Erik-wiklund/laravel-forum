@@ -32,7 +32,7 @@ class ChatController extends Controller
         $message->user_id = auth()->user()->id; // Associate with the user who sent the message
         $message->save();
 
-        return redirect()->route('forum.index')->with('success', 'Message sent successfully.');
+        return back()->with('success', 'Message sent successfully.');
     }
 
     public function destroy($id)
@@ -76,6 +76,6 @@ class ChatController extends Controller
         // Save the chat room
         $chatRoom->save();
 
-        return view('forum.index', [ 'userId' => $id]);
+        return view('layouts.sidebar', [ 'userId' => $id]);
     }
 }
