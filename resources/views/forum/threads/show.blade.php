@@ -116,22 +116,7 @@
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
                                                 <div style="float: right" class="publishControls">
-                                                    <a style="color: #fff;
-                        background-color:#17a2b8;
-                        padding-right: 8px;
-                        padding-left: 8px;
-                        margin: 0 1px 4px 0;
-                        border: 0 solid #383838;
-                        border-top-width: 1px;
-                        border-bottom-width: 2px;
-                        -webkit-border-radius: 2px;
-                        -moz-border-radius: 2px;
-                        -khtml-border-radius: 2px;
-                        border-radius: 2px;
-                        line-height: 24px;
-                        float: none;
-                        display: inline-block;
-                        vertical-align: middle;"
+                                                    <a class="replyButton" style=""
                                                         href="#">Reply</a>
                                                 </div>
                                             </div>
@@ -184,22 +169,7 @@
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
                                                 <div style="float: right" class="publishControls">
-                                                    <a style="color: #fff;
-                                                        background-color:#17a2b8;
-                                                        padding-right: 8px;
-                                                        padding-left: 8px;
-                                                        margin: 0 1px 4px 0;
-                                                        border: 0 solid #383838;
-                                                        border-top-width: 1px;
-                                                        border-bottom-width: 2px;
-                                                        -webkit-border-radius: 2px;
-                                                        -moz-border-radius: 2px;
-                                                        -khtml-border-radius: 2px;
-                                                        border-radius: 2px;
-                                                        line-height: 24px;
-                                                        float: none;
-                                                        display: inline-block;
-                                                        vertical-align: middle;"
+                                                    <a class="replyButton" style=""
                                                         href="#" class="quote-button"
                                                         data-quote="{{ $reply->content }}"
                                                         data-username="{{ $reply->createdBy->name }}">Reply</a>
@@ -278,151 +248,11 @@
     </div>
 
     <style>
-        .quoted-message {
-            background-color: #f0f0f0;
-            border-left: 4px solid #17a2b8;
-            padding: 10px;
-            /* margin: 10px 0; */
-            font-style: italic;
-            color: #333;
-        }
 
-        .popup {
-            position: relative;
-            display: inline-block;
-        }
-
-        .admin-menu {
-            width: 300px;
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: -112px;
-            background-color: #17a2b8;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            z-index: 1;
-        }
-
-        .popup:hover .admin-menu {
-            display: block;
-            /* Show the admin menu on hover */
-        }
-
-        .menu {
-            position: relative;
-            padding-right: 20px;
-            /* Reserve space for the arrow icon */
-            text-decoration: none;
-        }
-
-        .arrowIcon:before {
-            content: '▼';
-            /* Down arrow */
-            position: absolute;
-            right: 0;
-            transition: transform 0.3s;
-            /* Add a smooth transition effect */
-        }
-
-        .menu:hover .arrowIcon:before {
-            transform: rotate(180deg);
-            /* Rotate the arrow to point up on hover */
-        }
-
-        .admin-menu-title {
-            font-weight: bold;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        ul li {
-            margin: 5px 0;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 5px;
-        }
     </style>
+    <script type="text/javascript" src="{{ URL::asset('js/show_thread.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.openmodModal').on('click', function(e) {
-                e.preventDefault();
-
-                // Get the thread status info from the hidden div
-                var threadStatusInfo = $('#user-info').html();
-
-                // Set the modal content to the thread status info
-                $('#modModalBody').html(threadStatusInfo);
-
-                // Show the modal
-                $('#ModeratorActionsModal').modal('show');
-            });
-        });
-
-
-
-
-
-        function updateCheckboxValue(checkbox) {
-            const threadId = {{ $thread->id }};
-            const value = checkbox.checked ? '1' : '0';
-            const context = checkbox.checked ? 'lockThread' : 'unlockThread';
-
-            // Send an AJAX request to update the checkbox value in the database
-            axios.post(`/update-thread-checkbox/${threadId}`, {
-                    value,
-                    context
-                })
-                .then(response => {
-                    // Handle a successful response here, if needed
-                    // Reload the window after a successful response
-                    location.reload();
-                })
-                .catch(error => {
-                    // Handle errors if the request fails
-                    console.error('Error:', error);
-                });
-        }
-
-
-
-
-
-
-        const quoteButtons = document.querySelectorAll('.quote-button');
-
-        quoteButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const quotedMessage = button.getAttribute('data-quote');
-                const username = button.getAttribute('data-username');
-
-                if (quotedMessage) {
-                    // Use the captured 'quotedMessage' and 'username' here
-                    const contentToInsert = `
-    <div class="quoted-message" style="background-color: grey; padding: 10px;">
-        User ${username} said:
-    </div>
-    <div class="quoted-message" style="background-color: lightgrey; padding: 10px;">
-        ${quotedMessage}
-    </div><br>
-`;
-
-
-                    // Assuming you have initialized TinyMCE and have a reference to the editor instance
-                    const editor = tinymce.get('reply-textarea');
-
-                    if (editor) {
-                        editor.insertContent(contentToInsert);
-                    }
-                }
-            });
-        });
+        const threadId = {{ $thread->id }};
     </script>
 @endsection
