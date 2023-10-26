@@ -109,12 +109,12 @@
             <div class="card-body">
                 <h4 class="card-title">Members Statistics</h4>
                 <dl class="row">
-                    <dt class="col-8 mb-0 text-sm">Total Forums:</dt>
-                    <dd class="col-4 mb-0">15</dd>
+                    <dt class="col-8 mb-0 text-sm">Total Categories:</dt>
+                    <dd class="col-4 mb-0">{{ $sidebarData['totalCategories'] }}</dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-8 mb-0 text-sm">Total Topics:</dt>
-                    <dd class="col-4 mb-0 ">500</dd>
+                        <dd class="col-4 mb-0 ">{{ $sidebarData['totalTopics'] }}</dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-8 mb-0 text-sm">Total members:</dt>
