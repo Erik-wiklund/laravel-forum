@@ -27,7 +27,7 @@
             <div class="px-4">
                 
                 <a class="text-gray-500" href="{{ route('login') }}">Login</a>
-                <a class="text-gray-500" href="{{ route('register') }}">Register</a>
+                {{-- <a class="text-gray-500" href="{{ route('register') }}">Register</a> --}}
             </div>
 
             {{-- <div class="mt-3 space-y-1">
