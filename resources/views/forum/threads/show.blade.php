@@ -65,13 +65,6 @@
                             </div>
                         </div>
                     @endif
-                    @guest
-                        <a href="{{ route('register') }}"
-                            class="ml-auto bg-red-600 text-white text-center py-2 px-4 hover-bg-red-700 float-right"
-                            style="border-radius: 4px">
-                            Sign up
-                        </a>
-                    @endguest
                 </div>
 
                 <div>{{ $replies->links() }}</div>
