@@ -4,66 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="row">
-                @auth
-                    <!-- Display chat messages -->
-                    <div id="chat-messages" style="height: 300px; width:100%; overflow-y: scroll; padding: 20px;">
-                        @foreach ($messages->reverse() as $message)
-                            <div class="message" style="border-bottom: solid lightgrey 1px;">
-                                <div class="flex justify-between items-center">{{ $message->user->name }} -
-                                    {{ $message->content }}
-                                    @if (auth()->user()->isAdmin())
-                                        <div class="dropdown">
-                                            <button style="background-color: #6c757d !important"
-                                                class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Actions
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <form class="text-center dropdown-item" method="POST"
-                                                    action="{{ route('chat.destroy', ['message' => $message]) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit">Delete Message</button>
-                                                </form>
-                                                <form class="text-center dropdown-item" method="POST"
-                                                    action="{{ route('chat.purge', ['id' => $message->user->id]) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit">Purge user</button>
-                                                </form>
-                                                <form class="text-center dropdown-item" method="POST"
-                                                    action="{{ route('chat.ban', ['id' => $message->user->id, 'userId' => $message->user->id]) }}">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <button type="submit">Shoutbox ban user</button>
-                                                </form>
-
-
-
-
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    @if (in_array(Auth::user()->id, $bannedUserIds))
-                        <div class="alert alert-danger">
-                            You are banned from sending messages in the shoutbox, please contact an administrator for help!
-                        </div>
-                    @else
-                        <!-- Input form for sending messages -->
-                        <form method="post" action="{{ route('chat.send') }}"
-                            style="display: flex; flex-direction: row; width:100%; padding:10px;">
-                            @csrf
-                            <input type="text" name="content" placeholder="Type your message"
-                                style="flex: 1; margin-right: 10px; margin-left:10px;" />
-                            <button type="submit" style="background: red; padding:10px; border-radius: 7px">Send</button>
-                        </form>
-                    @endif
-                @endauth
+               
 
 
                 @foreach ($categories as $category)
