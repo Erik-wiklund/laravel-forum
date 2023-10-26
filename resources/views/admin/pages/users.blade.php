@@ -15,9 +15,7 @@
                     </ol>
                 </div>
             </div>
-
             <div class="row">
-
                 <div class="col-lg-12 col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -80,7 +78,8 @@
                                                                     action="{{ route('chat.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('GET')
-                                                                    <input type="hidden" name="context" value="unbanShoutbox">
+                                                                    <input type="hidden" name="context"
+                                                                        value="unbanShoutbox">
                                                                     <button style="background: red" type="submit">Remove
                                                                         Shoutbox Ban</button>
                                                                 </form>
@@ -98,7 +97,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><a href="{{ route('user.show',['userId' => $user->id]) }}"><i
+                                                <td><a href="{{ route('user.show', ['userId' => $user->id]) }}"><i
                                                             class="fa fa-eye text-success"></i></a></td>
                                                 <td><a href="{{ route('user.edit', ['userId' => $user->id]) }}"><i
                                                             class="fa fa-edit text-info"></i></a></td>
@@ -110,24 +109,13 @@
                                     @endif
                                 </tbody>
                             </table>
-
                             {{ $users->links() }}
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-            <!--/col-->
-
             </div>
-
-
-
         </section>
-
-
     </section>
     <!--main content end-->
 @endsection

@@ -62,24 +62,12 @@
                                     @endif
                                 </tbody>
                             </table>
-
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-            <!--/col-->
-
             </div>
-
-
-
         </section>
-
-
     </section>
     <!--main content end-->
 @endsection

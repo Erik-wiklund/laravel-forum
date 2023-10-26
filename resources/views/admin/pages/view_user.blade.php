@@ -14,8 +14,6 @@
                     </ol>
                 </div>
             </div>
-
-
             <!-- edit-profile -->
             <div id="edit-profile" class="tab-pane">
                 <section class="panel">
@@ -85,11 +83,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
                                     <a href="{{ route('user.edit', ['userId' => $users->id]) }}">Edit User</a>
@@ -100,8 +93,6 @@
                     </div>
                 </section>
             </div>
-
-
         </section>
     </section>
     <!--main content end-->

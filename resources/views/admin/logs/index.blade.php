@@ -64,21 +64,11 @@
 
                             {{-- {{ $users->links() }} --}}
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-            <!--/col-->
-
             </div>
-
-
-
         </section>
-
-
     </section>
     <!--main content end-->
 @endsection
