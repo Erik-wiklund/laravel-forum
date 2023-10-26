@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\ChatRoom;
+use App\Models\Message;
 use App\Models\Thread;
 use App\Models\User;
 use App\Models\Visitor;
@@ -39,7 +41,10 @@ class SidebarServiceProvider extends ServiceProvider
                 $onlineUsers = User::where('last_seen', '>=', now()->subMinutes(5))->get();
                 $membersOnline = User::where('last_seen', '>=', now()->subMinutes(5))->get()->count();
                 $totalCategories = Category::count();
-                $totalTopics = Thread::all();
+                $totalTopics = Thread::count();
+                $messages = Message::all()->reverse();
+                $chatRoom = ChatRoom::find(1);
+                $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
                 $totalOnline = $membersOnline + $visitors;
                 $ip = request()->ip();
                 $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
@@ -48,6 +53,9 @@ class SidebarServiceProvider extends ServiceProvider
             } else {
                 $totalCategories = Category::count();
                 $totalTopics = Thread::count();
+                $messages = Message::all()->reverse();
+                $chatRoom = ChatRoom::find(1);
+                $bannedUserIds = json_decode($chatRoom->banned_users) ?? [];
                 // User is not logged in
                 $ip = request()->ip();
                 $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
@@ -69,6 +77,8 @@ class SidebarServiceProvider extends ServiceProvider
                 'latestUser' => $latestuser,
                 'totalTopics' => $totalTopics,
                 'totalCategories' => $totalCategories,
+                'messages' => $messages,
+                'bannedUserIds' => $bannedUserIds,
             ];
 
             // dd($sidebarData);
