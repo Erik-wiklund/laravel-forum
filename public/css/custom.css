@@ -15,6 +15,34 @@
     /* Adjust the height of your navigation bar */
 }
 
+.page-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+.form-control-static {
+    font-weight: normal;
+}
+
+.panel-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
 .replyButton {
     color: #fff;
     background-color: #17a2b8;
