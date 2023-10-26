@@ -22,16 +22,13 @@
 
     <!-- Scripts -->
     <x-head.tinymce-config />
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/chat.js'])
+    @vite(['resources/css/app.css','resources/css/custom.css', 'resources/js/app.js', 'resources/js/chat.js'])
 </head>
 
 
 <body class="font-sans antialiased">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <header class="sticky-navigation">
         @include('layouts.navigation')
-
         <!-- Page Heading -->
         @if (isset($header))
             <header class="bg-white dark:bg-gray-800 shadow">
@@ -40,10 +37,8 @@
                 </div>
             </header>
         @endif
-
-        <!-- Page Content -->
-
-        <!-- Page Content -->
+    </header>
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 content-below-navigation">
         <main>
             <div class="container">
                 <div class="row">
@@ -57,10 +52,8 @@
             </div>
         </main>
     </div>
-
     <footer>
         @include('layouts.footer')
     </footer>
 </body>
-
 </html>
