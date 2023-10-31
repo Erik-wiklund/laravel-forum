@@ -17,6 +17,13 @@
                                 <a href="{{ route('threads.create', ['subcategory' => $subcategory]) }}"
                                     class="bg-red-600 block px-4 py-2 rounded-lg">Create new thread</a>
                             </label>
+                        
+                        @elseif(Route::is('pm.index'))
+                            <label for=""
+                                style="text-align: center;  display: block; cursor: pointer;">
+                                <a href="{{ route('pm.create',['userId' => $user->id]) }}"
+                                    class="bg-red-600 block px-4 py-2 rounded-lg">Create new PM</a>
+                            </label>
                         @endif
                     @endauth
                 </div>

@@ -35,13 +35,21 @@ const quoteButtons = document.querySelectorAll('.quote-button');
 
                     // Assuming you have initialized TinyMCE and have a reference to the editor instance
                     const editor = tinymce.get('reply-textarea');
+                    const editor2 = tinymce.get('reply-textarea2');
+
 
                     if (editor) {
+                        editor.insertContent(contentToInsert);
+                    }
+
+                    if (editor2) {
                         editor.insertContent(contentToInsert);
                     }
                 }
             });
         });
+
+        
 
         function updateCheckboxValue(checkbox) {
             const value = checkbox.checked ? '1' : '0';

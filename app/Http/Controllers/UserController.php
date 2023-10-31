@@ -249,4 +249,13 @@ class UserController extends Controller
 
         return redirect()->route('users')->with('success', 'Forum ban added successfully');
     }
+
+    public function searchUsers(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
+        // Query users whose names start with the search term
+        $users = User::where('name', 'LIKE', $searchTerm . '%')->get();
+
+        return view('private_message.new_private_message', ['users' => $users]);
+    }
 }

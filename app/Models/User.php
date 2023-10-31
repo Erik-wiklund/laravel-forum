@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Messagable;
 
     // public function isOnline()
     // {
@@ -46,12 +47,17 @@ class User extends Authenticatable
     {
         return $this->role->name === 'Administrator' || $this->role->name === 'Moderator';
     }
-    
+
 
     public function isMod()
     {
         $this->role->name === 'Moderator';
     }
+
+    public function privateMessages()
+{
+    return $this->belongsToMany(PrivateMessage::class, 'private_message_user', 'user_id', 'private_message_id');
+}
 
     /**
      * The attributes that are mass assignable.

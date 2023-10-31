@@ -1,3 +1,3 @@
 <form method="post">
-    <textarea id="myeditorinstance">Hello, World!</textarea>
+    <textarea id="reply-textarea2">Hello, World!</textarea>
   </form>

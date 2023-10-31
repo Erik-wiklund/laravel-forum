@@ -55,6 +55,9 @@
                             <x-dropdown-link :href="route('profile.index', ['userId' => $user->id])">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('pm.index', ['userId' => $user->id])">
+                                {{ __('Private message') }}
+                            </x-dropdown-link>
                             @if (auth()->user()->isAdmin())
                                 <x-dropdown-link :href="route('admin.home')">
                                     {{ __('Admin') }}

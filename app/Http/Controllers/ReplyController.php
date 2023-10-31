@@ -20,8 +20,8 @@ class ReplyController extends Controller
         $thread = Thread::find($threadId);
         $replies = $thread->replies;
 
-       
-        
+
+
 
         if (!$thread) {
             // Handle the case where the thread with the given ID is not found (e.g., show an error page)
@@ -36,21 +36,21 @@ class ReplyController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(Request $request, SubCategory $subcategory, string $threadId)
-{
-    // Validate the form data (message content)
-    $request->validate([
-        'content' => 'required|string|max:255',
-    ]);
+    {
+        // Validate the form data (message content)
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
 
-    // Create a new reply
-    $reply = new Reply();
-    $reply->content = $request->input('content');
-    $reply->thread_id = $threadId; // Associate with the thread
-    $reply->user_id = auth()->user()->id; // Associate with the user who sent the reply
-    $reply->save();
+        // Create a new reply
+        $reply = new Reply();
+        $reply->content = $request->input('content');
+        $reply->thread_id = $threadId; // Associate with the thread
+        $reply->user_id = auth()->user()->id; // Associate with the user who sent the reply
+        $reply->save();
 
-    return redirect()->route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $threadId])->with('success', 'Reply sent successfully.');
-}
+        return redirect()->route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $threadId])->with('success', 'Reply sent successfully.');
+    }
 
 
     /**

@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\SidebarServiceProvider::class,
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
     ])->toArray(),
 
     /*

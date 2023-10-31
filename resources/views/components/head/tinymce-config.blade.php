@@ -5,4 +5,11 @@
     plugins: 'code table lists',
     toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
   });
+
+  tinymce.init({
+        selector: 'textarea#message',
+        plugins: 'code table lists',
+        toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+    });
 </script>
+

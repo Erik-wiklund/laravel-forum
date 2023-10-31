@@ -37,6 +37,32 @@
     font-weight: normal;
 }
 
+#participant-list {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 150px; /* Set a max height to enable scrolling */
+    overflow-y: auto; /* Add a scrollbar when needed */
+    width: 100%;
+}
+
+#participant-list option {
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#participant-list option:hover {
+    background-color: #f0f0f0; /* Change the background color on hover */
+}
+
+/* Style the selected options (previously added names) */
+#participants {
+    background-color: #f0f0f0; /* Change the background color of the selected names */
+    padding: 5px;
+}
+
+
 .panel-body {
     display: flex;
     justify-content: space-between;

@@ -7,13 +7,17 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\PrivateMessageController;
+use App\Http\Controllers\PrivateMessageRepliyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Models\Conversation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -117,6 +121,17 @@ Route::middleware('auth', 'web')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/{userId}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Route::get('/search-users', [ConversationController::class, 'create'])->name('searchUsers');
+
+
+    // Private message system
+Route::get('/private-messages/{userId}', [PrivateMessageController::class, 'index'])->name('pm.index');
+Route::get('/private-messages/{conversation}/{userId}', [PrivateMessageController::class, 'show'])->name('pm.show');
+Route::get('/private-message/{userId}', [PrivateMessageController::class, 'create'])->name('pm.create');
+Route::post('/private-messages', [PrivateMessageController::class, 'store'])->name('pm.store');
+Route::post('/private-messages/{conversation}/{userId}', [PrivateMessageRepliyController::class, 'store'])->name('pm.reply');
+
 });
 
 // Outside auth to display for guests
