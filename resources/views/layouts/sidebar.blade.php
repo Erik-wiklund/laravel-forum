@@ -2,7 +2,7 @@
     <aside>
         <div class="card">
             <div class="card-footer">
-                <div class="register-login-thread-button text-center">
+                <div class="register-login-thread-button mb-4 text-center">
                     @guest
                         <a href="{{ route('register') }}"
                             class="ml-auto bg-red-600 text-white text-center py-2 px-4 hover:bg-red-700"
