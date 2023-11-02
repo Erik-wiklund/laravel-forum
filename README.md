@@ -24,6 +24,7 @@ To get started with Laravel Forum, follow these steps:
 
 bash
 Copy code
+
 composer install
 Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
 
@@ -44,7 +45,7 @@ Copy code
 php artisan serve
 Your Laravel Forum is now up and running!
 
-Features
+## Features
 Laravel Forum comes with a wide range of features to create a robust and engaging forum for your community:
 
 User Registration and Authentication
@@ -85,7 +86,7 @@ RESTful API for integration with other applications.
 User-Friendly UI
 
 Clean and responsive design for an excellent user experience.
-Work-in-Progress (WIP) Features
+## Work-in-Progress (WIP) Features
 While Laravel Forum is already feature-rich, we're actively working on enhancements and new features to make it even better. Some of the WIP features include:
 
 Private Messaging
@@ -106,10 +107,10 @@ Implement a reputation system to encourage positive contributions.
 Plugin Support
 
 Enable easy integration of third-party plugins and extensions.
-Usage
+## Usage
 You can start using Laravel Forum by registering as a user, creating discussion threads, and engaging in conversations. To access admin and moderator features, you'll need to have the appropriate permissions. Please refer to the documentation or contact the forum administrator for more information on how to use the forum effectively.
 
-Contributing
+## Contributing
 We welcome contributions to improve and expand Laravel Forum. If you'd like to contribute to the project, please follow these guidelines:
 
 Fork the repository to your own GitHub account.
@@ -118,7 +119,7 @@ Commit your changes with clear and concise messages.
 Submit a pull request to the main repository.
 We appreciate your help in making Laravel Forum even better!
 
-License
+## License
 Laravel Forum is open-source software and is licensed under the MIT License. You are free to use, modify, and distribute it as per the terms of this license.
 
 Thank you for choosing Laravel Forum! We hope you enjoy using it and building a thriving online community. If you have any questions or need assistance, feel free to reach out to the project maintainers or the community.
