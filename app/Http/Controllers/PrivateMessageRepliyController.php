@@ -42,29 +42,32 @@ class PrivateMessageRepliyController extends Controller
      */
     public function store(Request $request, string $conversationId, string $userId)
     {
-
         $conversation = PrivateMessage::find($conversationId);
+    
         // Validate the form data (message content)
         $request->validate([
             'message' => 'required|string|max:255',
         ]);
-
+    
         // Create a new reply
         $reply = new PrivateMessageReply();
         $reply->message = $request->input('message');
-        $reply->private_message_id = $conversationId; 
-        $reply->user_id = auth()->user()->id; 
+        $reply->private_message_id = $conversationId;
+        $reply->user_id = auth()->user()->id;
+    
+        // Add the logged-in user to the 'has_read' array
+        $has_read_users = $reply->has_read ?? [];
+        $has_read_users[] = auth()->user()->id;
+        $reply->has_read = $has_read_users;
+    
         $reply->save();
-
-        $conversation->unread = true;
+    
         $conversation->last_poster_id = auth()->user()->id;
         $conversation->save();
-
-      
-        unset($conversation);
-
+    
         return redirect()->route('pm.show', ['conversation' => $conversationId, 'userId' => $userId])->with('success', 'Reply sent successfully.');
     }
+    
 
     /**
      * Display the specified resource.
