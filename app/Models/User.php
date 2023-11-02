@@ -55,8 +55,20 @@ class User extends Authenticatable
     }
 
     public function privateMessages()
+    {
+        return $this->belongsToMany(PrivateMessage::class, 'private_message_user', 'user_id', 'private_message_id');
+    }
+
+    public function hasUnreadMessages()
 {
-    return $this->belongsToMany(PrivateMessage::class, 'private_message_user', 'user_id', 'private_message_id');
+    // Check if there are any private messages with unread replies for the user
+    $unreadMessagesCount = $this->privateMessages()
+        ->whereHas('privateMessageReplies', function ($query) {
+            $query->whereJsonDoesntContain('has_read', $this->id);
+        })
+        ->count();
+
+    return $unreadMessagesCount > 0;
 }
 
     /**
