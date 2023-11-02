@@ -30,5 +30,16 @@ class PrivateMessage extends Model
         return $this->hasMany(PrivateMessageReply::class);
     }
 
+    public function markMessagesAsRead($conversationId, $messageIds)
+    {
+        // Implement your logic to mark messages as read in this method
+        // For example, update the database to track read messages
+        // You should adapt this part to your specific database structure
+
+        // Assuming you have a 'private_messages' table with a 'has_read' column
+        PrivateMessage::where('conversation_id', $conversationId)
+            ->whereNotIn('id', $messageIds)
+            ->update(['has_read' => true]);
+    }
     
 }
