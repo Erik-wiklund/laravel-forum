@@ -33,45 +33,44 @@
                                     <td class="posterAvatar">
                                         <!-- Avatar content here -->
                                     </td>
-                                    <td class="conversation_block" style="max-width: 200px;">
-
-                                        <div class="avatar">
-                                            <!-- Display the creator's avatar here -->
-                                            <img src="" alt="">
-                                        </div>
-                                        <div class="conversation-details">
-                                            <h3 class="conversation-title">
-                                                <a
-                                                    href="{{ route('pm.show', ['conversation' => $conversation->id, 'userId' => $user->id]) }}">{{ $conversation->subject }}</a>
-                                            </h3>
-                                            <p class="participants-info">
-                                                Participants: {{ $conversation->participantNames->implode(', ') }}
-                                            </p>
-                                            <p class="created-info">
-                                                Created by {{ $conversation->createdby->name }} on
-                                                {{ $conversation->created_at->format('M d, Y') }}
-                                            </p>
-                                    </td>
-                                    @php
-                                        $lastReply = $conversation;
-                                    @endphp
-                                    <td>
-                                        <p class="replies-info flex flex-col">
-                                            <span>Replies: {{ $lastReply->privateMessageReplies->count() }}</span>
-                                            <span>Participants: {{ count($conversation->participantNames) }}</span>
+                                    <td class="conversation_block" style="max-width: 200px;"></td>
+                                    <div class="avatar">
+                                        <!-- Display the creator's avatar here -->
+                                        <img src="" alt="">
+                                    </div>
+                                    <div class="conversation-details">
+                                        <h3 class="conversation-title">
+                                            <a
+                                                href="{{ route('pm.show', ['conversation' => $conversation->id, 'userId' => $user->id]) }}">{{ $conversation->subject }}</a>
+                                        </h3>
+                                        <p class="participants-info">
+                                            Participants: {{ $conversation->participantNames->implode(', ') }}
                                         </p>
-                                    </td>
-
-                                    <td>
-                                        <div class="last-reply-details" style="color: grey; font-size: 14px;">
-                                            <div class="flex items-center">
-                                                <a href="#">{{ $lastReply->lastPoster->name }}</a>
-                                            </div>
-                                            <p class="last-reply-date">
-                                                {{ $conversation->updated_at->format('M d, Y') }}
+                                        <p class="created-info">
+                                            Created by {{ $conversation->createdby->name }} on
+                                            {{ $conversation->created_at->format('M d, Y') }}
+                                        </p>
+                                        </td>
+                                        @php
+                                            $lastReply = $conversation;
+                                        @endphp
+                                        <td>
+                                            <p class="replies-info flex flex-col">
+                                                <span>Replies: {{ $lastReply->privateMessageReplies->count() }}</span>
+                                                <span>Participants: {{ count($conversation->participantNames) }}</span>
                                             </p>
-                                        </div>
-                                    </td>
+                                        </td>
+
+                                        <td>
+                                            <div class="last-reply-details" style="color: grey; font-size: 14px;">
+                                                <div class="flex items-center">
+                                                    <a href="#">{{ $lastReply->lastPoster->name }}</a>
+                                                </div>
+                                                <p class="last-reply-date">
+                                                    {{ $conversation->updated_at->format('M d, Y') }}
+                                                </p>
+                                            </div>
+                                        </td>
                                 </tr>
                             @endforeach
 
