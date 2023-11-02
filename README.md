@@ -25,23 +25,19 @@ To get started with Laravel Forum, follow these steps:
     ```bash
     composer install
 
-
 3.Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
 
 4.Generate a unique application key.
 
-    ```bash
     php artisan key:generate
 5.Run the database migrations and seed the initial data.
 
-    ---bash
     php artisan migrate --seed
 
 6.Serve the application on your local server.
 
-    ---bash
     php artisan serve
-    
+
 Your Laravel Forum is now up and running!
 
 ## Features
