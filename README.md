@@ -1,39 +1,45 @@
-Laravel Forum
+# Laravel Forum
+
 Welcome to the Laravel Forum project! This is a powerful and flexible forum application built on the Laravel framework, designed to provide a rich and engaging forum experience for your users. This README will help you get started with the project and provide a clear overview of its features and the work-in-progress (WIP) features.
 
-Table of Contents
-Installation
-Features
-Work-in-Progress (WIP) Features
-Usage
-Contributing
-License
-Installation
+## Table of Contents
+
+- [Installation](#installation)
+- [Features](#features)
+- [Work-in-Progress (WIP) Features](#work-in-progress-wip-features)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
 To get started with Laravel Forum, follow these steps:
 
-Clone this repository to your local environment.
+1. Clone this repository to your local environment.
+
+   ```bash
+   git clone https://github.com/erik-wiklund/laravel-forum.git
+
+   Install the project dependencies using Composer.
 
 bash
-Copy code
-git clone https://github.com/yourusername/laravel-forum.git
-Install the project dependencies using Composer.
-
 Copy code
 composer install
 Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
 
 Generate a unique application key.
 
-vbnet
+bash
 Copy code
 php artisan key:generate
 Run the database migrations and seed the initial data.
 
-css
+bash
 Copy code
 php artisan migrate --seed
 Serve the application on your local server.
 
+bash
 Copy code
 php artisan serve
 Your Laravel Forum is now up and running!
