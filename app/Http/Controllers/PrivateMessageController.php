@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Models\private_message;
 use App\Models\PrivateMessage;
+use App\Models\PrivateMessageUserStatus;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class PrivateMessageController extends Controller
         });
 
         // Get the names of participants in each conversation
-        $conversationsWithNames = $conversations->map(function ($conversation) {
+        $conversationsWithNames = $conversations->map(function ($conversation) use ($user) {
             // Parse the JSON string to an array
             $participants = is_array($conversation->participants) ? $conversation->participants : json_decode($conversation->participants, true);
             $participantNames = User::whereIn('id', $participants)->pluck('name');
@@ -124,30 +125,35 @@ class PrivateMessageController extends Controller
     // Show messages in a conversation
     public function show(PrivateMessage $conversation, $userId)
     {
-        $user = User::find($userId);
-        $authenticatedUserId = auth()->user()->id;
-
-        // Get all private message conversations
-        $conversations = PrivateMessage::all();
+        $loggedInUserId = auth()->user()->id;
 
         $loggedInUserId = Auth::id();
         $user = User::find($loggedInUserId);
 
-        // Get the names of participants in each conversation
-        $conversationsWithNames = $conversations->map(function ($conversation) {
-            // Parse the JSON string to an array
-            $participants = is_array($conversation->participants) ? $conversation->participants : json_decode($conversation->participants, true);
-            $participantNames = User::whereIn('id', $participants)->pluck('name');
-            $conversation->participantNames = $participantNames;
-            return $conversation;
-        });
-
-        // Retrieve replies for the specified conversation
+        // Retrieve the conversation's replies
         $replies = $conversation->privateMessageReplies()->paginate(20);
 
-        // Pass $conversation->id as $conversationId to the view
-        $conversationId = $conversation->id;
+        // Mark unread messages as read and filter unread replies
+        $unreadReplies = [];
+        foreach ($replies as $reply) {
+            $hasRead = $reply->has_read ?? [];
+            if (!in_array($loggedInUserId, $hasRead)) {
+                $hasRead[] = $loggedInUserId;
+                $reply->has_read = $hasRead;
+                $reply->save();
+                $unreadReplies[] = $reply;
+            }
+        }
 
-        return view('private_message.show', compact('replies', 'conversation', 'conversationsWithNames', 'user', 'conversationId', 'userId'));
+        // Retrieve the conversation's participants
+        $participants = is_array($conversation->participants)
+            ? $conversation->participants
+            : json_decode($conversation->participants, true);
+
+        // Get the names of participants in the conversation
+        $participantNames = User::whereIn('id', $participants)->pluck('name');
+
+        // Render the view, passing the unread messages and participant names
+        return view('private_message.show', compact('user','unreadReplies', 'conversation','replies', 'participantNames', 'userId'));
     }
 }
