@@ -6,7 +6,7 @@ Welcome to the Laravel Forum project! This is a powerful and flexible forum appl
 
 - [Installation](#installation)
 - [Features](#features)
-- [Work-in-Progress (WIP) Features](#work-in-progress-wip-features)
+- [Future features](#future-features)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -51,7 +51,7 @@ Discussion Threads
 
 Create and manage discussion threads.
 Categorize threads for easy navigation.
-Thread subscriptions for updates.
+
 Comments and Replies
 
 Users can comment on threads and reply to comments.
@@ -59,34 +59,24 @@ Rich text formatting for engaging discussions.
 Moderation Tools
 
 Admins and moderators can manage and moderate content.
-Flagging and reporting system for inappropriate content.
 User Roles and Permissions
 
 Define user roles with different permissions.
 Control access to specific forum sections.
-Notifications
 
-Real-time notifications for replies and mentions.
-Email notifications for subscribed threads.
-Search Functionality
-
-Powerful search functionality to find discussions quickly.
 User Profiles
 
-User profiles with activity and discussion history.
 Avatars and customization options.
-API Support
 
-RESTful API for integration with other applications.
 User-Friendly UI
 
+Private Messaging
+Allow users to send private messages to each other.
+
 Clean and responsive design for an excellent user experience.
-## Work-in-Progress (WIP) Features
+## Future Features
 While Laravel Forum is already feature-rich, we're actively working on enhancements and new features to make it even better. Some of the WIP features include:
 
-Private Messaging
-
-Allow users to send private messages to each other.
 Gamification
 
 Implement gamification elements to engage users and reward participation.
@@ -102,6 +92,27 @@ Implement a reputation system to encourage positive contributions.
 Plugin Support
 
 Enable easy integration of third-party plugins and extensions.
+
+Thread subscriptions for updates.
+
+Flagging and reporting system for inappropriate content.
+
+Notifications
+
+Real-time notifications for replies and mentions.
+
+Email notifications for subscribed threads.
+
+Search Functionality
+
+Powerful search functionality to find discussions quickly.
+
+User profiles with activity and discussion history.
+
+API Support
+
+RESTful API for integration with other applications.
+
 ## Usage
 You can start using Laravel Forum by registering as a user, creating discussion threads, and engaging in conversations. To access admin and moderator features, you'll need to have the appropriate permissions. Please refer to the documentation or contact the forum administrator for more information on how to use the forum effectively.
 
