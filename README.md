@@ -20,29 +20,28 @@ To get started with Laravel Forum, follow these steps:
    ```bash
    git clone https://github.com/erik-wiklund/laravel-forum.git
 
-   Install the project dependencies using Composer.
+2. Install the project dependencies using Composer.
+   
+    ```bash
+    composer install
 
-bash
-Copy code
 
-composer install
-Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
+3.Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
 
-Generate a unique application key.
+4.Generate a unique application key.
 
-bash
-Copy code
-php artisan key:generate
-Run the database migrations and seed the initial data.
+    ```bash
+    php artisan key:generate
+5.Run the database migrations and seed the initial data.
 
-bash
-Copy code
-php artisan migrate --seed
-Serve the application on your local server.
+    ---bash
+    php artisan migrate --seed
 
-bash
-Copy code
-php artisan serve
+6.Serve the application on your local server.
+
+    ---bash
+    php artisan serve
+    
 Your Laravel Forum is now up and running!
 
 ## Features
