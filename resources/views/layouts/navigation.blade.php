@@ -55,9 +55,13 @@
                             <x-dropdown-link :href="route('profile.index', ['userId' => $user->id])">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('pm.index', ['userId' => $user->id])">
-                                {{ __('Private message') }}
-                            </x-dropdown-link>
+                            <div class="flex justify-center  flex-col">
+                                <x-dropdown-link style="margin: 0 !important;" :href="route('pm.index', ['userId' => $user->id])">
+                                    {{ __('Private message') }}
+                                </x-dropdown-link>
+                                @if (Auth::user()->hasUnreadMessages())  <span style="margin-top: -15px;" class="new-indicator px-4 py-2 text-sm text-red-600">New Messages</span>@endif
+                            </div>
+
                             @if (auth()->user()->isAdmin())
                                 <x-dropdown-link :href="route('admin.home')">
                                     {{ __('Admin') }}
