@@ -13,6 +13,10 @@ class PrivateMessageReply extends Model
 
     protected $fillable = ['private_message_user', 'private_message_id', 'user_id'];
 
+    protected $casts = [
+        'has_read' => 'array',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,5 +30,16 @@ class PrivateMessageReply extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function markAsReadByUser($userId)
+    {
+        $hasRead = $this->has_read ?? [];
+
+        if (!in_array($userId, $hasRead)) {
+            $hasRead[] = $userId;
+            $this->has_read = $hasRead;
+            $this->save();
+        }
     }
 }
