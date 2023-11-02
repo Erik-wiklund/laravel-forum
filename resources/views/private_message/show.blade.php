@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                {{-- <div>{{ $replies->links() }}</div> --}}
+                <div>{{ $replies->links() }}</div>
                 <table class="table table-striped table-bordered">
                     <thead class="thead-light">
                         <!-- Table headers here -->
@@ -84,6 +84,9 @@
                                             <div class="quoted-block">
                                                 <div class="quoted-message" style="display: none"></div>
                                             </div>
+                                            @if (!in_array($user->id, $reply->has_read))
+                                            <span data-reply-id="{{ $reply->id }}" class="new-indicator float-right" style="color: red">New</span>
+                                            @endif
                                             <div>{!! $reply->message !!}</div>
 
                                         </div>
@@ -127,7 +130,7 @@
                     <img src="{{ asset('images/' . $user->image) }}" alt="User Image" style="max-width: 140px;">
                 </div>
                 <form method="post"
-                action="{{ route('pm.reply', ['conversation' => $conversation->id, 'userId' => $userId]) }}"
+                    action="{{ route('pm.reply', ['conversation' => $conversation->id, 'userId' => $userId]) }}"
                     style="width: 100%; padding: 10px;">
                     @csrf
                     <!-- Add a textarea for the user's reply -->
@@ -150,4 +153,6 @@
     <script>
         const conversationId = {{ $conversation->id }};
     </script>
+
+    
 @endsection
