@@ -126,11 +126,12 @@ Route::middleware('auth', 'web')->group(function () {
 
 
     // Private message system
-Route::get('/private-messages/{userId}', [PrivateMessageController::class, 'index'])->name('pm.index');
+    Route::get('/private-messages/{userId}', [PrivateMessageController::class, 'index'])->name('pm.index');
 Route::get('/private-messages/{conversation}/{userId}', [PrivateMessageController::class, 'show'])->name('pm.show');
 Route::get('/private-message/{userId}', [PrivateMessageController::class, 'create'])->name('pm.create');
 Route::post('/private-messages', [PrivateMessageController::class, 'store'])->name('pm.store');
 Route::post('/private-messages/{conversation}/{userId}', [PrivateMessageRepliyController::class, 'store'])->name('pm.reply');
+Route::post('/mark-messages-as-read', [PrivateMessageController::class, 'markMessagesAsRead'])->name('mark-messages-as-read');
 
 });
 
