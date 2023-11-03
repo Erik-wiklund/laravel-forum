@@ -46,6 +46,10 @@
     width: 100%;
 }
 
+button {
+    background-color: blue !important;
+}
+
 #participant-list option {
     padding: 5px 10px;
     cursor: pointer;
