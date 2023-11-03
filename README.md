@@ -7,6 +7,7 @@ Welcome to the Laravel Forum project! This is a powerful and flexible forum appl
 - [Installation](#installation)
 - [Features](#features)
 - [Future features](#future-features)
+- [WIP](#work-in-progress)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -95,8 +96,6 @@ Enable easy integration of third-party plugins and extensions.
 
 Thread subscriptions for updates.
 
-Flagging and reporting system for inappropriate content.
-
 Notifications
 
 Real-time notifications for replies and mentions.
@@ -112,6 +111,13 @@ User profiles with activity and discussion history.
 API Support
 
 RESTful API for integration with other applications.
+
+## WIP
+
+[ ] = Work in progress on the feature
+[ x ] = Done but need testing
+
+[ ] Flagging and reporting system for inappropriate content.
 
 ## Usage
 You can start using Laravel Forum by registering as a user, creating discussion threads, and engaging in conversations. To access admin and moderator features, you'll need to have the appropriate permissions. Please refer to the documentation or contact the forum administrator for more information on how to use the forum effectively.
