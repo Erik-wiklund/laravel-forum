@@ -114,11 +114,14 @@ RESTful API for integration with other applications.
 
 ## WIP
 <div align="center">
+
 - [ ] = Work in progress on the feature
 - [x] = Feature done but need testing
 
   <h3 align="center">Working on now</h3>
+
 - [ ] Flagging and reporting system for inappropriate content.
+
 </div>
 
 ## Usage
