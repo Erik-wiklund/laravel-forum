@@ -113,7 +113,7 @@ API Support
 RESTful API for integration with other applications.
 
 ## WIP
-<div align="center">
+<div>
 
 - [ ] = Work in progress on the feature
 - [x] = Feature done but need testing
