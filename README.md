@@ -113,15 +113,13 @@ API Support
 RESTful API for integration with other applications.
 
 ## WIP
-
+<div align="center">
 - [ ] = Work in progress on the feature
 - [x] = Feature done but need testing
 
-<div align="center">
-
-  <h3 align="center">Wokring on now</h3>
-</div>
+  <h3 align="center">Working on now</h3>
 - [ ] Flagging and reporting system for inappropriate content.
+</div>
 
 ## Usage
 You can start using Laravel Forum by registering as a user, creating discussion threads, and engaging in conversations. To access admin and moderator features, you'll need to have the appropriate permissions. Please refer to the documentation or contact the forum administrator for more information on how to use the forum effectively.
