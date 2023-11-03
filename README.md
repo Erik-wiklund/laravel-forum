@@ -117,7 +117,10 @@ RESTful API for integration with other applications.
 - [ ] = Work in progress on the feature
 - [x] = Feature done but need testing
 
-### Working on now
+<div align="center">
+
+  <h3 align="center">Wokring on now</h3>
+</div>
 - [ ] Flagging and reporting system for inappropriate content.
 
 ## Usage
