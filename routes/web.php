@@ -14,6 +14,7 @@ use App\Http\Controllers\PrivateMessageController;
 use App\Http\Controllers\PrivateMessageRepliyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
@@ -58,12 +59,12 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/threads/{id}/contents', [ReplyController::class, 'index'])
     ->name('thread-content.index');
 
-    Route::middleware(['is.admin.or.mod'])->group(function () {
-        Route::post('/update-thread-checkbox/{thread}', [ThreadController::class, 'updateCheckboxValue'])->name('update-thread-checkbox');
-    });
-        
+Route::middleware(['is.admin.or.mod'])->group(function () {
+    Route::post('/update-thread-checkbox/{thread}', [ThreadController::class, 'updateCheckboxValue'])->name('update-thread-checkbox');
+});
 
-    
+
+
 
 Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     // Admin Dashboard Routes
@@ -127,12 +128,15 @@ Route::middleware('auth', 'web')->group(function () {
 
     // Private message system
     Route::get('/private-messages/{userId}', [PrivateMessageController::class, 'index'])->name('pm.index');
-Route::get('/private-messages/{conversation}/{userId}', [PrivateMessageController::class, 'show'])->name('pm.show');
-Route::get('/private-message/{userId}', [PrivateMessageController::class, 'create'])->name('pm.create');
-Route::post('/private-messages', [PrivateMessageController::class, 'store'])->name('pm.store');
-Route::post('/private-messages/{conversation}/{userId}', [PrivateMessageRepliyController::class, 'store'])->name('pm.reply');
-Route::post('/mark-messages-as-read', [PrivateMessageController::class, 'markMessagesAsRead'])->name('mark-messages-as-read');
+    Route::get('/private-messages/{conversation}/{userId}', [PrivateMessageController::class, 'show'])->name('pm.show');
+    Route::get('/private-message/{userId}', [PrivateMessageController::class, 'create'])->name('pm.create');
+    Route::post('/private-messages', [PrivateMessageController::class, 'store'])->name('pm.store');
+    Route::post('/private-messages/{conversation}/{userId}', [PrivateMessageRepliyController::class, 'store'])->name('pm.reply');
+    Route::post('/mark-messages-as-read', [PrivateMessageController::class, 'markMessagesAsRead'])->name('mark-messages-as-read');
 
+
+    // Report system routes
+    Route::post('/reports', [ReportController::class,'store'])->name('reports.store');
 });
 
 // Outside auth to display for guests
