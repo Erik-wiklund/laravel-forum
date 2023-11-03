@@ -115,9 +115,14 @@
                                         @if (Auth::check())
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
+                                                <div class="reportButton">
+                                                    <a class="replyButton float-left" href="#" data-toggle="modal"
+                                                        data-target="#reportModal"
+                                                        data-thread="{{ $thread->id }}">Report</a>
+
+                                                </div>
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style=""
-                                                        href="#">Reply</a>
+                                                    <a class="replyButton" style="" href="#">Reply</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -168,16 +173,76 @@
                                         @if (Auth::check())
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
+                                                @if (Auth::check())
+                                                    <div class="reportButton">
+                                                        <a class="replyButton float-left" href=""
+                                                            data-toggle="modal" data-target="#reportModal"
+                                                            data-report="{{ $reply->id }}">Report</a>
+
+                                                    </div>
+                                                @endif
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style=""
-                                                        href="#" class="quote-button"
-                                                        data-quote="{{ $reply->content }}"
+                                                    <a class="replyButton" style="" href="#"
+                                                        class="quote-button" data-quote="{{ $reply->content }}"
                                                         data-username="{{ $reply->createdBy->name }}">Reply</a>
                                                 </div>
                                             </div>
                                         @endif
                                     </div>
                                 </li>
+                                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="reportModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <!-- Modal content here, including radio buttons for report reasons -->
+                                            <form action="{{ route('reports.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="reply_id" id="replyIdInput" value="">
+                                                <input type="hidden" name="thread_id" id="threadIdInput"
+                                                    value="{{ $thread->id }}">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="reportModalLabel">Report this post</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Select a reason for reporting:</p>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="reason"
+                                                            id="reason1" value="Inappropriate content">
+                                                        <label class="form-check-label" for="reason1">Inappropriate
+                                                            content</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="reason"
+                                                            id="reason2" value="Spam">
+                                                        <label class="form-check-label" for="reason2">Spam</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="reason"
+                                                            id="reason3" value="Other">
+                                                        <label class="form-check-label" for="reason3">Other
+                                                            reason</label>
+                                                    </div>
+                                                    <div class="form-group" id="otherReasonInput" style="display: none;">
+                                                        <label for="otherReason">Specify the reason:</label>
+                                                        <input class="form-control" type="text" name="otherReason"
+                                                            id="otherReason">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </ol>
                     </tbody>
@@ -247,6 +312,9 @@
         </div>
     </div>
 
+    <!-- The Modal -->
+
+
     <style>
 
     </style>
@@ -254,5 +322,37 @@
 
     <script>
         const threadId = {{ $thread->id }};
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Listen for changes in the radio buttons
+            $('input[type=radio][name=reason]').change(function() {
+                if (this.value === 'Other') {
+                    // Show the hidden text input if "Other" is selected
+                    $('#otherReasonInput').show();
+                } else {
+                    // Hide the text input for other options
+                    $('#otherReasonInput').hide();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            // Listen for the "Report" button click
+            $('.reportButton a').click(function(e) {
+                e.preventDefault();
+                // Get the values of data-report and data-thread attributes
+                var replyId = $(this).data('report');
+                var threadId = $(this).data('thread');
+
+                // Set the values in the hidden input fields
+                $('#replyIdInput').val(replyId);
+                $('#threadIdInput').val(threadId);
+
+                // Now, both replyId and threadId are included in the form data when the user submits a report.
+                // You can continue with form submission as usual.
+            });
+        });
     </script>
 @endsection
