@@ -13,7 +13,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        $reports = Report::all();
+        return view('admin.reports.index', ['reports' => $reports]);
     }
 
     /**
