@@ -177,7 +177,8 @@
                                                     <div class="reportButton">
                                                         <a class="replyButton float-left" href=""
                                                             data-toggle="modal" data-target="#reportModal"
-                                                            data-report="{{ $reply->id }}">Report</a>
+                                                            data-report="{{ $reply->id }}"
+                                                            data-thread="{{ $thread->id }}">Report</a>
 
                                                     </div>
                                                 @endif
