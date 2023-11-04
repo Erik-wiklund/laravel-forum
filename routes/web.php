@@ -112,6 +112,9 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     // Admin logs
     Route::get('/dashboard/admin-logs', [AdminLogsController::class, 'index'])->name('logs.index');
     Route::post('/dashboard/logs', [AdminLogsController::class, 'store'])->name('logs.store');
+
+    // Reports to admins
+    Route::get('/dashboard/reports', [ReportController::class,'index'])->name('reports.index');
 });
 
 
