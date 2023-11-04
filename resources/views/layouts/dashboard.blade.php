@@ -138,6 +138,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a class="" href="{{ route('reports.index') }}">
+                            <i class="fa fa-envelope"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+
 
 
 
