@@ -198,7 +198,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <!-- Modal content here, including radio buttons for report reasons -->
-                                            <form action="{{ route('reports.store') }}" method="POST" id="reportForm">
+                                            <form action="{{ route('reports.store') }}" id="reportForm" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="reply_id" id="replyIdInput" value="">
                                                 <input type="hidden" name="thread_id" id="threadIdInput"
@@ -234,16 +234,17 @@
                                                         <input class="form-control" type="text" name="otherReason"
                                                             id="otherReason">
                                                     </div>
+                                                    <div id="reasonError" class="text-danger" style="display: none;">Please
+                                                        chose a reason.</div>
                                                 </div>
+
 
                                                 <div class="modal-footer">
                                                     <button id="cancelButton" type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancel</button>
-                                                    <button type="button" class="btn btn-primary"
-                                                        id="submitReportButton">Submit Report</button>
+                                                    <button id="submitReportButton" type="submit"
+                                                        class="btn btn-primary">Submit Report</button>
                                                 </div>
-                                                <div id="reasonError" class="text-danger" style="display: none;">Please
-                                                    choose a reason.</div>
                                             </form>
                                         </div>
                                     </div>
@@ -341,29 +342,45 @@
                     $('#otherReasonInput').hide();
                 }
             });
+        });
 
-            $('#submitReportButton').click(function() {
-        // Check if any reason is selected
-        const selectedReason = $('input[type=radio][name=reason]:checked').val();
+        $(document).ready(function() {
+            // Initialize replyId and threadId variables
+            var replyId = null;
+            var threadId = null;
 
-        if (!selectedReason) {
-            // Display an error message
-            $('#reasonError').show();
-        } else {
-            // Hide the error message
-            $('#reasonError').hide();
-            
-            // Set the reason in the form field
-            $('#reportForm input[name="reason"]').val(selectedReason);
+            // Listen for the "Report" button click
+            $('.reportButton a').click(function(e) {
+                e.preventDefault();
+                // Get the values of data-report and data-thread attributes
+                replyId = $(this).data('report');
+                threadId = $(this).data('thread');
 
-            // Manually trigger the form submission
-            $('#reportForm').submit();
-        }
-    });
+                // Now, replyId and threadId are captured here.
 
-            // When the modal is closed, reset the error message
-            $('#reportModal').on('hidden.bs.modal', function() {
+                // Open the report modal
+                $('#reportModal').modal('show');
+            });
+
+            // Listen for the "Submit Report" button click inside the modal
+            $('#submitReportButton').click(function(e) {
+                // Hide the error message
                 $('#reasonError').hide();
+
+                // Check if any reason is selected
+                const selectedReason = $('input[type=radio][name=reason]:checked').val();
+                if (!selectedReason) {
+                    // Show the error message and prevent form submission
+                    $('#reasonError').show();
+                    e.preventDefault();
+                } else {
+                    // Set the values in the hidden input fields
+                    $('#replyIdInput').val(replyId);
+                    $('#threadIdInput').val(threadId);
+
+                    // Continue with form submission
+                    $('#reportForm').submit();
+                }
             });
         });
     </script>

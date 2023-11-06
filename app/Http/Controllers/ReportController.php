@@ -31,7 +31,11 @@ class ReportController extends Controller
     public function store(Request $request)
     {
 
-        
+        $request->validate([
+            'reason' => 'required|string',
+        ], [
+            'reason.required' => 'Please choose a reason for reporting.',
+        ]);
 
 
         $reason = $request->input('reason');
