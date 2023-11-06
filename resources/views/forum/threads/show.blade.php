@@ -198,7 +198,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <!-- Modal content here, including radio buttons for report reasons -->
-                                            <form action="{{ route('reports.store') }}" method="POST">
+                                            <form action="{{ route('reports.store') }}" method="POST" id="reportForm">
                                                 @csrf
                                                 <input type="hidden" name="reply_id" id="replyIdInput" value="">
                                                 <input type="hidden" name="thread_id" id="threadIdInput"
@@ -236,12 +236,14 @@
                                                     </div>
                                                 </div>
 
-
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
+                                                    <button id="cancelButton" type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="submitReportButton">Submit Report</button>
                                                 </div>
+                                                <div id="reasonError" class="text-danger" style="display: none;">Please
+                                                    choose a reason.</div>
                                             </form>
                                         </div>
                                     </div>
@@ -339,22 +341,29 @@
                     $('#otherReasonInput').hide();
                 }
             });
-        });
 
-        $(document).ready(function() {
-            // Listen for the "Report" button click
-            $('.reportButton a').click(function(e) {
-                e.preventDefault();
-                // Get the values of data-report and data-thread attributes
-                var replyId = $(this).data('report');
-                var threadId = $(this).data('thread');
+            $('#submitReportButton').click(function() {
+        // Check if any reason is selected
+        const selectedReason = $('input[type=radio][name=reason]:checked').val();
 
-                // Set the values in the hidden input fields
-                $('#replyIdInput').val(replyId);
-                $('#threadIdInput').val(threadId);
+        if (!selectedReason) {
+            // Display an error message
+            $('#reasonError').show();
+        } else {
+            // Hide the error message
+            $('#reasonError').hide();
+            
+            // Set the reason in the form field
+            $('#reportForm input[name="reason"]').val(selectedReason);
 
-                // Now, both replyId and threadId are included in the form data when the user submits a report.
-                // You can continue with form submission as usual.
+            // Manually trigger the form submission
+            $('#reportForm').submit();
+        }
+    });
+
+            // When the modal is closed, reset the error message
+            $('#reportModal').on('hidden.bs.modal', function() {
+                $('#reasonError').hide();
             });
         });
     </script>
