@@ -59,7 +59,9 @@
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style="" href="#">Reply</a>
+                                                    <a style="" href="#" class="quote-button replyButton"
+                                                        data-quote="{{ $conversation->message }}"
+                                                        data-username="{{ $conversation->createdBy->name }}">Reply</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -85,7 +87,8 @@
                                                 <div class="quoted-message" style="display: none"></div>
                                             </div>
                                             @if (!in_array($user->id, $reply->has_read))
-                                            <span data-reply-id="{{ $reply->id }}" class="new-indicator float-right" style="color: red">New</span>
+                                                <span data-reply-id="{{ $reply->id }}" class="new-indicator float-right"
+                                                    style="color: red">New</span>
                                             @endif
                                             <div>{!! $reply->message !!}</div>
 
@@ -107,8 +110,8 @@
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style="" href="#"
-                                                        class="quote-button" data-quote="{{ $reply->message }}"
+                                                    <a style="" href="#" class="quote-button replyButton"
+                                                        data-quote="{{ $reply->message }}"
                                                         data-username="{{ $reply->createdBy->name }}">Reply</a>
                                                 </div>
                                             </div>
@@ -154,5 +157,5 @@
         const conversationId = {{ $conversation->id }};
     </script>
 
-    
+
 @endsection

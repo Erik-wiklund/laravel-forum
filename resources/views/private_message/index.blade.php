@@ -33,12 +33,11 @@
                                     <td class="posterAvatar">
                                         <!-- Avatar content here -->
                                     </td>
-                                    <td class="conversation_block" style="max-width: 200px;"></td>
                                     <div class="avatar">
                                         <!-- Display the creator's avatar here -->
                                         <img src="" alt="">
                                     </div>
-                                    <div class="conversation-details">
+                                    <td class="conversation-details">
                                         <h3 class="conversation-title">
                                             <a
                                                 href="{{ route('pm.show', ['conversation' => $conversation->id, 'userId' => $user->id]) }}">{{ $conversation->subject }}</a>

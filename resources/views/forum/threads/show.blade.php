@@ -122,7 +122,9 @@
 
                                                 </div>
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style="" href="#">Reply</a>
+                                                    <a style="" href="#" class="quote-button replyButton"
+                                                        data-quote="{{ $thread->content }}"
+                                                        data-username="{{ $thread->createdBy->name }}">Reply</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -183,8 +185,8 @@
                                                     </div>
                                                 @endif
                                                 <div style="float: right" class="publishControls">
-                                                    <a class="replyButton" style="" href="#"
-                                                        class="quote-button" data-quote="{{ $reply->content }}"
+                                                    <a style="" href="#" class="quote-button replyButton"
+                                                        data-quote="{{ $reply->content }}"
                                                         data-username="{{ $reply->createdBy->name }}">Reply</a>
                                                 </div>
                                             </div>
