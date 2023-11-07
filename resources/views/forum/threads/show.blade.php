@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('modals.report_thread_modal')
+    @include('modals.report_reply_modal')
     <div class="col-lg-12">
         <div class="row">
             <!-- Thread -->
@@ -115,77 +117,10 @@
                                         @if (Auth::check())
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
-                                                <div class="reportButton">
-                                                    <a type="button" class="replyButton float-left" href="#"
+                                                <div class="reportThreadMessageButton">
+                                                    <button class="replyButton float-left" href="#"
                                                         data-toggle="modal" data-target="#threadReportModal"
-                                                        data-thread="{{ $thread->id }}">Report</a>
-
-                                                </div>
-
-                                                <div class="modal fade" id="threadReportModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="reportModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <!-- Modal content here, including radio buttons for report reasons -->
-                                                            <form action="{{ route('reports.store') }}"
-                                                                id="threadReportForm" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="thread_id" id="threadIdInput"
-                                                                    value="{{ $thread->id }}">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="reportModalLabel">Report
-                                                                        this post</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p>Select a reason for reporting:</p>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="radio"
-                                                                            name="reason" id="reason1"
-                                                                            value="Inappropriate content">
-                                                                        <label class="form-check-label"
-                                                                            for="reason1">Inappropriate
-                                                                            content</label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="radio"
-                                                                            name="reason" id="reason2" value="Spam">
-                                                                        <label class="form-check-label"
-                                                                            for="reason2">Spam</label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="radio"
-                                                                            name="reason" id="reason3" value="Other">
-                                                                        <label class="form-check-label"
-                                                                            for="reason3">Other
-                                                                            reason</label>
-                                                                    </div>
-                                                                    <div class="form-group" id="otherReasonInput"
-                                                                        style="display: none;">
-                                                                        <label for="otherReason">Specify the
-                                                                            reason:</label>
-                                                                        <input class="form-control" type="text"
-                                                                            name="otherReason" id="otherReason">
-                                                                    </div>
-                                                                    <div id="reasonError" class="text-danger"
-                                                                        style="display: none;">Please
-                                                                        chose a reason.</div>
-                                                                </div>
-
-
-                                                                <div class="modal-footer">
-                                                                    <button id="cancelButton" type="button"
-                                                                        class="btn btn-secondary"
-                                                                        data-dismiss="modal">Cancel</button>
-                                                                    <button id="submitThreadReportButton" type="submit"
-                                                                        class="btn btn-primary">Submit Report</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                                                        data-thread="{{ $thread->id }}">Report</button>
                                                 </div>
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
@@ -242,11 +177,11 @@
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
                                                 @if (Auth::check())
-                                                    <div class="reportButton">
-                                                        <a class="replyButton float-left" href=""
+                                                    <div class="reportReplyMessageButton">
+                                                        <button class="replyButton float-left" href=""
                                                             data-toggle="modal" data-target="#reportModal"
                                                             data-report="{{ $reply->id }}"
-                                                            data-thread="{{ $thread->id }}">Report</a>
+                                                            data-thread="{{ $thread->id }}">Report</button>
 
                                                     </div>
                                                 @endif
@@ -259,64 +194,6 @@
                                         @endif
                                     </div>
                                 </li>
-
-                                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="reportModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <!-- Modal content here, including radio buttons for report reasons -->
-                                            <form action="{{ route('reports.store') }}" id="reportForm" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="reply_id" id="replyIdInput" value="">
-                                                <input type="hidden" name="thread_id" id="threadIdInput"
-                                                    value="{{ $thread->id }}">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="reportModalLabel">Report this post</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Select a reason for reporting:</p>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="reason"
-                                                            id="reason1" value="Inappropriate content">
-                                                        <label class="form-check-label" for="reason1">Inappropriate
-                                                            content</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="reason"
-                                                            id="reason2" value="Spam">
-                                                        <label class="form-check-label" for="reason2">Spam</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="reason"
-                                                            id="reason3" value="Other">
-                                                        <label class="form-check-label" for="reason3">Other
-                                                            reason</label>
-                                                    </div>
-                                                    <div class="form-group" id="otherReasonInput" style="display: none;">
-                                                        <label for="otherReason">Specify the reason:</label>
-                                                        <input class="form-control" type="text" name="otherReason"
-                                                            id="otherReason">
-                                                    </div>
-                                                    <div id="reasonError" class="text-danger" style="display: none;">
-                                                        Please
-                                                        chose a reason.</div>
-                                                </div>
-
-
-                                                <div class="modal-footer">
-                                                    <button id="cancelButton" type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Cancel</button>
-                                                    <button id="submitReportButton" type="submit"
-                                                        class="btn btn-primary">Submit Report</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
                         </ol>
                     </tbody>
@@ -361,8 +238,6 @@
         </div>
     @endif
 
-
-
     <!-- Modal -->
     <div class="modal fade" id="ModeratorActionsModal" tabindex="-1" role="dialog" aria-labelledby="modModalLabel"
         aria-hidden="true">
@@ -386,107 +261,11 @@
         </div>
     </div>
 
-    <!-- The Modal -->
-
-
-    <style>
-
-    </style>
     <script type="text/javascript" src="{{ URL::asset('js/show_thread.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/thread_report.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/reply_report.js') }}"></script>
 
     <script>
         const threadId = {{ $thread->id }};
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // Listen for changes in the radio buttons
-            $('input[type=radio][name=reason]').change(function() {
-                if (this.value === 'Other') {
-                    // Show the hidden text input if "Other" is selected
-                    $('#otherReasonInput').show();
-                } else {
-                    // Hide the text input for other options
-                    $('#otherReasonInput').hide();
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            // Initialize replyId and threadId variables
-            var replyId = null;
-            var threadId = null;
-
-            // Listen for the "Report" button click
-            $('.reportButton a').click(function(e) {
-                e.preventDefault();
-                // Get the values of data-report and data-thread attributes
-                replyId = $(this).data('report');
-                threadId = $(this).data('thread');
-
-                // Now, replyId and threadId are captured here.
-
-                // Open the report modal
-                $('#reportModal').modal('show');
-            });
-
-            // Listen for the "Submit Report" button click inside the modal
-            $('#submitReportButton').click(function(e) {
-                // Hide the error message
-                $('#reasonError').hide();
-
-                // Check if any reason is selected
-                const selectedReason = $('input[type=radio][name=reason]:checked').val();
-                if (!selectedReason) {
-                    // Show the error message and prevent form submission
-                    $('#reasonError').show();
-                    e.preventDefault();
-                } else {
-                    // Set the values in the hidden input fields
-                    $('#replyIdInput').val(replyId);
-                    $('#threadIdInput').val(threadId);
-
-                    // Continue with form submission
-                    $('#reportForm').submit();
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            // Initialize replyId and threadId variables
-            var threadId = null;
-
-            // Listen for the "Report" button click
-            $('.reportButton a').click(function(e) {
-                e.preventDefault();
-                // Get the values of data-report and data-thread attributes
-                threadId = $(this).data('thread');
-                console.log('Thread ID:', threadId);
-                // Now, replyId and threadId are captured here.
-
-                // Open the report modal
-                $('#threadReportModal').modal('show');
-            });
-
-            // Listen for the "Submit Report" button click inside the modal
-            $('#submitThreadReportButton').click(function(e) {
-                // Hide the error message
-                $('#reasonError').hide();
-
-                // Check if any reason is selected
-                const selectedReason = $('input[type=radio][name=reason]:checked').val();
-                if (!selectedReason) {
-                    // Show the error message and prevent form submission
-                    $('#reasonError').show();
-                    e.preventDefault();
-                } else {
-                    // Set the values in the hidden input fields
-                    $('#threadIdInput').val(threadId);
-
-                    // Continue with form submission
-                    $('#threadReportForm').submit();
-                }
-            });
-        });
     </script>
 @endsection
