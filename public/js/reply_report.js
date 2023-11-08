@@ -1,17 +1,4 @@
 $(document).ready(function () {
-    // Listen for changes in the radio buttons
-    $('input[type=radio][name=reason]').change(function () {
-        if (this.value === 'Other') {
-            // Show the hidden text input if "Other" is selected
-            $('#otherReasonInput').show();
-        } else {
-            // Hide the text input for other options
-            $('#otherReasonInput').hide();
-        }
-    });
-});
-
-$(document).ready(function () {
     // Initialize replyId and threadId variables
     var replyId = null;
     var threadId = null;
@@ -45,9 +32,10 @@ $(document).ready(function () {
             // Set the values in the hidden input fields
             $('#replyIdInput').val(replyId);
             $('#threadIdInput').val(threadId);
-
+            console.log(replyId);
+        console.log(threadId);
             // Continue with form submission
-            $('#reportForm').submit();
+            $('#reportReplyForm').submit();
         }
     });
 });

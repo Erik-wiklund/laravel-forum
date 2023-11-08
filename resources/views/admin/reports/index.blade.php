@@ -43,17 +43,32 @@
                                     @foreach ($reports as $report)
                                         <tr>
                                             <td>{{ $report->user->name }}</td>
-                                            <td>{{ optional($report->thread)->title }}</td>
-                                            <td>{{ $report->reported_reply }}</td>
+                                            <td>
+                                                @if ($report->thread && $report->thread->sub_category_id !== null)
+                                                    <a
+                                                        href="{{ route('threads.show', ['subcategory' => $report->thread->sub_category_id, 'thread' => $report->thread->id]) }}">
+                                                        {!! $report->thread->title !!}
+                                                    </a>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($report->reply && $report->thread->sub_category_id !== null)
+                                                    <a
+                                                        href="{{ route('threads.show', ['subcategory' => $report->thread->sub_category_id, 'thread' => $report->thread->id, 'scrollToReply' => $report->reply->id]) }}">
+                                                        {!! $report->reply->content !!}
+                                                    </a>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
                                             <td>{{ $report->reason }}</td>
                                             <td>{{ $report->created_at }}</td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
-
-
                         </div>
                     </div>
                 </div>
@@ -62,4 +77,5 @@
         </section>
     </section>
     <!--main content end-->
+    <script type="text/javascript" src="{{ URL::asset('js/scrollToReply.js') }}"></script>
 @endsection

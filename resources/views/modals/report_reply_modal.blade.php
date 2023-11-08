@@ -1,4 +1,5 @@
-<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+<div class="modal fade" id="reportReplyModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Modal content here, including radio buttons for report reasons -->
@@ -29,7 +30,7 @@
                         <label class="form-check-label" for="reason3">Other
                             reason</label>
                     </div>
-                    <div class="form-group" id="otherReasonInput" style="display: none;">
+                    <div class="form-group" id="otherReasonReplyInput" style="display: none;">
                         <label for="otherReason">Specify the reason:</label>
                         <input class="form-control" type="text" name="otherReason" id="otherReason">
                     </div>
@@ -37,8 +38,6 @@
                         Please
                         chose a reason.</div>
                 </div>
-
-
                 <div class="modal-footer">
                     <button id="cancelButton" type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancel</button>
@@ -48,3 +47,4 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/otherReason.js') }}"></script>

@@ -38,14 +38,14 @@
                     <div id="reasonError" class="text-danger" style="display: none;">Please
                         chose a reason.</div>
                 </div>
-
-
                 <div class="modal-footer">
                     <button id="cancelButton" type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancel</button>
-                    <button id="submitThreadReportButton" style="background-color: blue" type="submit" class="btn btn-primary">Submit Report</button>
+                    <button id="submitThreadReportButton" style="background-color: blue" type="submit"
+                        class="btn btn-primary">Submit Report</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/otherReasonThread.js') }}"></script>

@@ -1,17 +1,4 @@
 $(document).ready(function () {
-    // Listen for changes in the radio buttons
-    $('input[type=radio][name=reason]').change(function () {
-        if (this.value === 'Other') {
-            // Show the hidden text input if "Other" is selected
-            $('#otherReasonInput').show();
-        } else {
-            // Hide the text input for other options
-            $('#otherReasonInput').hide();
-        }
-    });
-});
-
-$(document).ready(function () {
     // Initialize replyId and threadId variables
     var threadId = null;
 
@@ -20,7 +7,6 @@ $(document).ready(function () {
         e.preventDefault();
         // Get the values of data-report and data-thread attributes
         threadId = $(this).data('thread');
-        console.log('Thread ID:', threadId);
         // Now, replyId and threadId are captured here.
 
         // Open the report modal

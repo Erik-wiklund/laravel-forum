@@ -1,17 +1,17 @@
-$(document).ready(function() {
-    $('.openmodModal').on('click', function(e) {
-        e.preventDefault();
+// $(document).ready(function() {
+//     $('.openmodModal').on('click', function(e) {
+//         e.preventDefault();
 
-        // Get the thread status info from the hidden div
-        var threadStatusInfo = $('#user-info').html();
+//         // Get the thread status info from the hidden div
+//         var threadStatusInfo = $('#user-info').html();
 
-        // Set the modal content to the thread status info
-        $('#modModalBody').html(threadStatusInfo);
+//         // Set the modal content to the thread status info
+//         $('#modModalBody').html(threadStatusInfo);
 
-        // Show the modal
-        $('#ModeratorActionsModal').modal('show');
-    });
-});
+//         // Show the modal
+//         $('#ModeratorActionsModal').modal('show');
+//     });
+// });
 
 
 const quoteButtons = document.querySelectorAll('.quote-button');

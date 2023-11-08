@@ -121,6 +121,7 @@
                                                     <button class="replyButton float-left" href="#"
                                                         data-toggle="modal" data-target="#threadReportModal"
                                                         data-thread="{{ $thread->id }}">Report</button>
+
                                                 </div>
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
@@ -132,10 +133,9 @@
                                     </div>
                                 </li>
                             @endif
-
-
                             @foreach ($replies as $key => $reply)
-                                <li style="border-bottom: 1px solid #383838; padding: 10px;">
+                                <li id="reply_{{ $reply->id }}"
+                                    style="border-bottom: 1px solid #383838; padding: 10px;">
                                     <div class="posterAvatar" style="width: 150px; float: left;">
                                         @if (!empty($reply->createdBy->image))
                                             <img src="{{ asset('images/' . $reply->createdBy->image) }}" alt="User Image"
@@ -151,9 +151,7 @@
                                                 <div class="quoted-message" style="display: none"></div>
                                             </div>
                                             <div>{!! $reply->content !!}</div>
-
                                         </div>
-
                                         <a class="postcount"
                                             style="font-size: 12px; float: right; line-height: 2; margin-top: 0; margin-left: 6px;"
                                             href="#">#{{ $startCount + $key + 1 }}</a>
@@ -179,7 +177,7 @@
                                                 @if (Auth::check())
                                                     <div class="reportReplyMessageButton">
                                                         <button class="replyButton float-left" href=""
-                                                            data-toggle="modal" data-target="#reportModal"
+                                                            data-toggle="modal" data-target="#reportReplyModal"
                                                             data-report="{{ $reply->id }}"
                                                             data-thread="{{ $thread->id }}">Report</button>
 
@@ -260,11 +258,10 @@
             </div>
         </div>
     </div>
-
     <script type="text/javascript" src="{{ URL::asset('js/show_thread.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/thread_report.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/reply_report.js') }}"></script>
-
+    <script type="text/javascript" src="{{ URL::asset('js/thread_report.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/scrollToReplyElement.js') }}"></script>
     <script>
         const threadId = {{ $thread->id }};
     </script>
