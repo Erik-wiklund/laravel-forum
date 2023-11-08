@@ -12,7 +12,7 @@ class AdminLogsController extends Controller
      */
     public function index()
     {
-        $adminLogs = AdminLog::all();
+        $adminLogs = AdminLog::latest()->paginate(20);
         return view('admin.logs.index', ['adminLogs' => $adminLogs]);
     }
 

@@ -13,7 +13,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports = Report::all();
+        $reports = Report::with('user', 'reply', 'thread')->latest()->paginate(20);
         return view('admin.reports.index', ['reports' => $reports]);
     }
 

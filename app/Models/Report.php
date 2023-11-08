@@ -16,6 +16,11 @@ class Report extends Model
         return $this->belongsTo(User::class, 'reporter');
     }
 
+    public function reportss()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function reply()
     {
         return $this->belongsTo(Reply::class, 'reported_reply');
