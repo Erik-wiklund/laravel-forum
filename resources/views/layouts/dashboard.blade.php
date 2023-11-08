@@ -165,13 +165,14 @@
     <!-- javascripts -->
 
     {{-- ckeditor --}}
-    <script>
+    {{-- <script>
         CKEDITOR.replace('editor1');
-    </script>
+    </script> --}}
 
 
     <!-- Vue App.js -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    @vite(['resources/css/app.css','resources/css/custom.css', 'resources/js/app.js'])
+    {{-- <script type="module" src="{{ asset('admin/js/app.js') }}"></script> --}}
     <!-- End -->
     <script src="{{ asset('admin/js/jquery.js') }}"></script>
     <script src="{{ asset('admin/js/jquery-ui-1.10.4.min.js') }}"></script>

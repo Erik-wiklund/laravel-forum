@@ -29,6 +29,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
+                            {{ $adminLogs->links() }}
                             <table class="table bootstrap-datatable countries">
                                 <thead>
                                     <tr>
@@ -61,8 +62,6 @@
 
                                 </tbody>
                             </table>
-
-                            {{-- {{ $users->links() }} --}}
                         </div>
                     </div>
                 </div>

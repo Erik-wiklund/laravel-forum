@@ -15,9 +15,7 @@
                     </ol>
                 </div>
             </div>
-
             <div class="row">
-
                 <div class="col-lg-12 col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -29,6 +27,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
+                            {{ $reports->links() }}
                             <table class="table bootstrap-datatable countries">
                                 <thead>
                                     <tr>
@@ -54,7 +53,7 @@
                                 </tbody>
                             </table>
 
-                            {{-- {{ $users->links() }} --}}
+
                         </div>
                     </div>
                 </div>

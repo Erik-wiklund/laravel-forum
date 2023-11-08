@@ -1,27 +1,58 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8" style="background-color: #17a2b8 !important;">
+        <div class="flex justify-between h-18">
+            <div class="flex items-center">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a>
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
-                </div>
+                {{-- <a href="/forum" class="flex-shrink-0">
+                    <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                </a> --}}
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 items-center sm:flex">
                     <x-nav-link>
-                        <a href="/forum"> {{ __('Home') }}</a>
+                        <form action="{{ route('forum.index') }}">
+                            <button class="text-white navButtons h-16 w-16 p-2" type="submit">
+                                {{ __('Home') }}</button>
+                        </form>
+                    </x-nav-link>
+                    <x-nav-link>
+                        <form action="">
+                            <button class="text-white navButtons h-16 w-18 p-2"
+                                type="submit">{{ __('Resources') }}</button>
+                        </form>
                     </x-nav-link>
                 </div>
             </div>
 
+            <script>
+                // When a navigation button is clicked, store its ID in local storage
+                $('.navButtons').on('click', function() {
+                    var selectedButtonId = $(this).parent().index(); // Get the index of the selected button
+                    localStorage.setItem('selectedButton', selectedButtonId);
+                });
+
+                // Retrieve the selected button from local storage and apply the style
+                var selectedButtonId = localStorage.getItem('selectedButton');
+                if (selectedButtonId !== null) {
+                    $('.navButtons').removeClass('selected'); // Remove selected class from all buttons
+                    $('.navButtons').eq(selectedButtonId).addClass('selected'); // Add selected class to the stored button
+                }
+            </script>
+
+            <style>
+                .selected {
+                    background-color: red;
+                    /* Change this to your desired background color */
+                }
+            </style>
+
+
+
+
             <!-- Settings Dropdown -->
             @guest
                 <div>
-
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="px-4">
@@ -50,7 +81,6 @@
                                 </div>
                             </button>
                         </x-slot>
-
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.index', ['userId' => $user->id])">
                                 {{ __('Profile') }}
@@ -59,7 +89,10 @@
                                 <x-dropdown-link style="margin: 0 !important;" :href="route('pm.index', ['userId' => $user->id])">
                                     {{ __('Private message') }}
                                 </x-dropdown-link>
-                                @if (Auth::user()->hasUnreadMessages())  <span style="margin-top: -15px;" class="new-indicator px-4 py-2 text-sm text-red-600">New Messages</span>@endif
+                                @if (Auth::user()->hasUnreadMessages())
+                                    <span style="margin-top: -15px;"
+                                        class="new-indicator px-4 py-2 text-sm text-red-600">New Messages</span>
+                                @endif
                             </div>
 
                             @if (auth()->user()->isAdmin())
@@ -99,5 +132,4 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-
 </nav>
