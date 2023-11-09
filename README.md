@@ -120,7 +120,7 @@ RESTful API for integration with other applications.
 
   <p>Working on now</p>
 
-- [ ] Flagging and reporting system for inappropriate content.
+- [x] Flagging and reporting system for inappropriate content.
 
 </div>
 
