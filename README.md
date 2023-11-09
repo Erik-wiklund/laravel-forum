@@ -74,36 +74,36 @@ User-Friendly UI
 Private Messaging
 Allow users to send private messages to each other.
 
+Flagging and reporting system for inappropriate content.
+Users may now report threads/replies and private message content, admins sees the title of thread and content reported followed by id for database tracking.
+
 Clean and responsive design for an excellent user experience.
 ## Future Features
-While Laravel Forum is already feature-rich, we're actively working on enhancements and new features to make it even better. Some of the WIP features include:
+While Laravel Forum is already feature-rich, we're actively working on enhancements and new features to make it even better. Some of the future features include:
 
 Gamification
-
 Implement gamification elements to engage users and reward participation.
+
 Advanced Moderation Tools
-
 Additional tools for moderating discussions and user management.
+
 Custom Themes
-
 Theme customization options for forums.
+
 User Reputation System
-
 Implement a reputation system to encourage positive contributions.
-Plugin Support
 
+Plugin Support
 Enable easy integration of third-party plugins and extensions.
 
 Thread subscriptions for updates.
 
 Notifications
-
 Real-time notifications for replies and mentions.
 
 Email notifications for subscribed threads.
 
 Search Functionality
-
 Powerful search functionality to find discussions quickly.
 
 User profiles with activity and discussion history.
@@ -120,7 +120,7 @@ RESTful API for integration with other applications.
 
   <p>Working on now</p>
 
-- [x] Flagging and reporting system for inappropriate content.
+
 
 </div>
 
