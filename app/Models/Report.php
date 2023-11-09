@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    protected $fillable = ['reporter', 'reported_reply', 'reported_thread' , 'reason'];
+    protected $fillable = [
+        'reporter',
+        'reported_reply',
+        'reported_thread',
+        'reason',
+        'reported_private_conversation',
+        'reported_private_messages',
+    ];
 
 
     public function user()
@@ -24,6 +31,16 @@ class Report extends Model
     public function reply()
     {
         return $this->belongsTo(Reply::class, 'reported_reply');
+    }
+
+    public function conversation()
+    {
+        return $this->belongsTo(PrivateMessage::class, 'reported_private_conversation');
+    }
+
+    public function conversationMessages()
+    {
+        return $this->belongsTo(PrivateMessage::class, 'reported_private_messages');
     }
 
     public function thread()

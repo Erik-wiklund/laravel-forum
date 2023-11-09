@@ -34,8 +34,9 @@
                                         <th>Reporting User</th>
                                         <th>Reported Thread</th>
                                         <th>Reported Reply</th>
+                                        <th>Reported Private Conversation</th>
+                                        <th>Reported Private Conversation Messages</th>
                                         <th>Reason</th>
-                                        <th>Content reported</th>
                                         <th>Date</th>
                                     </tr>
                                 </thead>
@@ -47,7 +48,7 @@
                                                 @if ($report->thread && $report->thread->sub_category_id !== null)
                                                     <a
                                                         href="{{ route('threads.show', ['subcategory' => $report->thread->sub_category_id, 'thread' => $report->thread->id]) }}">
-                                                        {!! $report->thread->title !!}
+                                                        {!! $report->thread->title !!} ({{ $report->thread->id}})
                                                     </a>
                                                 @else
                                                     N/A
@@ -57,8 +58,22 @@
                                                 @if ($report->reply && $report->thread->sub_category_id !== null)
                                                     <a
                                                         href="{{ route('threads.show', ['subcategory' => $report->thread->sub_category_id, 'thread' => $report->thread->id, 'scrollToReply' => $report->reply->id]) }}">
-                                                        {!! $report->reply->content !!}
+                                                        {!! $report->reply->content !!}({{ $report->reply->id}})
                                                     </a>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($report->conversation !== null)
+                                                    <span>{!! $report->conversation->message !!} ({{ $report->conversation->id}})</span>
+                                                @else
+                                                    N/A
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($report->conversationMessages !== null)
+                                                    <span>{!! $report->conversationMessages->message !!} ({{ $report->conversationMessages->id}})</span>
                                                 @else
                                                     N/A
                                                 @endif

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+@include('modals.report_conversation_modal')
+@include('modals.report_reply_pm_modal')
     <div class="col-lg-12">
         <div class="row">
             <!-- Thread -->
@@ -58,6 +60,14 @@
                                         @if (Auth::check())
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
+                                                @if (Auth::check())
+                                                    <div class="reportPrivateMessageButton">
+                                                        <button class="replyButton float-left" href=""
+                                                            data-toggle="modal" data-target="#reportConversationModal"
+                                                            data-conversation="{{ $conversation->id }}">Report</button>
+
+                                                    </div>
+                                                @endif
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
                                                         data-quote="{{ $conversation->message }}"
@@ -109,6 +119,14 @@
                                         @if (Auth::check())
                                             <div class="messageTriggers"
                                                 style="font-size: 12px; padding-top: 5px; padding-bottom: 5px; overflow: hidden; zoom: 1;">
+                                                @if (Auth::check())
+                                                    <div class="reportpmReplyButton">
+                                                        <button class="replyButton float-left" href=""
+                                                            data-toggle="modal" data-target="#reportpmReplyModal"
+                                                            data-replypm="{{ $reply->id }}"
+                                                            data-conversation="{{ $conversation->id }}">Report</button>
+                                                    </div>
+                                                @endif
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
                                                         data-quote="{{ $reply->message }}"
@@ -152,7 +170,8 @@
 
 
     <script type="text/javascript" src="{{ URL::asset('js/show_thread.js') }}"></script>
-
+    <script type="text/javascript" src="{{ URL::asset('js/reply_pm_report.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/conversation_pm_report.js') }}"></script>
     <script>
         const conversationId = {{ $conversation->id }};
     </script>

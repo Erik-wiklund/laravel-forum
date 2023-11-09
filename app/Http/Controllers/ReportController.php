@@ -13,7 +13,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports = Report::with('user', 'reply', 'thread')->latest()->paginate(20);
+        $reports = Report::with('user', 'reply', 'thread','conversation','conversationMessages')->latest()->paginate(20);
         return view('admin.reports.index', ['reports' => $reports]);
     }
 
@@ -42,6 +42,8 @@ class ReportController extends Controller
         $reason = $request->input('reason');
         $reportedReply = $request->input('reply_id');
         $reportedThread = $request->input('thread_id');
+        $reportedConversationMessage = $request->input('replypm_id');
+        $reportedConversation = $request->input('conversation_id');
 
 
         if ($reason === 'Other') {
@@ -56,6 +58,8 @@ class ReportController extends Controller
         $report->reporter = auth()->user()->id;
         $report->reported_reply = $reportedReply;
         $report->reported_thread = $reportedThread;
+        $report->reported_private_messages = $reportedConversationMessage;
+        $report->reported_private_conversation = $reportedConversation;
         $report->reason = $reason;
         $report->save();
 

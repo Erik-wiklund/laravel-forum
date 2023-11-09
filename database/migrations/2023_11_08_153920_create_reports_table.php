@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('reporter');
             $table->unsignedBigInteger('reported_reply');
             $table->unsignedBigInteger('reported_thread');
+            $table->unsignedBigInteger('reported_private_conversation');
+            $table->unsignedBigInteger('reported_private_messages');
             $table->text('reason');
             $table->timestamps();
 
@@ -23,6 +25,8 @@ return new class extends Migration
             $table->foreign('reporter')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('reported_reply')->references('id')->on('replies')->onDelete('CASCADE');
             $table->foreign('reported_thread')->references('id')->on('threads')->onDelete('CASCADE');
+            $table->foreign('reported_private_conversation')->references('id')->on('private_messages')->onDelete('CASCADE');
+            $table->foreign('reported_private_messages')->references('id')->on('private_message_user')->onDelete('CASCADE');
             // Add more foreign key constraints if the reported item relates to other tables (e.g., posts, comments).
 
         });
