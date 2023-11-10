@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLogsController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AdminUserRoleController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
@@ -115,6 +116,12 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
 
     // Reports to admins
     Route::get('/dashboard/reports', [ReportController::class,'index'])->name('reports.index');
+
+    // User Role system
+    Route::get('/user-roles', [AdminUserRoleController::class,'index'])->name('user_roles');
+    Route::get('/user-role/new', [AdminUserRoleController::class, 'create'])->name('role.create');
+    Route::get('/user-role/{userroleId}', [AdminUserRoleController::class, 'update'])->name('role.update');
+    Route::post('/user-role', [AdminUserRoleController::class,'store'])->name('role.store');
 });
 
 

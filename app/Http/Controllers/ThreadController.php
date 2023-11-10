@@ -9,6 +9,7 @@ use App\Models\SubCategory;
 use App\Models\Thread;
 use App\Models\ThreadView;
 use App\Models\User;
+use App\Models\User_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -23,8 +24,9 @@ class ThreadController extends Controller
         // Retrieve all threads related to the provided subcategory
 
         $threads = Thread::where('sub_category_id', $subcategory->id)->get();
+        $user_roles = User_role::all();
 
-        return view('forum.threads.index', compact('threads', 'subcategory'));
+        return view('forum.threads.index', compact('threads', 'subcategory','user_roles'));
     }
 
 

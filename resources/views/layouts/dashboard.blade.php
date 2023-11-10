@@ -100,6 +100,16 @@
                                     <li><a href="{{ route('user.new') }}">Create</a></li>
                                 </ul>
                             </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;" class="">
+                                    <i class="fa fa-edit"></i>
+                                    <span>User Role</span>
+                                    <span class="menu-arrow arrow_carrot-right"></span>
+                                </a>
+                                <ul class="sub">
+                                    <li><a href="{{ route('role.create') }}">Create</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
 
@@ -107,6 +117,12 @@
                         <a class="" href="{{ route('users') }}">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="{{ route('user_roles') }}">
+                            <i class="fa fa-users"></i>
+                            <span>User Roles</span>
                         </a>
                     </li>
 

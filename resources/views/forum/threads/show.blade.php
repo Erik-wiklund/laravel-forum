@@ -85,12 +85,15 @@
                                 <li style="border-bottom: 1px solid #383838; padding: 10px;">
 
                                     <div class="posterAvatar" style="width: 150px; float: left;">
-                                        @if (!empty($thread->createdBy->image))
-                                            <img src="{{ asset('images/' . $thread->createdBy->image) }}" alt="User Image"
-                                                style="max-width: 100px;">
-                                        @else
-                                            No Image
-                                        @endif
+                                        <div>
+                                            @if (!empty($thread->createdBy->image))
+                                                <img src="{{ asset('images/' . $thread->createdBy->image) }}"
+                                                    alt="User Image" style="max-width: 100px;">
+                                            @else
+                                                No Image
+                                            @endif
+                                        </div>
+                                        <div class="user-container mt-1 text-center" style="width:100px;background-color: {{ $thread->createdBy->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $thread->createdBy->role->name }}</div>
                                     </div>
                                     <div class="messagePrimaryContent" style="margin-left: 150px;">
                                         <div style="padding: 10px; min-height: 100px; overflow: hidden;"
@@ -137,12 +140,15 @@
                                 <li id="reply_{{ $reply->id }}"
                                     style="border-bottom: 1px solid #383838; padding: 10px;">
                                     <div class="posterAvatar" style="width: 150px; float: left;">
-                                        @if (!empty($reply->createdBy->image))
-                                            <img src="{{ asset('images/' . $reply->createdBy->image) }}" alt="User Image"
-                                                style="max-width: 100px;">
-                                        @else
-                                            No Image
-                                        @endif
+                                        <div>
+                                            @if (!empty($reply->createdBy->image))
+                                                <img src="{{ asset('images/' . $reply->createdBy->image) }}"
+                                                    alt="User Image" style="max-width: 100px;">
+                                            @else
+                                                No Image
+                                            @endif
+                                        </div>
+                                        <div class="user-container mt-1 text-center" style="width:105px;background-color: {{ $reply->user->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $reply->user->role->name }}</div>
                                     </div>
                                     <div class="messagePrimaryContent" style="margin-left: 150px;">
                                         <div class="messageContent"
