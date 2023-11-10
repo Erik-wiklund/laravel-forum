@@ -14,7 +14,7 @@ class AdminUserRoleController extends Controller
     public function index()
     {
         $userRoles = User_role::all();
-        return view('admin.pages.user_roles',compact('userRoles'));
+        return view('admin.pages.user_roles', compact('userRoles'));
     }
 
     /**
@@ -34,12 +34,12 @@ class AdminUserRoleController extends Controller
             'roleName' => 'required',
             'roleColor' => 'required',
         ]);
-    
+
         $userRole = new User_role();
         $userRole->name = $request->roleName;
         $userRole->color = $request->roleColor;
-    
-       
+
+
         $userRole->save();
         Session::flash('message', 'User Role created successfully');
         Session::flash('alert-class', 'alert-success');
@@ -49,9 +49,10 @@ class AdminUserRoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $userroleId)
     {
-        //
+        $userrole = User_role::find($userroleId);
+        return view('admin.pages.view_user_role', compact(['userrole']));
     }
 
     /**
@@ -66,9 +67,22 @@ class AdminUserRoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $userroleId)
     {
-        //
+        $userrole = User_role::find($userroleId);
+
+        if ($request->filled('roleName')) {
+            $userrole->name = $request->roleName;
+        }
+        if ($request->filled('userColor')) {
+            $userrole->color = $request->userColor;
+        }
+        $userrole->save();
+
+        Session::flash('message', 'User Role updated successfully');
+        Session::flash('alert-class', 'alert-success');
+
+        return back();
     }
 
     /**

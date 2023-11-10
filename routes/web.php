@@ -119,8 +119,10 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
 
     // User Role system
     Route::get('/user-roles', [AdminUserRoleController::class,'index'])->name('user_roles');
+    Route::get('/user-role/show/{userroleId}', [AdminUserRoleController::class,'show'])->name('role.show');
     Route::get('/user-role/new', [AdminUserRoleController::class, 'create'])->name('role.create');
-    Route::get('/user-role/{userroleId}', [AdminUserRoleController::class, 'update'])->name('role.update');
+    Route::post('/user-role/update/{userroleId}', [AdminUserRoleController::class, 'update'])->name('role.update');
+    Route::get('/user-role/edit/{userroleId}', [AdminUserRoleController::class, 'edit'])->name('role.edit');
     Route::post('/user-role', [AdminUserRoleController::class,'store'])->name('role.store');
 });
 

@@ -46,9 +46,9 @@
                                                 <td style="width:100px; background-color: {{ $userrole->color }};">{{ $userrole->color }}</td>
                                                 
                                                 
-                                                <td><a href=""><i
+                                                <td><a href="{{ route('role.show',['userroleId' => $userrole->id ]) }}"><i
                                                             class="fa fa-eye text-success"></i></a></td>
-                                                <td><a href=""><i
+                                                <td><a href="{{ route('role.edit',['userroleId' => $userrole->id ]) }}"><i
                                                             class="fa fa-edit text-info"></i></a></td>
                                                 <td><a href="#" class="text-danger"><i
                                                             class="fa fa-trash"></i>Delete</a></td>
