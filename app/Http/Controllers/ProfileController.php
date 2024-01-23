@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -36,45 +37,48 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(Request $request, string $userId)
     {
-        $image = '';
-        $imageFileName = '';
-        $newImageFileName = '';
+        $image = $request->image;
 
-        if ($request->image) {
-            $image = $request->image;
+        // Check if an image is provided
+        if ($image) {
             $imageFileName = $image->getClientOriginalName();
-            $newImageFileName = time() . $imageFileName;
 
-            // Move the uploaded image to the public/images folder with the new filename
-            $imagePath = public_path('images/' . $newImageFileName);
-            $request->image->move(public_path('images'), $newImageFileName);
+            // Move the uploaded image to the public/images folder with the same filename
+            $imagePath = public_path('images/' . $imageFileName);
+            $image->move(public_path('images'), $imageFileName);
 
             // Open the uploaded image using Intervention Image and resize it to fit within a 300x300 pixel box
             Image::make($imagePath)->fit(300, 300)->save($imagePath);
+
+            // Update the user's image attribute
+            $user = User::find($userId);
+            $user->image = $imageFileName;
+            $user->save();
+
+            Session::flash('message', 'User updated successfully with a new image');
         }
 
-        $user = User::find($userId);
-
+        // Check and update other fields like email
         if ($request->filled('email')) {
-            $user->email = $request->email;
+            $user = User::find($userId);
+
+            // Check if the email has changed
+            if ($user->email !== $request->email) {
+                $user->email = $request->email;
+                $user->save();
+                Session::flash('message', 'User updated successfully');
+            }
         }
 
-        if ($request->image) {
-            $user->image = $newImageFileName;
-        }
-
-        $user->save();
-
-        Session::flash('message', 'User updated successfully');
         Session::flash('alert-class', 'alert-success');
 
         return back();
     }
+
+
+
 
     /**
      * Delete the user's account.
