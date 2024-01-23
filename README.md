@@ -4,13 +4,13 @@ Welcome to the Laravel Forum project! This is a powerful and flexible forum appl
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Features](#features)
-- [Future features](#future-features)
-- [WIP](#work-in-progress)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+-   [Installation](#installation)
+-   [Features](#features)
+-   [Future features](#future-features)
+-   [WIP](#work-in-progress)
+-   [Usage](#usage)
+-   [Contributing](#contributing)
+-   [License](#license)
 
 ## Installation
 
@@ -18,19 +18,24 @@ To get started with Laravel Forum, follow these steps:
 
 1. Clone this repository to your local environment.
 
-   ```bash
-   git clone https://github.com/erik-wiklund/laravel-forum.git
+    ```bash
+    git clone https://github.com/erik-wiklund/laravel-forum.git
 
-2. Install the project dependencies using Composer.
-   
+    ```
+
+2. Install the project dependencies using Composer and npm.
+
     ```bash
     composer install
+    npm run build
+    ```
 
 3.Create a copy of the .env.example file and rename it to .env. Configure your database connection and other necessary environment variables in this file.
 
 4.Generate a unique application key.
 
     php artisan key:generate
+
 5.Run the database migrations and seed the initial data.
 
     php artisan migrate --seed
@@ -42,6 +47,7 @@ To get started with Laravel Forum, follow these steps:
 Your Laravel Forum is now up and running!
 
 ## Features
+
 Laravel Forum comes with a wide range of features to create a robust and engaging forum for your community:
 
 User Registration and Authentication
@@ -78,7 +84,9 @@ Flagging and reporting system for inappropriate content.
 Users may now report threads/replies and private message content, admins sees the title of thread and content reported followed by id for database tracking.
 
 Clean and responsive design for an excellent user experience.
+
 ## Future Features
+
 While Laravel Forum is already feature-rich, we're actively working on enhancements and new features to make it even better. Some of the future features include:
 
 Gamification
@@ -113,21 +121,22 @@ API Support
 RESTful API for integration with other applications.
 
 ## WIP
+
 <div>
 
-- [ ] = Work in progress on the feature
-- [x] = Feature done but need testing
+-   [ ] = Work in progress on the feature
+-   [x] = Feature done but need testing
 
-  <p>Working on now</p>
-
-
+<p>Working on now</p>
 
 </div>
 
 ## Usage
+
 You can start using Laravel Forum by registering as a user, creating discussion threads, and engaging in conversations. To access admin and moderator features, you'll need to have the appropriate permissions. Please refer to the documentation or contact the forum administrator for more information on how to use the forum effectively.
 
 ## Contributing
+
 We welcome contributions to improve and expand Laravel Forum. If you'd like to contribute to the project, please follow these guidelines:
 
 Fork the repository to your own GitHub account.
@@ -137,6 +146,7 @@ Submit a pull request to the main repository.
 We appreciate your help in making Laravel Forum even better!
 
 ## License
+
 Laravel Forum is open-source software and is licensed under the MIT License. You are free to use, modify, and distribute it as per the terms of this license.
 
 Thank you for choosing Laravel Forum! We hope you enjoy using it and building a thriving online community. If you have any questions or need assistance, feel free to reach out to the project maintainers or the community.
