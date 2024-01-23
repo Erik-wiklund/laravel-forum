@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'username' => 'test',
             'email' => 'admin@example.com',
+            'image' => 'default_image.webp',
             'password' => bcrypt('password'), // Don't forget to hash the password
             'role_id' => 3, // Assuming 'role' is used to represent user roles
         ]);
