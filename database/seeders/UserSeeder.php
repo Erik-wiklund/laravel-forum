@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
         \App\Models\User::factory(5)->create();
         User::create([
             'name' => 'admin',
+            'username' => 'test',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'), // Don't forget to hash the password
             'role_id' => 3, // Assuming 'role' is used to represent user roles

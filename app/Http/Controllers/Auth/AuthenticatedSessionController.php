@@ -24,26 +24,32 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-{
-    $credentials = $request->only('email', 'password');
+    {
+        $loginField = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-    if (Auth::attempt($credentials)) {
-        // Check if the user is banned
-        $user = Auth::user();
-        if ($user->isforumbanned == 1) {
-            Auth::logout();
-            return redirect()->route('login')
-                ->with('error', 'Your account has been banned. Please contact the administrator for assistance.');
+        $credentials = [
+            $loginField => $request->input('login'),
+            'password' => $request->input('password'),
+        ];
+
+        if (Auth::attempt($credentials)) {
+            // Check if the user is banned
+            $user = Auth::user();
+            if ($user->isforumbanned == 1) {
+                Auth::logout();
+                return redirect()->route('login')
+                    ->with('error', 'Your account has been banned. Please contact the administrator for assistance.');
+            }
+
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        $request->session()->regenerate();
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return back()->withErrors([
+            'login' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-}
 
     /**
      * Destroy an authenticated session.

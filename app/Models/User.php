@@ -60,16 +60,16 @@ class User extends Authenticatable
     }
 
     public function hasUnreadMessages()
-{
-    // Check if there are any private messages with unread replies for the user
-    $unreadMessagesCount = $this->privateMessages()
-        ->whereHas('privateMessageReplies', function ($query) {
-            $query->whereJsonDoesntContain('has_read', $this->id);
-        })
-        ->count();
+    {
+        // Check if there are any private messages with unread replies for the user
+        $unreadMessagesCount = $this->privateMessages()
+            ->whereHas('privateMessageReplies', function ($query) {
+                $query->whereJsonDoesntContain('has_read', $this->id);
+            })
+            ->count();
 
-    return $unreadMessagesCount > 0;
-}
+        return $unreadMessagesCount > 0;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -78,6 +78,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'last_seen',
