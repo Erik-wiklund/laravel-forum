@@ -61,7 +61,7 @@ class ForumController extends Controller
             $totalOnline = $membersOnline + $visitors;
         }
 
-        return view('forum.index', compact('latestuser','bannedUserIds','totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
+        return view('forum.index', compact('latestuser', 'bannedUserIds', 'totalOnline', 'membersOnline', 'categories', 'threads', 'messages', 'onlineUsers', 'totalUsers', 'visitors', 'totalUserCount'));
     }
 
 

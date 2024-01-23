@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('sub_categories', function (Blueprint $table) {
             $table->unsignedInteger('order')->default(0);
-            $table->text('desc');
+            $table->text('desc')->default('default_image.jpg');;
         });
     }
 

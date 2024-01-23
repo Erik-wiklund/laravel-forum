@@ -1,0 +1,174 @@
+.sticky-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #fff;
+    /* Adjust the background color as needed */
+    border-bottom: 1px solid #ddd;
+    /* Optional: Add a border if desired */
+}
+
+.content-below-navigation {
+    padding-top: 60px;
+    /* Adjust the height of your navigation bar */
+}
+
+.page-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+.form-control-static {
+    font-weight: normal;
+}
+
+#participant-list {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    /* Set a max height to enable scrolling */
+    overflow-y: auto;
+    /* Add a scrollbar when needed */
+    width: 100%;
+}
+
+#submitReportButton {
+    background: blue;
+}
+
+
+#cancelButton {
+    background: black;
+}
+
+#participant-list option {
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#participant-list option:hover {
+    background-color: #f0f0f0;
+    /* Change the background color on hover */
+}
+
+/* Style the selected options (previously added names) */
+#participants {
+    background-color: #f0f0f0;
+    /* Change the background color of the selected names */
+    padding: 5px;
+}
+
+
+.panel-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.replyButton {
+    color: #fff;
+    background-color: #17a2b8;
+    padding-right: 8px;
+    padding-left: 8px;
+    margin: 0 1px 4px 0;
+    border: 0 solid #383838;
+    border-top-width: 1px;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 24px;
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.quoted-message {
+    background-color: #f0f0f0;
+    border-left: 4px solid #17a2b8;
+    padding: 10px;
+    /* margin: 10px 0; */
+    font-style: italic;
+    color: #333;
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-menu {
+    width: 300px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -112px;
+    background-color: #17a2b8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1;
+}
+
+.popup:hover .admin-menu {
+    display: block;
+    /* Show the admin menu on hover */
+}
+
+.menu {
+    position: relative;
+    padding-right: 20px;
+    /* Reserve space for the arrow icon */
+    text-decoration: none;
+}
+
+.arrowIcon:before {
+    content: '▼';
+    /* Down arrow */
+    position: absolute;
+    right: 0;
+    transition: transform 0.3s;
+    /* Add a smooth transition effect */
+}
+
+.menu:hover .arrowIcon:before {
+    transform: rotate(180deg);
+    /* Rotate the arrow to point up on hover */
+}
+
+.admin-menu-title {
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 5px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
