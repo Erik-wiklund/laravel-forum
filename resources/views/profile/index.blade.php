@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.app_profile')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         @if (session()->has('errors'))
             @foreach ($errors as $error)
                 {{ $error }}
