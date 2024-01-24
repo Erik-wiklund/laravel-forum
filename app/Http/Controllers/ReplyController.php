@@ -37,6 +37,9 @@ class ReplyController extends Controller
      */
     public function create(Request $request, SubCategory $subcategory, string $threadId)
     {
+
+        // Find the specific thread by ID
+        $thread = Thread::find($threadId);
         // Validate the form data (message content)
         $request->validate([
             'content' => 'required|string|max:255',
@@ -48,6 +51,14 @@ class ReplyController extends Controller
         $reply->thread_id = $threadId; // Associate with the thread
         $reply->user_id = auth()->user()->id; // Associate with the user who sent the reply
         $reply->save();
+
+        // Update the last_poster_id in the thread to the user who made the reply
+        $thread->last_poster_id = auth()->user()->id;
+        $thread->save();
+
+        // Update the last_poster_id in the thread to the user who made the reply
+        $thread->last_poster_id = auth()->user()->id;
+        $thread->save();
 
         return redirect()->route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $threadId])->with('success', 'Reply sent successfully.');
     }

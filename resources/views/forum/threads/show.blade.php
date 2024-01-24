@@ -93,7 +93,9 @@
                                                 No Image
                                             @endif
                                         </div>
-                                        <div class="user-container mt-1 text-center" style="width:100px;background-color: {{ $thread->createdBy->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $thread->createdBy->role->name }}</div>
+                                        <div class="user-container mt-1 text-center"
+                                            style="width:100px;background-color: {{ $thread->createdBy->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                            {{ $thread->createdBy->role->name }}</div>
                                     </div>
                                     <div class="messagePrimaryContent" style="margin-left: 150px;">
                                         <div style="padding: 10px; min-height: 100px; overflow: hidden;"
@@ -110,7 +112,7 @@
                                                     <input type="hidden" name="thread_id" value="{{ $thread->id }}">
                                                     <input type="checkbox" name="lockedOrNot" id="">
                                                 @endif
-                                                <span href="#">{{ $thread->createdBy->name }}</span>
+                                                <span href="#">{{ $thread->createdBy->username }}</span>
                                                 ,
                                                 <a style="color: #383838; margin-left: 2px;">
                                                     {{ $thread->created_at->format('M d, Y') }}
@@ -129,7 +131,7 @@
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
                                                         data-quote="{{ $thread->content }}"
-                                                        data-username="{{ $thread->createdBy->name }}">Reply</a>
+                                                        data-username="{{ $thread->createdBy->username }}">Reply</a>
                                                 </div>
                                             </div>
                                         @endif
@@ -148,7 +150,9 @@
                                                 No Image
                                             @endif
                                         </div>
-                                        <div class="user-container mt-1 text-center text-sm" style="width:100px;background-color: {{ $reply->user->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $reply->user->role->name }}</div>
+                                        <div class="user-container mt-1 text-center text-sm"
+                                            style="width:100px;background-color: {{ $reply->user->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                            {{ $reply->user->role->name }}</div>
                                     </div>
                                     <div class="messagePrimaryContent" style="margin-left: 150px;">
                                         <div class="messageContent"
@@ -170,7 +174,7 @@
                                                     <input type="hidden" name="thread_id" value="{{ $thread->id }}">
                                                     <input type="checkbox" name="lockedOrNot" id="">
                                                 @endif
-                                                <span href="#">{{ $reply->createdBy->name }}</span>
+                                                <span href="#">{{ $reply->createdBy->username }}</span>
                                                 ,
                                                 <a style="color: #383838; margin-left: 2px;">
                                                     {{ $reply->created_at->format('M d, Y') }}
@@ -192,7 +196,7 @@
                                                 <div style="float: right" class="publishControls">
                                                     <a style="" href="#" class="quote-button replyButton"
                                                         data-quote="{{ $reply->content }}"
-                                                        data-username="{{ $reply->createdBy->name }}">Reply</a>
+                                                        data-username="{{ $reply->createdBy->username }}">Reply</a>
                                                 </div>
                                             </div>
                                         @endif

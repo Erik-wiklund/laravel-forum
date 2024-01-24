@@ -33,6 +33,9 @@ class SidebarServiceProvider extends ServiceProvider
             $visitors = 0;
             $membersOnline = 0;
             $totalOnline = 0;
+            $activitiesCount = 0;
+            $user = null;
+            $userImage = null;
 
             $latestuser = User::latest()->first();
 

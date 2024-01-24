@@ -30,7 +30,7 @@
                                     <div>{{ $thread->content }}</div>
                                     <div>
                                         <div style="font-size: 14px; color: grey; display: flex">
-                                            <a href="#">{{ $thread->createdBy->name }}</a>
+                                            <a href="#">{{ $thread->createdBy->username }}</a>
                                             <div style="color: #383838; margin-left: 2px;">
                                                 {{ $thread->created_at->format('M d, Y') }}</div>
                                         </div>
@@ -47,7 +47,7 @@
                                         <div>{{ $reply->content }}</div>
                                         <div>
                                             <div style="font-size: 14px; color: grey; display: flex">
-                                                <a href="#">{{ $reply->createdBy->name }}</a>
+                                                <a href="#">{{ $reply->createdBy->username }}</a>
                                                 <div style="color: #383838; margin-left: 2px;">
                                                     {{ $reply->created_at->format('M d, Y') }}</div>
                                             </div>
@@ -61,16 +61,16 @@
             </div>
         </div>
     </div>
-    @if(Auth::check())
-       <form method="post" action="{{ route('reply.create', ['threadId' => $thread->id]) }}" style=" width:100%; padding:10px;">
-        @csrf
-        <textarea class="w-full" name="content" id="" cols="30" rows="10"></textarea>
-           
-        <button class="float-right" type="submit" style="background: red; padding:10px; border-radius: 7px">Reply</button>
-    </form> 
+    @if (Auth::check())
+        <form method="post" action="{{ route('reply.create', ['threadId' => $thread->id]) }}"
+            style=" width:100%; padding:10px;">
+            @csrf
+            <textarea class="w-full" name="content" id="" cols="30" rows="10"></textarea>
+
+            <button class="float-right" type="submit"
+                style="background: red; padding:10px; border-radius: 7px">Reply</button>
+        </form>
     @else
-    <div class="text-center"><a  href="{{ route('login') }}">You must register or login to reply here</a></div>
-    
+        <div class="text-center"><a href="{{ route('login') }}">You must register or login to reply here</a></div>
     @endif
-    
 @endsection

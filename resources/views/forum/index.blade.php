@@ -47,7 +47,7 @@
                                                         Latest: <a href="#">{{ $lastThread->title }}</a>
                                                     </h4>
                                                     <div class="flex items-center"><a
-                                                            href="#">{{ $lastThread->lastPoster->name }}</a>,
+                                                            href="#">{{ $lastThread->lastPoster->username }}</a>,
                                                         <div style="color:grey; 14px; margin-left:2px">
                                                             {{ $lastThread->updated_at->format('M d, Y') }}</div>
                                                     </div>

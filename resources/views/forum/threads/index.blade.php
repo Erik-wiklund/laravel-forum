@@ -50,7 +50,7 @@
                                                 $createdBy = $subcategory->threads('created_by')->first();
                                             @endphp
                                             <div style="font-size: 14px; color: grey;">
-                                                <a href="#">{{ $createdBy->createdBy->name }},</a>
+                                                <a href="#">{{ $thread->createdBy->username }},</a>
                                                 <div style="color: #383838">
                                                     {{ $createdBy->updated_at->format('M d, Y') }}
                                                 </div>
@@ -69,7 +69,7 @@
                                     <!-- Last post content here -->
                                     <div style="color: grey; font-size: 14px;">
                                         <div class="flex items-center">
-                                            <a href="#">{{ $lastThread->lastPoster->name }}</a>
+                                            <a href="#">{{ $thread->lastPoster->username }}</a>
                                         </div>
                                         {{ $lastThread->updated_at->format('M d, Y') }}
                                     </div>
