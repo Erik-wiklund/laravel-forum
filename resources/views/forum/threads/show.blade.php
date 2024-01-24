@@ -8,7 +8,7 @@
             <!-- Thread -->
             <div class="col-lg-12">
                 <!-- Thread section -->
-                <div class="text-white bg-info mb-0 p-4 rounded-top" style="min-height: 100px;">
+                <div class="text-white mt-8 bg-info mb-0 p-4 rounded-top" style="min-height: 100px;">
                     <div class="threadNavs">
                         <h4>
                             {{ $category->title }} / {{ $subcategory->title }} / {{ $thread->title }}
@@ -148,7 +148,7 @@
                                                 No Image
                                             @endif
                                         </div>
-                                        <div class="user-container mt-1 text-center" style="width:105px;background-color: {{ $reply->user->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $reply->user->role->name }}</div>
+                                        <div class="user-container mt-1 text-center text-sm" style="width:100px;background-color: {{ $reply->user->role->color }};padding: 5px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">{{ $reply->user->role->name }}</div>
                                     </div>
                                     <div class="messagePrimaryContent" style="margin-left: 150px;">
                                         <div class="messageContent"

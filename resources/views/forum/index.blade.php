@@ -8,7 +8,7 @@
                     <!-- Category -->
                     <div class="col-lg-12">
                         <!-- Category section  -->
-                        <h4 class="text-white bg-info mb-0 p-4 rounded-top">
+                        <h4 class="text-white bg-info mb-0 mt-8 p-4 rounded-top">
                             {{ $category->title }}
                         </h4>
 

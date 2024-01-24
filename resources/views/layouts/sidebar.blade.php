@@ -1,4 +1,4 @@
-<div class="w-full">
+<div class="w-full mt-8">
     <aside>
         <div class="card">
             <div class="card-footer">

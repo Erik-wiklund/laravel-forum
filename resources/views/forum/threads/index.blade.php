@@ -6,7 +6,7 @@
             <!-- Category -->
             <div class="col-lg-12">
                 <!-- Category section -->
-                <div class="text-white bg-info mb-0 p-4 rounded-top flex justify-between">
+                <div class="text-white bg-info mt-8 mb-0 p-4 rounded-top flex justify-between">
                     <h4>
                         {{ $subcategory->title }}
                     </h4>
