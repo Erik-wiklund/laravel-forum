@@ -17,11 +17,9 @@
                                 <a href="{{ route('threads.create', ['subcategory' => $subcategory]) }}"
                                     class="bg-red-600 block px-4 py-2 rounded-lg">Create new thread</a>
                             </label>
-                        
                         @elseif(Route::is('pm.index'))
-                            <label for=""
-                                style="text-align: center;  display: block; cursor: pointer;">
-                                <a href="{{ route('pm.create',['userId' => $user->id]) }}"
+                            <label for="" style="text-align: center;  display: block; cursor: pointer;">
+                                <a href="{{ route('pm.create', ['userId' => $user->id]) }}"
                                     class="bg-red-600 block px-4 py-2 rounded-lg">Create new PM</a>
                             </label>
                         @endif
@@ -29,6 +27,16 @@
                 </div>
 
                 @auth
+                    <div class="userInfo flex">
+                        <div>
+                            <img class="mx-3 mb-3" src="{{ asset('images/' . $sidebarData['userImage']) }}" alt="User Image"
+                                style="max-width: 100px; max-height: 100px;">
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <p class="">{{ $sidebarData['user']->username }}</p>
+                            <span class="messages_count text-xs">Messages: {{ $sidebarData['activitiesCount'] }}</span>
+                        </div>
+                    </div>
                     <div class="shoutbox-container" id="chat-messages"
                         style="height: 300px;  overflow:hidden; overflow-y: scroll;">
                         <!-- Display chat messages -->
@@ -168,7 +176,7 @@
 
                 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
-                
+
             </div>
     </aside>
 </div>

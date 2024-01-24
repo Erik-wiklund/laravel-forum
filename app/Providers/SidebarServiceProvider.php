@@ -40,6 +40,16 @@ class SidebarServiceProvider extends ServiceProvider
                 // User is logged in, fetch online users excluding the current user
                 $onlineUsers = User::where('last_seen', '>=', now()->subMinutes(5))->get();
                 $membersOnline = User::where('last_seen', '>=', now()->subMinutes(5))->get()->count();
+                $userImage = Auth::user()->image;
+                $user = Auth::user();
+                $currentUser = Auth::user();
+                $repliesCount = $currentUser->repliesMade()->count();
+                $threadsCount = $currentUser->threadsStarted()->count();
+                $activitiesCount = $repliesCount + $threadsCount;
+
+
+                $sidebarData['user'] = $currentUser;
+                $sidebarData['activitiesCount'] = $activitiesCount;
                 $totalCategories = Category::count();
                 $totalTopics = Thread::count();
                 $messages = Message::all()->reverse();
@@ -68,6 +78,9 @@ class SidebarServiceProvider extends ServiceProvider
             }
 
             $sidebarData = [
+                'activitiesCount' => $activitiesCount,
+                'user' => $user,
+                'userImage' => $userImage,
                 'onlineUsers' => $onlineUsers,
                 'totalUsers' => $totalUsers,
                 'totalOnline' => $totalOnline,

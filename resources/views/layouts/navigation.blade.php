@@ -73,7 +73,7 @@
                                         style="max-width: 30px; max-height: 30px;">
                                 </div>
                                 @auth
-                                    <div>{{ Auth::user()->name }}</div>
+                                    <div>{{ Auth::user()->username }}</div>
                                 @endauth
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"

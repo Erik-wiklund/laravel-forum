@@ -172,3 +172,11 @@ ul li {
 input[type="checkbox"] {
     margin-right: 5px;
 }
+
+.userInfo {
+    border-bottom: 2px rgba(0,0,0,.125) solid;
+}
+
+.card-footer {
+    padding: 0;
+}

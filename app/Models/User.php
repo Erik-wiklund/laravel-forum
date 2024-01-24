@@ -22,6 +22,16 @@ class User extends Authenticatable
     //     return $this->last_seen >= $onlineThreshold;
     // }
 
+    public function repliesMade()
+    {
+        return $this->hasMany(Reply::class, 'user_id');
+    }
+
+    public function threadsStarted()
+    {
+        return $this->hasMany(Thread::class, 'created_by');
+    }
+
 
     public function chatRooms()
     {
