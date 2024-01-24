@@ -83,6 +83,7 @@ class User extends Authenticatable
         'password',
         'last_seen',
         'role_id',
+        'image',
     ];
 
     /**
