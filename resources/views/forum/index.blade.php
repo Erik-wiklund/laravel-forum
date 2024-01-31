@@ -18,44 +18,39 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <h3 class="h5">
-
-                                            @foreach ($category->subcategories as $subcategory)
+                                    @foreach ($category->subcategories as $subcategory)
+                                        <td class="relative border-b border border-yellow-300 flex flex-col">
+                                            <div class="h5">
                                                 <a href="{{ route('subcategories.threads.index', ['subcategory' => $subcategory]) }}"
                                                     class="text-uppercase">
                                                     <li class="mt-2 mb-2" style="list-style: none;">
                                                         {{ $subcategory->title }}
-                                                        <div class="mt-2" style="border-bottom: 2px solid lightgrey;">
-                                                        </div>
                                                     </li>
                                                 </a>
-                                            @endforeach
-                                            </a>
-                                        </h3>
-                                    </td>
-                                    <td style="width: 350px">
-                                        @foreach ($category->subcategories as $subcategory)
-                                            <!-- Output subcategory details -->
+                                            </div>
+                                            <div class="absolute top-0 right-0 p-2 m-2" style="width: 200px;">
 
-                                            @if ($subcategory->threads->isNotEmpty())
-                                                @php
-                                                    $lastThread = $subcategory->threads->sortByDesc('updated_at')->first();
-                                                @endphp
-                                                <div>
-                                                    <h4 class="h6 font-weight-bold mb-0">
-                                                        Latest: <a href="#">{{ $lastThread->title }}</a>
-                                                    </h4>
-                                                    <div class="flex items-center"><a
-                                                            href="#">{{ $lastThread->lastPoster->username }}</a>,
-                                                        <div style="color:grey; 14px; margin-left:2px">
-                                                            {{ $lastThread->updated_at->format('M d, Y') }}</div>
+                                                <!-- Output subcategory details -->
+
+                                                @if ($subcategory->threads->isNotEmpty())
+                                                    @php
+                                                        $lastThread = $subcategory->threads->sortByDesc('updated_at')->first();
+                                                    @endphp
+                                                    <div>
+                                                        <h4 class="h6 font-weight-bold mb-0">
+                                                            Latest: <a href="#">{{ $lastThread->title }}</a>
+                                                        </h4>
+                                                        <div class="flex items-center"><a
+                                                                href="#">{{ $lastThread->lastPoster->username }}</a>,
+                                                            <div style="color:grey; 14px; margin-left:2px">
+                                                                {{ $lastThread->updated_at->format('M d, Y') }}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="mt-2" style="border-bottom: 2px solid lightgrey;"></div>
-                                            @endif
-                                        @endforeach
-                                    </td>
+                                                @endif
+
+                                            </div>
+                                        </td>
+                                    @endforeach
                                 </tr>
                             </tbody>
                         </table>
