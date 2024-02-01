@@ -28,7 +28,7 @@
                                                     </li>
                                                 </a>
                                             </div>
-                                            <div class="absolute top-0 right-0 p-2 m-2" style="width: 200px;">
+                                            <div class="absolute top-0 right-0 p-2 m-2" style="width: 250px;">
 
                                                 <!-- Output subcategory details -->
 
@@ -42,7 +42,7 @@
                                                         </h4>
                                                         <div class="flex items-center"><a
                                                                 href="#">{{ $lastThread->lastPoster->username }}</a>,
-                                                            <div style="color:grey; 14px; margin-left:2px">
+                                                            <div style="color:grey; font-size:14px; margin-left:2px">
                                                                 {{ $lastThread->updated_at->format('M d, Y') }}</div>
                                                         </div>
                                                     </div>
