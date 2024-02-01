@@ -54,6 +54,10 @@ class SidebarServiceProvider extends ServiceProvider
                 $sidebarData['user'] = $currentUser;
                 $sidebarData['activitiesCount'] = $activitiesCount;
                 $totalCategories = Category::count();
+                $categories = Category::all();
+                $totalSubCategories = $categories->sum(function ($category) {
+                    return $category->subcategories()->count();
+                });
                 $totalTopics = Thread::count();
                 $messages = Message::all()->reverse();
                 $chatRoom = ChatRoom::find(1);
@@ -65,6 +69,10 @@ class SidebarServiceProvider extends ServiceProvider
                 $visitor->save();
             } else {
                 $totalCategories = Category::count();
+                $categories = Category::all();
+                $totalSubCategories = $categories->sum(function ($category) {
+                    return $category->subcategories()->count();
+                });
                 $totalTopics = Thread::count();
                 $messages = Message::all()->reverse();
                 $chatRoom = ChatRoom::find(1);
@@ -93,6 +101,7 @@ class SidebarServiceProvider extends ServiceProvider
                 'latestUser' => $latestuser,
                 'totalTopics' => $totalTopics,
                 'totalCategories' => $totalCategories,
+                'totalSubCategories' => $totalSubCategories,
                 'messages' => $messages,
                 'bannedUserIds' => $bannedUserIds,
             ];
