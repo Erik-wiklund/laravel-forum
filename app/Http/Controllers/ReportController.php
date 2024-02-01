@@ -13,7 +13,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        $reports = Report::with('user', 'reply', 'thread','conversation','conversationMessages')->latest()->paginate(20);
+        $reports = Report::with('user', 'reply', 'thread', 'conversation', 'conversationMessages')->latest()->paginate(20);
         return view('admin.reports.index', ['reports' => $reports]);
     }
 
@@ -53,15 +53,24 @@ class ReportController extends Controller
 
         // Determine whether it's a reply or thread report
 
-        // Reporting a thread start message
         $report = new Report();
         $report->reporter = auth()->user()->id;
-        $report->reported_reply = $reportedReply;
-        $report->reported_thread = $reportedThread;
-        $report->reported_private_messages = $reportedConversationMessage;
-        $report->reported_private_conversation = $reportedConversation;
+
+        $reportedThread = $request->input('thread_id');
+        $report->reported_thread = empty($reportedThread) ? null : $reportedThread;
+
+        $reportedPrivateConversation = $request->input('conversation_id');
+        $report->reported_private_conversation = empty($reportedPrivateConversation) ? null : $reportedPrivateConversation;
+
+        $report->reported_reply = $request->input('reply_id');
+
+        // For reported_private_messages, as shown in the previous example
+        $reportedPrivateMessages = $request->input('replypm_id');
+        $report->reported_private_messages = empty($reportedPrivateMessages) ? null : $reportedPrivateMessages;
+
         $report->reason = $reason;
         $report->save();
+
 
 
         return redirect()->back()->with('success', 'Report submitted successfully');

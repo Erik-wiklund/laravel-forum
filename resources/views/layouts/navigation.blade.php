@@ -10,53 +10,26 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 items-center sm:flex">
-                    <x-nav-link>
-                        <form action="{{ route('forum.index') }}">
-                            <button class="text-white navButtons h-16 w-16 p-2" type="submit">
-                                {{ __('Home') }}</button>
-                        </form>
-                    </x-nav-link>
-                    <x-nav-link>
-                        <form action="">
-                            <button class="text-white navButtons h-16 w-18 p-2"
-                                type="submit">{{ __('Resources') }}</button>
-                        </form>
-                    </x-nav-link>
+
+                    <form action="{{ route('forum.index') }}">
+                        <a class=" navButtons h-16 p-2" type="submit">
+                            {{ __('Home') }}</a>
+                    </form>
+
+
+                    <form action="">
+                        <a class="navButtons h-16 p-2" type="submit">{{ __('Resources') }}</a>
+                    </form>
+
                 </div>
             </div>
-
-            <script>
-                // When a navigation button is clicked, store its ID in local storage
-                $('.navButtons').on('click', function() {
-                    var selectedButtonId = $(this).parent().index(); // Get the index of the selected button
-                    localStorage.setItem('selectedButton', selectedButtonId);
-                });
-
-                // Retrieve the selected button from local storage and apply the style
-                var selectedButtonId = localStorage.getItem('selectedButton');
-                if (selectedButtonId !== null) {
-                    $('.navButtons').removeClass('selected'); // Remove selected class from all buttons
-                    $('.navButtons').eq(selectedButtonId).addClass('selected'); // Add selected class to the stored button
-                }
-            </script>
-
-            <style>
-                .selected {
-                    background-color: red;
-                    /* Change this to your desired background color */
-                }
-            </style>
-
-
-
-
             <!-- Settings Dropdown -->
             @guest
-                <div>
+                <div class="flex justify-center items-center">
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                    <div>
                         <div class="px-4">
-                            <a class="text-gray-500" href="{{ route('login') }}">Login</a>
+                            <a class="navButtons" href="{{ route('login') }}">Login</a>
                             {{-- <a class="text-gray-500" href="{{ route('register') }}">Register</a> --}}
                         </div>
                     </div>

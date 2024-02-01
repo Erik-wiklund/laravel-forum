@@ -180,3 +180,14 @@ input[type="checkbox"] {
 .card-footer {
     padding: 0;
 }
+
+.navButtons {
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navButtons:hover {
+   color: white;
+}

@@ -1,8 +1,8 @@
 <div class="w-full mt-8">
     <aside>
         <div class="card">
-            <div class="card-footer">
-                <div class="register-login-thread-button mb-4 text-center">
+            <div>
+                <div class="register-login-thread-button mb-4 text-center mt-4">
                     @guest
                         <a href="{{ route('register') }}"
                             class="ml-auto bg-red-600 text-white text-center py-2 px-4 hover:bg-red-700"
@@ -114,7 +114,7 @@
                         @endforeach
                     </ul>
                 </div>
-                <dl>
+                <dl class="m-2">
                     <h3 style="border-radius: 5px;background: dodgerblue; padding: 6px; text-align: center">Members
                         Online Now</h3>
                     <ul class="list-unstyled mb-0 flex">
@@ -149,8 +149,8 @@
                     <dd class="col-4 mb-0">{{ $sidebarData['totalUsers'] }}</dd>
                 </dl>
             </div>
-            <div class="card-footer">
-                <div>Newest Member</div>
+            <div class="card-footer m-2">
+                <div>Newest Member:</div>
                 <div>
                     <a href="#" class="openProfileModal"
                         data-user-id="{{ $sidebarData['latestUser']['id'] }}">{{ $sidebarData['latestUser']['name'] }}</a>
