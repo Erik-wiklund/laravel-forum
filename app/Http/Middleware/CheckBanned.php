@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CheckBanned
 {
@@ -16,14 +16,17 @@ class CheckBanned
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && (auth()->user()->isforumbanned === 1)) {
-            Auth::logout();
+        if (auth()->check() && auth()->user()->banned_until && now()->lessThan(auth()->user()->banned_until)) {
+            $banned_days = now()->diffInDays(auth()->user()->banned_until) + 1;
+            auth()->logout();
 
-            $request->session()->invalidate();
+            if ($banned_days > 14) {
+                $message = 'Your account has been permanently suspended. Please contact administrator.';
+            } else {
+                $message = 'Your account has been suspended for ' . $banned_days . ' ' . Str::plural('day', $banned_days) . '. Please contact administrator.';
+            }
 
-            $request->session()->regenerateToken();
-
-            return redirect()->route('login')->with('error', 'Your Account is suspended, please contact Admin.');
+            return redirect()->route('login')->withMessage($message);
         }
         return $next($request);
     }

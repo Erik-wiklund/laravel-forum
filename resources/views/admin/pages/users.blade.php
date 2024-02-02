@@ -50,7 +50,8 @@
                                                 <td>
                                                     <div>
                                                         <div style="margin-bottom: 4px;">
-                                                            @if ($user->isforumbanned == 1)
+                                                            <label for="" class="text-center">Forum Ban</label>
+                                                            @if ($user->banned_until >= 1)
                                                                 <form method="POST"
                                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
@@ -61,14 +62,19 @@
                                                                         Ban</button>
                                                                 </form>
                                                             @else
-                                                                <form method="POST"
+                                                                <form method="post"
                                                                     action="{{ route('forum.ban', ['userId' => $user->id]) }}">
                                                                     @csrf
-                                                                    @method('POST')
-                                                                    <input type="hidden" name="context" value="forum">
-                                                                    <button style="background: green" type="submit">Forum
-                                                                        Ban
-                                                                        User</button>
+                                                                    <label for="ban_duration">Ban Duration:</label>
+                                                                    <select name="ban_duration" id="ban_duration">
+                                                                        <option value="1">1 day</option>
+                                                                        <option value="2">2 days</option>
+                                                                        <option value="3">3 days</option>
+                                                                        <option value="7">7 days</option>
+                                                                        <!-- Permanent option -->
+                                                                        <option value="permanent">Permanent</option>
+                                                                    </select>
+                                                                    <button type="submit">Ban User</button>
                                                                 </form>
                                                             @endif
                                                         </div>

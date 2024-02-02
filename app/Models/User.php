@@ -94,7 +94,11 @@ class User extends Authenticatable
         'last_seen',
         'role_id',
         'image',
-        'isforumbanned',
+        'banned_until',
+    ];
+
+    protected $dates = [
+        'banned_until'
     ];
 
     /**

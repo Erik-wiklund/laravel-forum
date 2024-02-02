@@ -223,30 +223,44 @@ class UserController extends Controller
         return redirect()->route('users')->with('success', 'Shoutbox ban added successfully');
     }
 
-    public function add_forum_ban($userId)
+    public function add_forum_ban(Request $request, $userId)
     {
         $user = User::find($userId);
 
-        $user->isforumbanned = 1;
+        // Get the selected ban duration
+        $banDuration = $request->input('ban_duration');
 
+        // Set the ban duration based on the selected option
+        if ($banDuration === 'permanent') {
+            // Permanent ban
+            $user->banned_until = '2038-01-19 03:14:07'; // Set to null for permanent ban
+        } else {
+            // Temporary ban
+            $user->banned_until = now()->addDays($banDuration);
+        }
         $user->save();
+
+        $banDurationText = ($banDuration === 'permanent') ? 'Permanent' : "$banDuration days";
 
         $request = request()->merge([
             'user_id' => auth()->check() ? auth()->user()->id : null,
             'resource_type' => 'user',
             'resource_id' => $userId,
             'context' => 'forum',
+            'message' => "Forum ban added successfully. Duration: $banDurationText",
         ]);
+
         app(AdminLogsController::class)->store($request);
 
         return redirect()->route('users')->with('success', 'Forum ban added successfully');
     }
 
+
     public function del_forum_ban($userId)
     {
         $user = User::find($userId);
 
-        $user->isforumbanned = 0;
+        $user->banned_until = null;
 
         $user->save();
         $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'unbanForum']);
