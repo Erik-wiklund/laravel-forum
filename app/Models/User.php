@@ -94,6 +94,7 @@ class User extends Authenticatable
         'last_seen',
         'role_id',
         'image',
+        'isforumbanned',
     ];
 
     /**

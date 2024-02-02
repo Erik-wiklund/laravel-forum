@@ -231,7 +231,12 @@ class UserController extends Controller
 
         $user->save();
 
-        $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'forum']);
+        $request = request()->merge([
+            'user_id' => auth()->check() ? auth()->user()->id : null,
+            'resource_type' => 'user',
+            'resource_id' => $userId,
+            'context' => 'forum',
+        ]);
         app(AdminLogsController::class)->store($request);
 
         return redirect()->route('users')->with('success', 'Forum ban added successfully');
