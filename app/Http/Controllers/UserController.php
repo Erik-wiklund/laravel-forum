@@ -233,7 +233,7 @@ class UserController extends Controller
         // Set the ban duration based on the selected option
         if ($banDuration === 'permanent') {
             // Permanent ban
-            $user->banned_until = '2038-01-19 03:14:07'; // Set to null for permanent ban
+            $user->is_permbanned = 1;
         } else {
             // Temporary ban
             $user->banned_until = now()->addDays($banDuration);
@@ -261,6 +261,7 @@ class UserController extends Controller
         $user = User::find($userId);
 
         $user->banned_until = null;
+        $user->is_permbanned = null;
 
         $user->save();
         $request = request()->merge(['user_id' => auth()->user()->id, 'resource_type' => 'user', 'resource_id' => $userId, 'context' => 'unbanForum']);

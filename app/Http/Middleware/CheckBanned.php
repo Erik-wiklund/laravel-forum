@@ -16,18 +16,22 @@ class CheckBanned
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->banned_until && now()->lessThan(auth()->user()->banned_until)) {
-            $banned_days = now()->diffInDays(auth()->user()->banned_until) + 1;
+        $user = auth()->user();
+
+        if ($user && $user->is_permbanned) {
+            auth()->logout();
+            $message = 'Your account has been suspended permanently. Please contact the administrator.';
+        } elseif ($user && $user->banned_until && now()->lessThan($user->banned_until)) {
+            $banned_days = now()->diffInDays($user->banned_until) + 1;
             auth()->logout();
 
-            if ($banned_days > 14) {
-                $message = 'Your account has been permanently suspended. Please contact administrator.';
-            } else {
-                $message = 'Your account has been suspended for ' . $banned_days . ' ' . Str::plural('day', $banned_days) . '. Please contact administrator.';
+            if ($banned_days <= 7) {
+                $message = 'Your account has been suspended for ' . $banned_days . ' ' . Str::plural('day', $banned_days) . '. Please contact the administrator.';
             }
-
-            return redirect()->route('login')->withMessage($message);
         }
-        return $next($request);
+
+        return isset($message)
+            ? redirect()->route('login')->withMessage($message)
+            : $next($request);
     }
 }

@@ -51,7 +51,7 @@
                                                     <div>
                                                         <div style="margin-bottom: 4px;">
                                                             <label for="" class="text-center">Forum Ban</label>
-                                                            @if ($user->banned_until >= 1)
+                                                            @if ($user->banned_until >= 1 || $user->is_permbanned === 1)
                                                                 <form method="POST"
                                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
@@ -79,6 +79,7 @@
                                                             @endif
                                                         </div>
                                                         <div style="margin-top: 4px;">
+                                                            <label for="" class="font-bold">Shoutbox ban</label>
                                                             @if (in_array($user->id, $bannedUserIds))
                                                                 <form method="POST"
                                                                     action="{{ route('chat.unban', ['userId' => $user->id]) }}">
