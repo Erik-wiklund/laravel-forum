@@ -40,7 +40,7 @@
                                 <label class="col-lg-2 control-label">Banned User Status</label>
                                 <div class="col-lg-10">
                                     <div style="margin-bottom: 10px;">
-                                        @if ($users->isforumbanned == 1)
+                                        @if ($users->banned_until >= 1 || $users->is_permbanned === 1)
                                             <span
                                                 style="background: red; padding: 5px 10px; color: white; border-radius: 5px;">User
                                                 Forumbanned</span>
@@ -85,7 +85,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    <a href="{{ route('user.edit', ['userId' => $users->id]) }}">Edit User</a>
+                                    <a href="{{ route('user.edit', ['userId' => $users->id]) }}"
+                                        class="btn btn-success">Edit
+                                        User</a>
                                     <a href="{{ route('users') }}" class="btn btn-danger">Back</a>
                                 </div>
                             </div>

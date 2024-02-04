@@ -172,3 +172,19 @@ ul li {
 input[type="checkbox"] {
     margin-right: 5px;
 }
+
+.forum_ban_button:hover {
+    background-color: lightgray !important;
+}
+
+.shout-box-button:hover, .forum-unban-button:hover {
+    background-color: lightgray !important;
+}
+
+.success-btn {
+    background-color: #4cd964;
+}
+
+/* .btn-success:hover {
+    background-color: white;
+} */

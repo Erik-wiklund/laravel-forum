@@ -33,7 +33,8 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Main role</th>
-                                        <th>Ban Actions</th>
+                                        <th>Forum ban</th>
+                                        <th>Shoutbox ban</th>
                                         <th>View</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -49,20 +50,21 @@
                                                 <td>{{ optional($user->role)->name }}</td>
                                                 <td>
                                                     <div>
-                                                        <div style="margin-bottom: 4px;">
-                                                            <label for="" class="text-center">Forum Ban</label>
+                                                        <div>
                                                             @if ($user->banned_until >= 1 || $user->is_permbanned === 1)
-                                                                <form method="POST"
+                                                                <form method="POST" class="flex flex-col"
                                                                     action="{{ route('forum.unban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     @method('GET')
                                                                     <input type="hidden" name="context" value="unbanForum">
-                                                                    <button style="background: red" type="submit">Remove
+                                                                    <button class="rounded-md forum-unban-button"
+                                                                        style="background-color: rgb(161, 92, 92)"
+                                                                        type="submit">Remove
                                                                         Forum
                                                                         Ban</button>
                                                                 </form>
                                                             @else
-                                                                <form method="post"
+                                                                <form method="post" class="flex flex-col"
                                                                     action="{{ route('forum.ban', ['userId' => $user->id]) }}">
                                                                     @csrf
                                                                     <label for="ban_duration">Ban Duration:</label>
@@ -74,34 +76,41 @@
                                                                         <!-- Permanent option -->
                                                                         <option value="permanent">Permanent</option>
                                                                     </select>
-                                                                    <button type="submit">Ban User</button>
+                                                                    <button
+                                                                        class="bg-gray-400 border mt-1 p-1 forum_ban_button rounded-md"
+                                                                        style="background-color: white" type="submit">Ban
+                                                                        User</button>
                                                                 </form>
                                                             @endif
                                                         </div>
-                                                        <div style="margin-top: 4px;">
-                                                            <label for="" class="font-bold">Shoutbox ban</label>
-                                                            @if (in_array($user->id, $bannedUserIds))
-                                                                <form method="POST"
-                                                                    action="{{ route('chat.unban', ['userId' => $user->id]) }}">
-                                                                    @csrf
-                                                                    @method('GET')
-                                                                    <input type="hidden" name="context"
-                                                                        value="unbanShoutbox">
-                                                                    <button style="background: red" type="submit">Remove
-                                                                        Shoutbox Ban</button>
-                                                                </form>
-                                                            @else
-                                                                <form method="POST"
-                                                                    action="{{ route('chat.banUser', ['userId' => $user->id]) }}">
-                                                                    @csrf
-                                                                    @method('POST')
-                                                                    <input type="hidden" name="context" value="shoutbox">
-                                                                    <button style="background: green"
-                                                                        type="submit">shoutbox
-                                                                        Ban User</button>
-                                                                </form>
-                                                            @endif
-                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="margin-bottom: 4px;">
+                                                        @if (in_array($user->id, $bannedUserIds))
+                                                            <form method="POST"
+                                                                action="{{ route('chat.unban', ['userId' => $user->id]) }}">
+                                                                @csrf
+                                                                @method('GET')
+                                                                <input type="hidden" name="context" value="unbanShoutbox">
+                                                                <button class="rounded-md shout-box-button"
+                                                                    style="background: rgb(161, 92, 92)"
+                                                                    type="submit">Remove
+                                                                    Shoutbox Ban</button>
+                                                            </form>
+                                                        @else
+                                                            <form method="POST"
+                                                                action="{{ route('chat.banUser', ['userId' => $user->id]) }}">
+                                                                @csrf
+                                                                @method('POST')
+                                                                <input type="hidden" name="context" value="shoutbox">
+                                                                <button
+                                                                    class="bg-gray-400 border mt-1 p-1 forum_ban_button rounded-md"
+                                                                    style="background-color: white" type="submit">
+                                                                    Ban User</button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td><a href="{{ route('user.show', ['userId' => $user->id]) }}"><i

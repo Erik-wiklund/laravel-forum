@@ -35,6 +35,7 @@
     <link href="{{ asset('admin/css/style-responsive.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/css/xcharts.min.css') }}" rel=" stylesheet">
     <link href="{{ asset('admin/css/jquery-ui-1.10.4.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="custom.css">
 
     <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 
@@ -187,7 +188,7 @@
 
 
     <!-- Vue App.js -->
-    @vite(['resources/css/app.css','resources/css/custom.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js'])
     {{-- <script type="module" src="{{ asset('admin/js/app.js') }}"></script> --}}
     <!-- End -->
     <script src="{{ asset('admin/js/jquery.js') }}"></script>

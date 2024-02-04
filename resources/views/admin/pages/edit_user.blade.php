@@ -33,8 +33,8 @@ use Illuminate\Support\Facades\Session;
       {{ Session::get('alert-class', 'alert-success') }}">
                                 {{ Session::get('message') }}</p>
                         @endif
-                        <form class="form-horizontal" method="POST" action="{{ route('user.update',['userId'=> $users->id]) }}"
-                            enctype="multipart/form-data">
+                        <form class="form-horizontal" method="POST"
+                            action="{{ route('user.update', ['userId' => $users->id]) }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -75,7 +75,8 @@ use Illuminate\Support\Facades\Session;
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">User Image</label>
                                 <div class="col-lg-10">
-                                    <input type="file" name="image" class="form-control" value="{{ $users->image }}" />
+                                    <input type="file" name="image" class="form-control"
+                                        value="{{ $users->image }}" />
                                     <div style="margin-top: 5px;">Current image: @if (!empty($users->image))
                                             <img src="{{ asset('images/' . $users->image) }}" alt="User Image"
                                                 style="max-width: 150px;">
@@ -98,39 +99,41 @@ use Illuminate\Support\Facades\Session;
                                     @endif
                                 </div>
                             </div>
-                        @error('password')
-                            <p class="alert alert-danger">{{ $message }}</p>
-                        @enderror
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Confirm Password</label>
-                            <div class="col-lg-10">
-                                @if ($users->password === null)
-                                    <input type="password" name="password_confirmation" class="form-control" value="" />
-                                @else
-                                    <input type="password" name="password_confirmation" class="form-control" value="********" />
-                                @endif
+                            @error('password')
+                                <p class="alert alert-danger">{{ $message }}</p>
+                            @enderror
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Confirm Password</label>
+                                <div class="col-lg-10">
+                                    @if ($users->password === null)
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                            value="" />
+                                    @else
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                            value="********" />
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        @error('password_confirmation')
-                            <p class="alert alert-danger">{{ $message }}</p>
-                        @enderror
+                            @error('password_confirmation')
+                                <p class="alert alert-danger">{{ $message }}</p>
+                            @enderror
 
 
 
-                        <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                                <button type="submit" class="btn btn-success">Add</button>
-                                <a href="/dashboard/home" class="btn btn-danger">Cancel</a>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-success success-btn">Add</button>
+                                    <a href="{{ route('users') }}" class="btn btn-danger">Cancel</a>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
 
 
+        </section>
     </section>
-</section>
-<!--main content end-->
+    <!--main content end-->
 
 @endsection

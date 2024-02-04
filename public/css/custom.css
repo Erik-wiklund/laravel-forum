@@ -191,3 +191,7 @@ input[type="checkbox"] {
 .navButtons:hover {
    color: white;
 }
+
+.forum_ban_button:hover {
+    background-color: white;
+}
