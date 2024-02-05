@@ -41,5 +41,17 @@ class PrivateMessage extends Model
             ->whereNotIn('id', $messageIds)
             ->update(['has_read' => true]);
     }
-    
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'private_message_user')
+            ->withPivot('has_read', 'created_at', 'updated_at');
+    }
+
+    public function hasUnreadMessages()
+    {
+        // Implement your logic to check if the conversation has unread messages
+        // For example, check if there are unread replies in the conversation
+        return $this->privateMessageReplies()->whereJsonDoesntContain('has_read', auth()->user()->id)->exists();
+    }
 }

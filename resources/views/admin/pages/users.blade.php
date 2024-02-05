@@ -31,6 +31,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>Main role</th>
                                         <th>Forum ban</th>
@@ -46,6 +47,7 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <td>{{ $user->name }}</td>
+                                                <td>{{ $user->username }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ optional($user->role)->name }}</td>
                                                 <td>

@@ -58,9 +58,15 @@
                                 <x-dropdown-link style="margin: 0 !important;" :href="route('pm.index', ['userId' => $user->id])">
                                     {{ __('Private message') }}
                                 </x-dropdown-link>
-                                @if (Auth::user()->hasUnreadMessages())
-                                    <span style="margin-top: -15px;"
-                                        class="new-indicator px-4 py-2 text-sm text-red-600">New Messages</span>
+                                @if (Auth::check())
+                                    @if (Auth::user()->hasUnreadMessages())
+                                        <span style="margin-top: -15px;"
+                                            class="new-indicator px-4 py-2 text-sm text-red-600">New Messages</span>
+                                    @else
+                                        <span class="text-xs px-4">No unread messages</span>
+                                    @endif
+                                @else
+                                    <span>User not authenticated</span>
                                 @endif
                             </div>
 

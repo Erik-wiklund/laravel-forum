@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-@include('modals.report_conversation_modal')
-@include('modals.report_reply_pm_modal')
+    @include('modals.report_conversation_modal')
+    @include('modals.report_reply_pm_modal')
     <div class="col-lg-12">
         <div class="row">
             <!-- Thread -->

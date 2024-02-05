@@ -40,7 +40,19 @@
                                     <td class="conversation-details">
                                         <h3 class="conversation-title">
                                             <a
-                                                href="{{ route('pm.show', ['conversation' => $conversation->id, 'userId' => $user->id]) }}">{{ $conversation->subject }}</a>
+                                                href="{{ route('pm.show', ['conversation' => $conversation->id, 'userId' => $user->id]) }}">{{ $conversation->subject }}
+                                            </a>
+                                            @if (Auth::check())
+                                                @if ($conversation->hasUnreadMessages())
+                                                    <span style="margin-top: -15px;"
+                                                        class="new-indicator px-4 py-2 text-sm text-red-600">New
+                                                        Messages</span>
+                                                @else
+                                                    <span class="text-xs px-4">No unread messages</span>
+                                                @endif
+                                            @else
+                                                <span>User not authenticated</span>
+                                            @endif
                                         </h3>
                                         <p class="participants-info">
                                             Participants: {{ $conversation->participantNames->implode(', ') }}
@@ -49,27 +61,27 @@
                                             Created by {{ $conversation->createdby->name }} on
                                             {{ $conversation->created_at->format('M d, Y') }}
                                         </p>
-                                        </td>
-                                        @php
-                                            $lastReply = $conversation;
-                                        @endphp
-                                        <td>
-                                            <p class="replies-info flex flex-col">
-                                                <span>Replies: {{ $lastReply->privateMessageReplies->count() }}</span>
-                                                <span>Participants: {{ count($conversation->participantNames) }}</span>
-                                            </p>
-                                        </td>
+                                    </td>
+                                    @php
+                                        $lastReply = $conversation;
+                                    @endphp
+                                    <td>
+                                        <p class="replies-info flex flex-col">
+                                            <span>Replies: {{ $lastReply->privateMessageReplies->count() }}</span>
+                                            <span>Participants: {{ count($conversation->participantNames) }}</span>
+                                        </p>
+                                    </td>
 
-                                        <td>
-                                            <div class="last-reply-details" style="color: grey; font-size: 14px;">
-                                                <div class="flex items-center">
-                                                    <a href="#">{{ $lastReply->lastPoster->name }}</a>
-                                                </div>
-                                                <p class="last-reply-date">
-                                                    {{ $conversation->updated_at->format('M d, Y') }}
-                                                </p>
+                                    <td>
+                                        <div class="last-reply-details" style="color: grey; font-size: 14px;">
+                                            <div class="flex items-center">
+                                                <a href="#">{{ $lastReply->lastPoster->name }}</a>
                                             </div>
-                                        </td>
+                                            <p class="last-reply-date">
+                                                {{ $conversation->updated_at->format('M d, Y') }}
+                                            </p>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -84,5 +96,4 @@
             </div>
         </div>
     </div>
-
 @endsection

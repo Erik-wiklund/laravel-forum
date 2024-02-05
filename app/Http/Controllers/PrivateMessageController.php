@@ -71,7 +71,7 @@ class PrivateMessageController extends Controller
         // Convert the recipients array to a JSON string
         $participants = json_encode($recipients);
 
-        $message = $request->input('message');
+        $messageContent = $request->input('message');
 
         // Create a new private message conversation
         $privateMessage = new PrivateMessage();
@@ -79,12 +79,23 @@ class PrivateMessageController extends Controller
         $privateMessage->created_by = auth()->user()->id;
         $privateMessage->last_poster_id = auth()->user()->id;
         $privateMessage->participants = $participants; // Store participants as JSON
-        $privateMessage->message = $message;
+        $privateMessage->message = $messageContent;
         $privateMessage->save();
+
+        // Create a record in the private_message_user table for the initial message
+        foreach ($recipients as $recipientId) {
+            $privateMessage->users()->attach($recipientId, [
+                'has_read' => json_encode([$senderId]),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'message' => $messageContent,
+            ]);
+        }
 
         // Redirect to the conversation or success page
         return back();
     }
+
 
     public function reply(Request $request, $conversationId)
     {
@@ -154,6 +165,6 @@ class PrivateMessageController extends Controller
         $participantNames = User::whereIn('id', $participants)->pluck('name');
 
         // Render the view, passing the unread messages and participant names
-        return view('private_message.show', compact('user','unreadReplies', 'conversation','replies', 'participantNames', 'userId'));
+        return view('private_message.show', compact('user', 'unreadReplies', 'conversation', 'replies', 'participantNames', 'userId'));
     }
 }
