@@ -185,6 +185,10 @@ input[type="checkbox"] {
     background-color: #4cd964;
 }
 
+.upload_resource_btn:hover {
+    background-color: #383838;
+}
+
 /* .btn-success:hover {
     background-color: white;
 } */
