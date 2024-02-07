@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('created_by');
             $table->string('category');
             $table->string('title');
             $table->text('description');
@@ -22,6 +23,8 @@ return new class extends Migration
             $table->string('format'); // Column for storing file format
             $table->string('url')->nullable(); // Column for additional URL, allowing NULL values
             $table->string('image')->nullable(); // Column for storing image path, allowing NULL values
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('CASCADE');
         });
     }
 
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resource');
+        Schema::dropIfExists('resources');
     }
 };
