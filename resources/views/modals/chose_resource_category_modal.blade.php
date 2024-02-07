@@ -12,7 +12,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select name="res_category" id="res_category">
+                    <select name="res_category" id="selectedCategory">
                         <option value="software">Software</option>
                         <option value="art_images">Art & Images</option>
                     </select>
@@ -20,10 +20,21 @@
                 <div class="modal-footer">
                     <button id="cancelButton" type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancel</button>
-                    <button id="submitresourceCategoryButton" style="background-color: blue" type="submit"
+                    <button id="continueButton" style="background-color: blue" type="submit"
                         class="btn btn-primary">Continue</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    // Add an event listener to the "Continue" button in the modal
+    document.getElementById('continueButton').addEventListener('click', function() {
+        // Get the selected category value
+        var selectedCategory = document.getElementById('selectedCategory').value;
+        // Set the selected category value in the hidden input field in the form
+        document.getElementById('selected_category').value = selectedCategory;
+        // Close the modal
+        $('#resourceCategoryModal').modal('hide');
+    });
+</script>
