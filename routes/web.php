@@ -155,6 +155,7 @@ Route::middleware('auth', 'web')->group(function () {
     // Resources
     Route::get('/resources/category', [ResourceController::class, 'chose_category'])->name('resources.chose_category');
     Route::get('/resources/create', [ResourceController::class, 'create'])->name('resources.create');
+    Route::post('/resources', [ResourceController::class, 'store'])->name('resources.store');
 });
 
 // Outside auth to display for guests
