@@ -10,9 +10,10 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 items-center sm:flex">
-                    <a href="{{ route('forum.index') }}" class=" navButtons h-16 p-2" type="submit">
+                    <a href="{{ route('forum.index') }}" class="items-center flex navButtons h-16 p-2" type="submit">
                         {{ __('Home') }}</a>
-                    <a href="/resources" class="navButtons h-16 p-2" type="submit">{{ __('Resources') }}</a>
+                    <a href="{{ route('resources.index') }}" class="flex items-center navButtons h-16 p-2"
+                        type="submit">{{ __('Resources') }}</a>
                 </div>
             </div>
             <!-- Settings Dropdown -->
