@@ -16,6 +16,7 @@ use App\Http\Controllers\PrivateMessageRepliyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
@@ -40,7 +41,8 @@ Route::get('/', function () {
 Route::resource('forum', ForumController::class)
     ->only('index', 'show');
 
-// routes/web.php
+
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
 
 // Route for displaying threads within a subcategory
 Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'index'])
@@ -115,15 +117,15 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     Route::post('/dashboard/logs', [AdminLogsController::class, 'store'])->name('logs.store');
 
     // Reports to admins
-    Route::get('/dashboard/reports', [ReportController::class,'index'])->name('reports.index');
+    Route::get('/dashboard/reports', [ReportController::class, 'index'])->name('reports.index');
 
     // User Role system
-    Route::get('/user-roles', [AdminUserRoleController::class,'index'])->name('user_roles');
-    Route::get('/user-role/show/{userroleId}', [AdminUserRoleController::class,'show'])->name('role.show');
+    Route::get('/user-roles', [AdminUserRoleController::class, 'index'])->name('user_roles');
+    Route::get('/user-role/show/{userroleId}', [AdminUserRoleController::class, 'show'])->name('role.show');
     Route::get('/user-role/new', [AdminUserRoleController::class, 'create'])->name('role.create');
     Route::post('/user-role/update/{userroleId}', [AdminUserRoleController::class, 'update'])->name('role.update');
     Route::get('/user-role/edit/{userroleId}', [AdminUserRoleController::class, 'edit'])->name('role.edit');
-    Route::post('/user-role', [AdminUserRoleController::class,'store'])->name('role.store');
+    Route::post('/user-role', [AdminUserRoleController::class, 'store'])->name('role.store');
 });
 
 
@@ -148,7 +150,11 @@ Route::middleware('auth', 'web')->group(function () {
 
 
     // Report system routes
-    Route::post('/reports', [ReportController::class,'store'])->name('reports.store');
+    Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+
+    // Resources
+    Route::get('/resources/category', [ResourceController::class, 'chose_category'])->name('resources.chose_category');
+    Route::get('/resources/create', [ResourceController::class, 'create'])->name('resources.create');
 });
 
 // Outside auth to display for guests
