@@ -5,23 +5,19 @@ $(document).ready(function () {
         $('#resourceCategoryModal').modal('show');
     });
 
-    // Listen for the "Submit Report" button click inside the modal
-    // $('#submitThreadReportButton').click(function (e) {
-    //     // Hide the error message
-    //     $('#reasonError').hide();
+    $(document).ready(function () {
+        // Listen for the "Continue" button click inside the modal
+        $('#submitresourceCategoryButton').click(function (e) {
+            e.preventDefault();
 
-    //     // Check if any reason is selected
-    //     const selectedReason = $('input[type=radio][name=reason]:checked').val();
-    //     if (!selectedReason) {
-    //         // Show the error message and prevent form submission
-    //         $('#reasonError').show();
-    //         e.preventDefault();
-    //     } else {
-    //         // Set the values in the hidden input fields
-    //         $('#threadIdInput').val(threadId);
+            // Get the selected category value
+            var selectedCategory = $('#res_category').val();
 
-    //         // Continue with form submission
-    //         $('#threadReportForm').submit();
-    //     }
-    // });
+            // Set the value of the hidden input field in the form
+            $('#selected_category').val(selectedCategory);
+
+            // Submit the form
+            $('#resourceCategoryForm').submit();
+        });
+    });
 });
