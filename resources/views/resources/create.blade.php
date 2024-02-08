@@ -40,12 +40,16 @@
                                 <label class="col-lg-2 control-label">Category</label>
                                 <div class="col-lg-10">
                                     <select name="category" class="form-control">
+                                        <option value="default"></option>
                                         <option value="software">Software</option>
                                         <option value="art_images">Art & Images</option>
                                         <!-- Add more category options as needed -->
                                     </select>
                                 </div>
                             </div>
+                            @error('category')
+                                <p class="alert alert-danger">{{ $message }}</p>
+                            @enderror
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Version</label>
                                 <div class="col-lg-10">

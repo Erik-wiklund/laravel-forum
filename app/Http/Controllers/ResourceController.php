@@ -37,17 +37,13 @@ class ResourceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:zip,rar,7z,tar,txt,mp3,wav,ogg,avi,mpg,mpeg,mkv,iso,pdf,png,jpg,jpeg,jpe,gif,psd,tif,bsp,dem,vtf,vmt,cfg,ini,sp,py',
+            'category' => 'required|not_in:default',
+            'version' => ['required', 'regex:/^\d+(\.\d+)?$/'],
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'format' => 'required|file|mimes:zip,rar,7z,tar,txt,mp3,wav,ogg,avi,mpg,mpeg,mkv,iso,pdf,png,jpg,jpeg,jpe,gif,psd,tif,bsp,dem,vtf,vmt,cfg,ini,sp,py',
         ]);
         // dd($request->all());
-        // Validate the request data
-        // $request->validate([
-        //     'category' => 'required',
-        //     'title' => 'required',
-        //     'description' => 'required',
-        //     'version' => 'required',
-        //     'format' => 'required',
-        // ]);
 
         $title = $request->input('title');
         $description = $request->input('description');
@@ -67,31 +63,25 @@ class ResourceController extends Controller
         $resource->format = empty($format) ? null : $format;
         $resource->url = empty($url) ? null : $url;
         if ($request->hasFile('format')) {
-            // An image was uploaded
-            // Generate a unique filename for the uploaded image
-            $resourceFileName = time() . '.' . $request->format->extension();
+            // Get the original name of the uploaded file
+            $originalFileName = $request->format->getClientOriginalName();
 
-            $request->format->move(public_path('public_resources/resources'), $resourceFileName);
+            // Move the uploaded file to the desired location with its original name
+            $request->format->move(public_path('public_resources/resources'), $originalFileName);
 
-            $resource->format = $resourceFileName;
+            // Set the file name in the resource object
+            $resource->format = $originalFileName;
         }
         if ($request->hasFile('image')) {
             // An image was uploaded
             // Generate a unique filename for the uploaded image
-            $imageFileName = time() . '.' . $request->image->extension();
+            $imageFileName = time() . '.' . $request->image->getClientOriginalName();
 
-            // Move the uploaded image to the public/images folder with the generated filename
-            $imagePath = public_path('public_resources/images' . $imageFileName);
             $request->image->move(public_path('public_resources/images'), $imageFileName);
-
-            // Open the uploaded image using Intervention Image and resize it to fit within a 300x300 pixel box
-            Image::make($imagePath)->fit(300, 300)->save($imagePath);
 
             $resource->image = $imageFileName;
         }
 
-
-        // Save the resource
         $resource->save();
 
         // Redirect to a success page or perform any other actions

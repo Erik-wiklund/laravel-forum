@@ -37,14 +37,15 @@
                     <div class="text-white">name</div>
                 </div>
             </div>
-            <div class="resource-main-container w-[1000px]">
+            <div class="resource-main-container w-full">
                 <div class="resources-content">
                     @foreach ($resources as $resource)
                         <div class="resource border border-red-500 rounded-md p-4 mb-4">
                             <div class="uploader-avatar float-left">
-                                <img src="{{ $resource->user->avatar }}" alt="Uploader Avatar">
+                                <img class=" w-36" src="{{ asset('images/' . $resource->user->image) }}"
+                                    alt="Uploader Avatar">
                             </div>
-                            <div class="uploader-info mt-2">
+                            <div class="uploader-info ml-40 mt-2">
                                 <p class="font-semibold">{{ $resource->user->name }}</p>
                                 <p class="text-gray-500">{{ $resource->created_at->diffForHumans() }}</p>
 
