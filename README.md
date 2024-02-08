@@ -128,7 +128,8 @@ RESTful API for integration with other applications.
 -   [x] = Feature done but need testing
 
 <p>Working on now</p>
-
+ [ ] Resource upload
+ Users may upload their work to chosen categories.
 </div>
 
 ## Usage
