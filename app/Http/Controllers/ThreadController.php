@@ -26,7 +26,7 @@ class ThreadController extends Controller
         $threads = Thread::where('sub_category_id', $subcategory->id)->get();
         $user_roles = User_role::all();
 
-        return view('forum.threads.index', compact('threads', 'subcategory','user_roles'));
+        return view('forum.threads.index', compact('threads', 'subcategory', 'user_roles'));
     }
 
 
@@ -77,22 +77,20 @@ class ThreadController extends Controller
         // Update the 'lockedOrNot' value based on the checkbox value
         $thread = Thread::find($thread);
         $thread->lockedOrNot = $value; // Set the value based on the checkbox
+        $thread->save();
 
         // Create an admin log entry
         $adminLog = new AdminLog();
-        $adminLog->user_id = auth()->user()->id;
+        $adminLog->user_id = auth()->check() ? auth()->user()->id : null;
         $adminLog->action = $context === 'lockThread' ? 'Lock Thread' : 'Unlock Thread';
         $adminLog->resource_type = 'thread';
-        $adminLog->resource_id = null;
-        $adminLog->thread_id = $thread->id;
-        // $adminLog->context = 'thread'; // Customize the context as needed
+        $adminLog->resource_id = $thread->id; // Set the resource_id to the thread_id
+        $adminLog->thread_id = $thread ? $thread->id : null;
         $adminLog->save();
-
-        // Save the thread after setting the 'lockedOrNot' value
-        $thread->save();
 
         return response()->json(['message' => 'Checkbox value and action updated successfully']);
     }
+
 
 
 
@@ -139,7 +137,7 @@ class ThreadController extends Controller
         $user = User::find($loggedInUserId); // Replace with your user model
 
 
-        return view('forum.threads.show', compact('lockedDate','adminName', 'request', 'thread', 'subcategory', 'replies', 'category', 'user'));
+        return view('forum.threads.show', compact('lockedDate', 'adminName', 'request', 'thread', 'subcategory', 'replies', 'category', 'user'));
     }
 
 
