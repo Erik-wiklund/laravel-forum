@@ -47,12 +47,16 @@
                                             <!-- Access the user's name via the relationship -->
                                             <td>{{ $log->admin->role->name }}</td>
                                             <td>
-                                                @if ($log->resource_type === 'thread' && $log->threadName)
-                                                    {{ $log->threadName->title }}
+                                                @if ($log->resource_type === 'thread')
+                                                    <a
+                                                        href="{{ route('threads.show', ['subcategory' => $log->thread->sub_category_id, 'thread' => $log->thread->id]) }}">
+                                                        {!! $log->thread->title !!} ({{ $log->thread->id }})
+                                                    </a>
                                                 @elseif ($log->resource_type === 'thread' && !$log->threadName)
                                                     {{ 'Unknown Thread' }}
                                                 @else
-                                                    {{ $log->targetUser->name }}
+                                                    <a
+                                                        href="{{ route('user.show', ['userId' => $log->targetUser->id]) }}">{!! $log->targetUser->username !!}</a>
                                                 @endif
                                             </td>
                                             <td>{{ $log->action }}</td>
