@@ -86,6 +86,9 @@ Route::group(['middleware' => 'is.admin', 'prefix' => 'admin'], function () {
     Route::get('/dashboard/category/edit/{categoryId}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::post('/dashboard/category/update/{categoryId}', [CategoryController::class, 'update'])->name('category.update');
 
+    // Edit thread route
+    Route::post('thread/edit/{thread}', [ThreadController::class, 'editThread'])->name('editThread.create');
+
     // Subcategory Routes
     Route::get('/dashboard/subcategory/new', [SubCategoryController::class, 'create'])->name('subcategory.new');
     Route::post('/dashboard/subcategory/new', [SubCategoryController::class, 'store'])->name('subcategory.store');
