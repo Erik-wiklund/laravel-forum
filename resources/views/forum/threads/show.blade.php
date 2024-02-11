@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('modals.edit_thread_modal')
     @include('modals.report_thread_modal')
     @include('modals.report_reply_modal')
     <div class="col-lg-12">
@@ -28,6 +29,16 @@
                     @endif
                     @if (auth()->check() &&
                             auth()->user()->isAdminOrMod())
+                        @if (session()->has('errors'))
+                            @foreach ($errors as $error)
+                                {{ $error }}
+                            @endforeach
+                        @endif
+                        @if (\Session::has('message'))
+                            <p class="alert
+      {{ Session::get('alert-class', 'alert-success') }}">
+                                {{ Session::get('message') }}</p>
+                        @endif
                         <div class="threadTools mt-4">
                             <div class="float-right">
                                 <div class="popup">
@@ -37,7 +48,8 @@
                                     <div class="admin-menu">
                                         <div class="admin-menu-title">Thread Tools</div>
                                         <ul>
-                                            <li><a href="#">Edit Thread</a></li>
+                                            <button data-toggle="modal" data-target="#editThreadModal" href="#">Edit
+                                                Thread</button>
                                             <li><a href="#">Add Poll</a></li>
                                             <li><a href="#">Move Thread</a></li>
                                         </ul>
