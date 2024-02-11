@@ -13,6 +13,8 @@ use App\Models\User_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ThreadController extends Controller
 {
@@ -91,15 +93,6 @@ class ThreadController extends Controller
         return response()->json(['message' => 'Checkbox value and action updated successfully']);
     }
 
-
-
-
-
-    /**
-     * Display the specified resource.
-     */
-
-
     public function show(SubCategory $subcategory, Thread $thread, Request $request, Category $category)
     {
         // Retrieve the thread by its ID
@@ -166,5 +159,18 @@ class ThreadController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function editThread($thread, Request $request)
+    {
+        $thread = Thread::find($thread);
+        $title = $request->input('threadTitle');
+        $thread->title = $title;
+        $thread->save();
+
+        Session::flash('message', 'Thread successfully updated');
+        Session::flash('alert-class', 'alert-success');
+
+        return back();
     }
 }
