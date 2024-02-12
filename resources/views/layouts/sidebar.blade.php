@@ -1,4 +1,4 @@
-<div class="w-full mt-8">
+<div class="w-full my-8">
     <aside>
         <div class="card">
             <div>
@@ -12,15 +12,17 @@
                     @endguest
                     @auth()
                         @if (Route::is('subcategories.threads.index'))
-                            <label for=""
+                            <label for="" class="md:h-0"
                                 style="text-align: center; line-height: 40px; display: block; cursor: pointer; height: 40px;">
                                 <a href="{{ route('threads.create', ['subcategory' => $subcategory]) }}"
-                                    class="bg-red-600 block px-4 py-2 rounded-lg">Create new thread</a>
+                                    class="bg-red-600 block px-4 py-2 rounded-lg md:h-8 md:text-xs md:leading-none md:m-1">Create
+                                    new
+                                    thread</a>
                             </label>
                         @elseif(Route::is('pm.index'))
                             <label for="" style="text-align: center;  display: block; cursor: pointer;">
                                 <a href="{{ route('pm.create', ['userId' => $user->id]) }}"
-                                    class="bg-red-600 block px-4 py-2 rounded-lg">Create new PM</a>
+                                    class="bg-red-600 block text-sm px-4 py-2 rounded-lg md:m-2">Create new PM</a>
                             </label>
                         @endif
                     @endauth
@@ -29,8 +31,8 @@
                 @auth
                     <div class="userInfo flex">
                         <div>
-                            <img class="mx-3 mb-3" src="{{ asset('images/' . $sidebarData['userImage']) }}" alt="User Image"
-                                style="max-width: 100px; max-height: 100px;">
+                            <img class="mx-3 mb-3 max-w-[100px] md:max-h-24 md:w-11"
+                                src="{{ asset('images/' . $sidebarData['userImage']) }}" alt="User Image">
                         </div>
                         <div class="flex flex-col items-center">
                             <p class="">{{ $sidebarData['user']->username }}</p>
@@ -90,12 +92,12 @@
                         </div>
                     @else
                         <!-- Input form for sending messages -->
-                        <form class="mt-2" method="post" action="{{ route('chat.send') }}"
+                        <form class="mt-2 mx-2" method="post" action="{{ route('chat.send') }}"
                             style="display: flex; width: 100%;">
                             @csrf
                             <input type="text" name="content" placeholder="Type your message"
                                 style="flex: 1; width: 100%; margin-right: 10px; font-size: 10px;" />
-                            <button type="submit"
+                            <button type="submit" class="mr-4"
                                 style="font-size: 14px; background: red; padding: 10px; border-radius: 7px;">Send</button>
                         </form>
                     @endif

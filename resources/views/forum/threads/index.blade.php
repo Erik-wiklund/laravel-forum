@@ -12,7 +12,7 @@
                     </h4>
                 </div>
 
-                <table class="table table-striped ">
+                <table class="table table-striped border-2 border-gray-300">
                     <thead class="thead-light">
                         <tr>
                             <th class="posterAvatar"></th>

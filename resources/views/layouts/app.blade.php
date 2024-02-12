@@ -22,7 +22,7 @@
 
     <!-- Scripts -->
     <x-head.tinymce-config />
-    @vite(['resources/css/app.css','resources/css/custom.css', 'resources/js/app.js', 'resources/js/chat.js'])
+    @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/chat.js'])
 </head>
 
 
@@ -42,10 +42,10 @@
         <main>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         @yield('content')
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @include('layouts.sidebar')
                     </div>
                 </div>
@@ -56,4 +56,5 @@
         @include('layouts.footer')
     </footer>
 </body>
+
 </html>
