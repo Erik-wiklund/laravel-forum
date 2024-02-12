@@ -5,7 +5,6 @@
             <!-- Modal content here, including radio buttons for report reasons -->
             <form action="{{ route('editThread.create', ['thread' => $thread->id]) }}" id="editThreadForm"
                 method="POST">
-
                 @csrf
                 <input type="hidden" name="threadId" value="{{ $thread->id }}">
                 <div class="modal-header">
@@ -14,10 +13,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-check">
+                <div class="modal-body flex flex-col">
+                    <p>Thread title</p>
+                    <div class="form-check w-full h-12">
                         <input value="{{ $thread->title }}" class="form-check-input" type="text" name="threadTitle"
                             id="threadTitle">
+                    </div>
+                    <div class="form-check">
+                        <input type="hidden" name="lockContext"
+                            value="{{ $thread->lockedOrNot ? 'unlockThread' : 'lockThread' }}">
+                        <input type="checkbox" name="lockedOrNot" id="LockedOrNot"
+                            {{ $thread->lockedOrNot ? 'checked' : '' }}> Open / Lock Thread
+                    </div>
+                    <div class="form-check">
+                        <input type="hidden" name="hiddenContext"
+                            value="{{ $thread->hidden ? 'displayThread' : 'hideThread' }}">
+                        <input type="checkbox" name="hiddenOrNot" id="hiddenOrNot"
+                            {{ $thread->hidden ? 'checked' : '' }}> Hide / Display Thread
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -27,7 +39,6 @@
                         class="btn btn-primary">Continue</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

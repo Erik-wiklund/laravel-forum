@@ -29,6 +29,109 @@
                     </thead>
                     <tbody>
                         @foreach ($threads as $thread)
+                            @if ($thread->hidden === 1 && !auth()->check())
+                                <!-- Check if thread is hidden and user is not logged in -->
+                                <tr class="hidden">
+                                    <td class="posterAvatar">
+                                        <!-- Avatar content here -->
+                                    </td>
+                                    <td class="mainblock">
+                                        <h3 style="font-size: 20px;">
+                                            <div>
+                                                <a href="{{ route('subcategories.threads.index', ['subcategory' => $subcategory]) }}"
+                                                    class="text-uppercase">
+                                                    @if (auth()->check() &&
+                                                            (auth()->user()->isAdmin() ||
+                                                                auth()->user()->isMod()))
+                                                        <input type="checkbox" name="lockedOrNot" id="">
+                                                    @endif
+                                                    <a
+                                                        href="{{ route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $thread->id]) }}">{{ $thread->title }}</a>
+                                                </a>
+                                                @php
+                                                    $createdBy = $subcategory->threads('created_by')->first();
+                                                @endphp
+                                                <div style="font-size: 14px; color: grey;">
+                                                    <a href="#">{{ $thread->createdBy->username }},</a>
+                                                    <div style="color: #383838">
+                                                        {{ $createdBy->updated_at->format('M d, Y') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                        @php
+                                            $lastThread = $subcategory->threads('last_poster_id')->first();
+                                        @endphp
+                                    </td>
+                                    <td class="statsblock flex">
+                                        <div class="mx-3">{{ $thread->replies->count() }}</div>
+                                        <div class="mx-3">{{ $thread->views_count }}</div>
+                                    </td>
+                                    <td class="lastpost">
+                                        <!-- Last post content here -->
+                                        <div style="color: grey; font-size: 14px;">
+                                            <div class="flex items-center">
+                                                <a href="#">{{ $thread->lastPoster->username }}</a>
+                                            </div>
+                                            {{ $lastThread->updated_at->format('M d, Y') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                @continue
+                            @endif
+
+                            @if (
+                                $thread->hidden === 1 &&
+                                    auth()->check() &&
+                                    !auth()->user()->isAdminOrMod())
+                                <tr class="hidden">
+                                    <td class="posterAvatar">
+                                        <!-- Avatar content here -->
+                                    </td>
+                                    <td class="mainblock">
+                                        <h3 style="font-size: 20px;">
+                                            <div>
+                                                <a href="{{ route('subcategories.threads.index', ['subcategory' => $subcategory]) }}"
+                                                    class="text-uppercase">
+                                                    @if (auth()->check() &&
+                                                            (auth()->user()->isAdmin() ||
+                                                                auth()->user()->isMod()))
+                                                        <input type="checkbox" name="lockedOrNot" id="">
+                                                    @endif
+                                                    <a
+                                                        href="{{ route('threads.show', ['subcategory' => $subcategory->id, 'thread' => $thread->id]) }}">{{ $thread->title }}</a>
+                                                </a>
+                                                @php
+                                                    $createdBy = $subcategory->threads('created_by')->first();
+                                                @endphp
+                                                <div style="font-size: 14px; color: grey;">
+                                                    <a href="#">{{ $thread->createdBy->username }},</a>
+                                                    <div style="color: #383838">
+                                                        {{ $createdBy->updated_at->format('M d, Y') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                        @php
+                                            $lastThread = $subcategory->threads('last_poster_id')->first();
+                                        @endphp
+                                    </td>
+                                    <td class="statsblock flex">
+                                        <div class="mx-3">{{ $thread->replies->count() }}</div>
+                                        <div class="mx-3">{{ $thread->views_count }}</div>
+                                    </td>
+                                    <td class="lastpost">
+                                        <!-- Last post content here -->
+                                        <div style="color: grey; font-size: 14px;">
+                                            <div class="flex items-center">
+                                                <a href="#">{{ $thread->lastPoster->username }}</a>
+                                            </div>
+                                            {{ $lastThread->updated_at->format('M d, Y') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                @continue
+                            @endif
                             <tr>
                                 <td class="posterAvatar">
                                     <!-- Avatar content here -->

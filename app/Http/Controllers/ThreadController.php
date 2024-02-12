@@ -165,8 +165,38 @@ class ThreadController extends Controller
     {
         $thread = Thread::find($thread);
         $title = $request->input('threadTitle');
+        $lockedOrNot = $request->has('lockedOrNot') ? 1 : 0;
+        $hiddenOrNot = $request->has('hiddenOrNot') ? 1 : 0;
+
+        $previousLockedState = $thread->lockedOrNot;
+        $previousHiddenState = $thread->hidden;
+
+        $action = '';
+        // Log the changes based on the previous and current state of checkboxes
+        if ($lockedOrNot != $previousLockedState && $hiddenOrNot != $previousHiddenState) {
+            $action = $lockedOrNot ? 'Thread locked and hidden' : 'Thread unlocked and displayed';
+        } elseif ($lockedOrNot != $previousLockedState) {
+            $action = $lockedOrNot ? 'Thread locked' : 'Thread unlocked';
+        } elseif ($hiddenOrNot != $previousHiddenState) {
+            $action = $hiddenOrNot ? 'Thread hidden' : 'Thread displayed';
+        } else {
+            // No changes were made
+            $action = null;
+        }
+
         $thread->title = $title;
+        $thread->lockedOrNot = $lockedOrNot;
+        $thread->hidden = $hiddenOrNot;
         $thread->save();
+
+        $adminLog = new AdminLog();
+        $adminLog->user_id = auth()->check() ? auth()->user()->id : null;
+        $adminLog->resource_type = 'thread';
+        $adminLog->resource_id = $thread->id;
+        $adminLog->thread_id = $thread ? $thread->id : null;
+        $adminLog->action = $action;
+
+        $adminLog->save();
 
         Session::flash('message', 'Thread successfully updated');
         Session::flash('alert-class', 'alert-success');
