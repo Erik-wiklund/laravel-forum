@@ -9,13 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+
+        $uniqueCategories = Resources::all()->pluck('category')->unique();
+        $categoryCounts = Resources::groupBy('category')
+            ->selectRaw('category, count(*) as count')
+            ->get();
+
         $resources = Resources::all();
-        return view('resources.index', compact('resources'));
+        $count = $resources->count();
+
+        return view('resources.index', compact('resources', 'uniqueCategories', 'count', 'categoryCounts'));
     }
 
     public function chose_category()
@@ -52,7 +57,6 @@ class ResourceController extends Controller
         $tag_line = $request->input('tag_line');
         $url = $request->input('url');
 
-        // Create a new resource instance
         $resource = new Resources();
         $resource->created_by = auth()->user()->id;
         $resource->category = empty($category) ? null : $category;
@@ -63,28 +67,18 @@ class ResourceController extends Controller
         $resource->format = empty($format) ? null : $format;
         $resource->url = empty($url) ? null : $url;
         if ($request->hasFile('format')) {
-            // Get the original name of the uploaded file
             $originalFileName = $request->format->getClientOriginalName();
-
-            // Move the uploaded file to the desired location with its original name
             $request->format->move(public_path('public_resources/resources'), $originalFileName);
-
-            // Set the file name in the resource object
             $resource->format = $originalFileName;
         }
         if ($request->hasFile('image')) {
-            // An image was uploaded
-            // Generate a unique filename for the uploaded image
             $imageFileName = time() . '.' . $request->image->getClientOriginalName();
-
             $request->image->move(public_path('public_resources/images'), $imageFileName);
-
             $resource->image = $imageFileName;
         }
 
         $resource->save();
 
-        // Redirect to a success page or perform any other actions
         return redirect()->back()->with('success', 'Resource added successfully.');
     }
 

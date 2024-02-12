@@ -22,11 +22,14 @@
             <h1 class="text-xl font-bold">Resources</h1>
         </div>
         <div class="main-container flex flex-row">
-
             <div class="resource-left-container w-56 float-left bg-slate-400">
                 <div>
                     <span class="font-bold">Categories</span>
-                    <div class="text-white">files</div>
+                    @foreach ($categoryCounts as $categoryCount)
+                        <div class="text-white">{{ $categoryCount->category }}
+                            <span>{{ $categoryCount->count }}</span>
+                        </div>
+                    @endforeach
                 </div>
                 <div>
                     <span class="font-bold">Top resources</span>
