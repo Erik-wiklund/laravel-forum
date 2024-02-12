@@ -12,7 +12,7 @@
                 </div>
                 <div class="resourceCategoryModalButton">
                     <a href="{{ route('resources.create') }}"
-                        class="upload_resource_btn float-right mr-3 bg-red-600 rounded-md text-white text-sm p-2">Upload
+                        class="upload_resource_btn float-right mr-3 bg-red-600 rounded-md h-8 text-xs w-28 text-white p-2 sm:h-9 sm:w-28 sm:text-xs lg:h-9">Upload
                         resource</a>
                 </div>
 
