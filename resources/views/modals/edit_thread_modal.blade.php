@@ -19,18 +19,20 @@
                         <input value="{{ $thread->title }}" class="form-check-input" type="text" name="threadTitle"
                             id="threadTitle">
                     </div>
-                    <div class="form-check">
-                        <input type="hidden" name="lockContext"
-                            value="{{ $thread->lockedOrNot ? 'unlockThread' : 'lockThread' }}">
-                        <input type="checkbox" name="lockedOrNot" id="LockedOrNot"
-                            {{ $thread->lockedOrNot ? 'checked' : '' }}> Open / Lock Thread
-                    </div>
-                    <div class="form-check">
-                        <input type="hidden" name="hiddenContext"
-                            value="{{ $thread->hidden ? 'displayThread' : 'hideThread' }}">
-                        <input type="checkbox" name="hiddenOrNot" id="hiddenOrNot"
-                            {{ $thread->hidden ? 'checked' : '' }}> Hide / Display Thread
-                    </div>
+                    @if (auth()->user()->isAdmin())
+                        <div class="form-check">
+                            <input type="hidden" name="lockContext"
+                                value="{{ $thread->lockedOrNot ? 'unlockThread' : 'lockThread' }}">
+                            <input type="checkbox" name="lockedOrNot" id="LockedOrNot"
+                                {{ $thread->lockedOrNot ? 'checked' : '' }}> Open / Lock Thread
+                        </div>
+                        <div class="form-check">
+                            <input type="hidden" name="hiddenContext"
+                                value="{{ $thread->hidden ? 'displayThread' : 'hideThread' }}">
+                            <input type="checkbox" name="hiddenOrNot" id="hiddenOrNot"
+                                {{ $thread->hidden ? 'checked' : '' }}> Hide / Display Thread
+                        </div>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button id="cancelButton" type="button" class="btn btn-secondary"
