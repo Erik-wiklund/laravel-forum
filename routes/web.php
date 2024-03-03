@@ -44,6 +44,7 @@ Route::resource('forum', ForumController::class)
 
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources.index');
 
+
 // Route for displaying threads within a subcategory
 Route::get('/subcategories/{subcategory}/threads', [ThreadController::class, 'index'])
     ->name('subcategories.threads.index');
@@ -163,6 +164,8 @@ Route::middleware('auth', 'web')->group(function () {
 
 // Outside auth to display for guests
 Route::middleware('web')->group(function () {
+    Route::get('/resources/{resourceId}', [ResourceController::class, 'show'])->name('resources.show');
+
     Route::get('/user/profile/{user}', [ProfileController::class, 'show'])->name('profile.show_modal');
 });
 

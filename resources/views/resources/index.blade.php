@@ -49,17 +49,24 @@
                                     alt="Uploader Avatar">
                             </div>
                             <div class="uploader-info ml-40 mt-2">
-                                <p class="font-semibold">{{ $resource->user->name }}</p>
-                                <p class="text-gray-500">{{ $resource->created_at->diffForHumans() }}</p>
 
                                 <div class="resource-details mt-2">
-                                    <p class="font-semibold">{{ $resource->title }}</p>
+                                    <a href="{{ route('resources.show', ['resourceId' => $resource->id]) }}"
+                                        class="font-semibold">{{ $resource->title }}
+                                        {{ number_format($resource->version, 1) }}</a>
                                     <p>{{ $resource->description }}</p>
                                 </div>
-                                <div class="file-download mt-2">
+                                <div class="flex flex-row">
+                                    <p class="font-semibold">{{ $resource->user->name }},</p>
+                                    <p class="text-gray-500 ml-1">{{ $resource->created_at->format('F d, Y') }},</p>
+                                    <p class="text-gray-500 ml-1">{{ $resource->category }}</p>
+                                </div>
+                                <p class="text-gray-500">{{ $resource->tag_line }}</p>
+                                <p class="text-gray-500">{{ $resource->url }}</p>
+                                {{-- <div class="file-download mt-2">
                                     <a href="{{ asset('public_resources/resources/' . $resource->format) }}"
                                         class="text-blue-500 hover:underline">Download</a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     @endforeach

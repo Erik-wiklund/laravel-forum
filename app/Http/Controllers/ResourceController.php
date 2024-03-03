@@ -87,9 +87,16 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($resourceId)
     {
-        //
+        $resource = Resources::find($resourceId);
+
+        // Check if resource is found
+        if (!$resource) {
+            abort(404); // Or handle the case where the resource is not found
+        }
+
+        return view('resources.show', compact('resource'));
     }
 
     /**
