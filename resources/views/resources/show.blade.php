@@ -11,7 +11,7 @@
                     >
                     <a href="">{{ $resource->category }}</a>
                 </div>
-                @if (auth()->check())
+                @if ($isCreator)
                     <div class="resourceCategoryModalButton">
                         <a href="{{ route('resources.create') }}"
                             class="update_resource_btn float-right mr-3 bg-red-600 rounded-md h-8 text-xs w-28 text-white p-2 sm:h-9 sm:w-28 sm:text-xs lg:h-9">Update
@@ -21,13 +21,28 @@
 
             </div>
         </div>
-        <div class="resource-top-info flex justify-between items-center">
-            <h1 class="text-xl font-bold">{{ $resource->title }}
-                <span class="text-xs">{{ $resource->created_at }}</span>
-            </h1>
-            <a href="{{ asset('public_resources/resources/' . $resource->format) }}"
-                class="download_resource_btn float-right text-center my-1 mr-3 bg-red-600 rounded-md h-8 text-xs w-28 text-white p-2 sm:h-9 sm:w-28 sm:text-xs lg:h-9"><span>Download</span></a>
-        </div>
+        @if (auth()->check())
+            <div class="resource-top-info flex justify-between items-center">
+                <h1 class="text-xl font-bold">{{ $resource->title }}
+                    <span class="text-xs">{{ $resource->created_at }}</span>
+                </h1>
+                <a href="{{ asset('public_resources/resources/' . $resource->format) }}"
+                    class="download_resource_btn float-right text-center my-1 mr-3 bg-red-600 rounded-md h-8 text-xs w-28 text-white p-2 sm:h-9 sm:w-28 sm:text-xs lg:h-9">
+                    <span>Download</span>
+                </a>
+            </div>
+        @else
+            <div class="resource-top-info flex justify-between items-center">
+                <h1 class="text-xl font-bold">{{ $resource->title }}
+                    <span class="text-xs">{{ $resource->created_at }}</span>
+                </h1>
+                <a href="#"
+                    class="download_resource_btn float-right text-center my-1 mr-3 bg-gray-600 pointer-events-none rounded-md h-8 text-[10px] w-28 text-white p-2 sm:h-9 sm:w-40 sm:text-xs lg:h-9">
+                    <span>Download not possible</span>
+                </a>
+            </div>
+        @endif
+
         <div class="main-container flex flex-row">
 
             <div class="resource-main-container w-full">

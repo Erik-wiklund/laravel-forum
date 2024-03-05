@@ -19,7 +19,7 @@
                         <input value="{{ $thread->title }}" class="form-check-input" type="text" name="threadTitle"
                             id="threadTitle">
                     </div>
-                    @if (auth()->user()->isAdmin())
+                    @if (auth()->check() && auth()->user()->isAdmin())
                         <div class="form-check">
                             <input type="hidden" name="lockContext"
                                 value="{{ $thread->lockedOrNot ? 'unlockThread' : 'lockThread' }}">

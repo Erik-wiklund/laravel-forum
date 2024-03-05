@@ -96,7 +96,10 @@ class ResourceController extends Controller
             abort(404); // Or handle the case where the resource is not found
         }
 
-        return view('resources.show', compact('resource'));
+        $loggedInUser = Auth::user();
+        $isCreator = $loggedInUser && $resource->created_by === $loggedInUser->id;
+
+        return view('resources.show', compact('resource', 'isCreator'));
     }
 
     /**
