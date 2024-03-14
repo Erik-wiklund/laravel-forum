@@ -46,7 +46,9 @@
                             @foreach ($sidebarData['messages']->reverse() as $message)
                                 <div class="message" style="border-bottom: solid lightgrey 1px;">
                                     <div class="flex justify-between items-center" style="font-size: 14px;">
-                                        {{ $message->user->name }} - {{ $message->content }}
+                                        <div class="message_userContent">
+                                            {{ $message->user->name }} - {!! processMessageContent($message->content, $sidebarData['user']) !!}
+                                        </div>
                                         @if (auth()->user()->isAdmin())
                                             <div class="dropdown">
                                                 <button
@@ -95,8 +97,12 @@
                         <form class="mt-2 mx-2" method="post" action="{{ route('chat.send') }}"
                             style="display: flex; width: 100%;">
                             @csrf
-                            <input type="text" name="content" placeholder="Type your message"
-                                style="flex: 1; width: 100%; margin-right: 10px; font-size: 10px;" />
+                            <input type="text" name="content" id="messageContent" placeholder="Type your message"
+                                style="flex: 1; width: 100%; margin-right: 10px; font-size: 10px;"
+                                oninput="searchUsers(this.value)" />
+                            <div id="mentionDropdown"
+                                style="position: absolute; display: none; background-color: #f9f9f9; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1;">
+                            </div>
                             <button type="submit" class="mr-4"
                                 style="font-size: 14px; background: red; padding: 10px; border-radius: 7px;">Send</button>
                         </form>
@@ -186,6 +192,65 @@
             </div>
     </aside>
 </div>
+
+<script>
+    let searchTimeout;
+
+    function searchUsers(query) {
+        // Check if query starts with @ and has more than one character
+        if (!query.startsWith('@') || query.length <= 1) {
+            // If not, hide the dropdown and return
+            document.getElementById('mentionDropdown').style.display = 'none';
+            return;
+        }
+
+        // Remove @ from the beginning of the query
+        const searchText = query.substring(1);
+
+        // Clear previous timeout if exists
+        clearTimeout(searchTimeout);
+
+        // Set a new timeout to debounce the search
+        searchTimeout = setTimeout(function() {
+            // AJAX request to fetch users matching the searchText
+            $.ajax({
+                url: '/users/search',
+                type: 'GET',
+                data: {
+                    query: searchText
+                },
+                success: function(response) {
+                    const users = response.users;
+                    const dropdown = document.getElementById('mentionDropdown');
+                    dropdown.innerHTML = '';
+                    if (users.length > 0) {
+                        dropdown.style.display = 'block';
+                        users.forEach(user => {
+                            const userElement = document.createElement('div');
+                            userElement.textContent = user.username; // Display username
+                            userElement.onclick = function() {
+                                // Replace the last word after @ with the selected user
+                                const messageContent = document.getElementById(
+                                    'messageContent');
+                                const newQuery = '@' + user.username +
+                                    ' '; // Use username
+                                messageContent.value = newQuery;
+                                dropdown.style.display = 'none';
+                            };
+                            dropdown.appendChild(userElement);
+                        });
+                    } else {
+                        dropdown.style.display = 'none';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }, 300); // Adjust debounce time as needed
+    }
+</script>
+
 
 <script>
     $(document).ready(function() {
