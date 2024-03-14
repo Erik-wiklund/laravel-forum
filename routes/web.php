@@ -175,6 +175,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Handle sending chat messages
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+
+    Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
 });
 
 Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
