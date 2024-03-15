@@ -177,6 +177,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
+    Route::post('/mention', [App\Http\Controllers\MentionController::class, 'mention'])->name('mention');
+    Route::get('/mark-as-read', [App\Http\Controllers\MentionController::class, 'markAsRead'])->name('mark-as-read');
 });
 
 Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
@@ -192,3 +194,7 @@ Route::post('/misc/contact/message', [ContactController::class, 'store'])->name(
 
 
 require __DIR__ . '/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

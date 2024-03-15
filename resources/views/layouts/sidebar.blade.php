@@ -94,18 +94,26 @@
                         </div>
                     @else
                         <!-- Input form for sending messages -->
-                        <form class="mt-2 mx-2" method="post" action="{{ route('chat.send') }}"
+                        <form class="mt-2 mx-2" id="sendMessageForm" method="post" action="{{ route('chat.send') }}"
                             style="display: flex; width: 100%;">
                             @csrf
-                            <input type="text" name="content" id="messageContent" placeholder="Type your message"
-                                style="flex: 1; width: 100%; margin-right: 10px; font-size: 10px;"
-                                oninput="searchUsers(this.value)" />
-                            <div id="mentionDropdown"
-                                style="position: absolute; display: none; background-color: #f9f9f9; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1;">
-                            </div>
+                            <input oninput="searchUsers(this.value)" type="text" name="content" class="messageContent"
+                                placeholder="Type your message"
+                                style="flex: 1; width: 100%; margin-right: 10px; font-size: 10px;" />
                             <button type="submit" class="mr-4"
                                 style="font-size: 14px; background: red; padding: 10px; border-radius: 7px;">Send</button>
                         </form>
+
+                        <!-- Hidden form for mentioning user -->
+                        <form id="mentionForm" method="post" action="{{ route('mention') }}" style="display: none;">
+                            @csrf
+                            <input type="hidden" name="mentioned_user" id="mentionedUserId">
+                        </form>
+
+                        <div class="mentionDropdown"
+                            style="position: absolute; display: none; background-color: #f9f9f9; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1;">
+                            <!-- Dropdown content will be added dynamically -->
+                        </div>
                     @endif
                 @endauth
 
@@ -194,60 +202,107 @@
 </div>
 
 <script>
-    let searchTimeout;
+    var mentionedUserId = null;
+
+    function mentionUser(userId) {
+        // Set the mentioned user ID
+        mentionedUserId = userId;
+        console.log("Mentioned User ID:", mentionedUserId);
+    }
+
+    $(document).ready(function() {
+        // Event listener for clicking on a user in the mention dropdown
+        $('.mentionDropdown').on('click', '.mentionUser', function() {
+            var userId = $(this).data('user-id');
+            mentionUser(userId);
+        });
+
+        // Event listener for form submission
+        $('#sendMessageForm').submit(function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Submit the message form
+            $('#sendMessageForm').unbind('submit').submit();
+
+            // Check if a mention exists
+            if (mentionedUserId) {
+                // Set the CSRF token
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                // Make an AJAX request to update the mention
+                $.ajax({
+                    url: '/mention',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        mentioned_user: mentionedUserId // Include the mentioned user ID in the request
+                    },
+                    success: function(response) {
+                        console.log("Mention updated successfully");
+                        // Optionally, you can perform any actions after updating the mention
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Failed to update mention:", error);
+                    }
+                });
+            }
+        });
+    });
+
+
+
+
+
 
     function searchUsers(query) {
         // Check if query starts with @ and has more than one character
         if (!query.startsWith('@') || query.length <= 1) {
             // If not, hide the dropdown and return
-            document.getElementById('mentionDropdown').style.display = 'none';
+            $('.mentionDropdown').hide();
             return;
         }
 
         // Remove @ from the beginning of the query
         const searchText = query.substring(1);
 
-        // Clear previous timeout if exists
-        clearTimeout(searchTimeout);
-
-        // Set a new timeout to debounce the search
-        searchTimeout = setTimeout(function() {
-            // AJAX request to fetch users matching the searchText
-            $.ajax({
-                url: '/users/search',
-                type: 'GET',
-                data: {
-                    query: searchText
-                },
-                success: function(response) {
-                    const users = response.users;
-                    const dropdown = document.getElementById('mentionDropdown');
-                    dropdown.innerHTML = '';
-                    if (users.length > 0) {
-                        dropdown.style.display = 'block';
-                        users.forEach(user => {
-                            const userElement = document.createElement('div');
-                            userElement.textContent = user.username; // Display username
-                            userElement.onclick = function() {
-                                // Replace the last word after @ with the selected user
-                                const messageContent = document.getElementById(
-                                    'messageContent');
-                                const newQuery = '@' + user.username +
-                                    ' '; // Use username
-                                messageContent.value = newQuery;
-                                dropdown.style.display = 'none';
-                            };
-                            dropdown.appendChild(userElement);
+        // AJAX request to fetch users matching the searchText
+        $.ajax({
+            url: '/users/search',
+            type: 'GET',
+            data: {
+                query: searchText
+            },
+            success: function(response) {
+                const users = response.users;
+                const dropdown = $('.mentionDropdown');
+                dropdown.empty();
+                if (users.length > 0) {
+                    dropdown.show();
+                    users.forEach(user => {
+                        const userElement = $('<div></div>').text(user.username);
+                        userElement.data('user-id', user.id); // Set data-user-id attribute
+                        console.log("User ID set for", user.username, ":", user.id); // Log user ID
+                        userElement.addClass('mentionUser'); // Add class for event handling
+                        userElement.on('click', function() {
+                            // Replace the last word after @ with the selected user
+                            const messageContent = $('.messageContent');
+                            const newQuery = '@' + user.username + ' ';
+                            messageContent.val(newQuery);
+                            dropdown.hide();
                         });
-                    } else {
-                        dropdown.style.display = 'none';
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
+                        dropdown.append(userElement);
+                    });
+                } else {
+                    dropdown.hide();
                 }
-            });
-        }, 300); // Adjust debounce time as needed
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 </script>
 
