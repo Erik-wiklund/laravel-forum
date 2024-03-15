@@ -42,9 +42,9 @@
                     <div class="shoutbox-container" id="chat-messages"
                         style="height: 300px;  overflow:hidden; overflow-y: scroll;">
                         <!-- Display chat messages -->
-                        <div id="chat-messages" padding: 10px;">
+                        <div id="chat-messages" class="padding: 2px;">
                             @foreach ($sidebarData['messages']->reverse() as $message)
-                                <div class="message" style="border-bottom: solid lightgrey 1px;">
+                                <div class="message p-1" style="border-bottom: solid lightgrey 1px;">
                                     <div class="flex justify-between items-center" style="font-size: 14px;">
                                         <div class="message_userContent">
                                             {{ $message->user->name }} - {!! processMessageContent($message->content, $sidebarData['user']) !!}
