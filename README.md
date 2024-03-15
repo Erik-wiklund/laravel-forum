@@ -130,6 +130,8 @@ RESTful API for integration with other applications.
 <p>Working on now</p>
  [ ] Resource upload
  Users may upload their work to chosen categories.
+ [ ] Notifications system
+ Users can mention other users in shoutbox, threads, pm etc.
 </div>
 
 ## Usage
