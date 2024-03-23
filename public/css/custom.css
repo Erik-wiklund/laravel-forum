@@ -195,3 +195,28 @@ input[type="checkbox"] {
 .forum_ban_button:hover {
     background-color: white;
 }
+
+.panel-item {
+    position: relative; /* Ensure the tooltip is positioned relative to the button */
+  }
+  
+  .panel-item::after {
+    content: attr(data-tooltip); /* Set the content of the tooltip to the data-tooltip attribute */
+    position: absolute; /* Position the tooltip absolutely relative to the button */
+    top: 100%; /* Position it below the button */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center it */
+    padding: 5px; /* Add padding for readability */
+    background-color: rgba(0, 0, 0, 0.8); /* Background color */
+    color: #fff; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 12px; /* Adjust font size as needed */
+    white-space: nowrap; /* Prevent line breaks */
+    opacity: 0; /* Initially hide the tooltip */
+    transition: opacity 0.3s; /* Add a transition for smooth appearance */
+  }
+  
+  .panel-item:hover::after {
+    opacity: 1; /* Show the tooltip on hover */
+  }
+  
