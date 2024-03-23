@@ -177,6 +177,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
+    Route::get('/users/mentions', [UserController::class, 'userMention'])->name('users.mention');
     Route::post('/mention', [App\Http\Controllers\MentionController::class, 'mention'])->name('mention');
     Route::get('/mark-as-read', [App\Http\Controllers\MentionController::class, 'markAsRead'])->name('mark-as-read');
 });
