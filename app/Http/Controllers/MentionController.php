@@ -54,4 +54,11 @@ class MentionController extends Controller
         Auth::user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }
+
+    public function clearAllNotifications()
+    {
+        auth()->user()->notifications()->delete();
+
+        return redirect()->back()->with('success', 'All notifications cleared.');
+    }
 }

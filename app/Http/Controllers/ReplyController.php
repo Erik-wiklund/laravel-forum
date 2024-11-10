@@ -75,9 +75,7 @@ class ReplyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
-    {
-    }
+    public function show(int $id) {}
 
     /**
      * Show the form for editing the specified resource.

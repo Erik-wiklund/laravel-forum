@@ -38,11 +38,22 @@
                                 class="badge badge-light bg-success badge-xs">{{ auth()->user()->unreadNotifications->count() }}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            @if (auth()->user()->unreadNotifications)
+                            @if (auth()->user()->unreadNotifications->count() > 0)
                                 <li class="d-flex justify-content-end mx-1 my-2">
                                     <a href="{{ route('mark-as-read') }}" class="btn btn-success btn-sm">Mark All as
                                         Read</a>
                                 </li>
+                                <li class="d-flex justify-content-end mx-1 my-2">
+                                    <form action="{{ route('clear-all-notifications') }}" method="POST"
+                                        class="btn btn-success btn-sm">
+                                        @csrf
+                                        @method('DELETE') <!-- This tells Laravel to treat the form as a DELETE request -->
+                                        <button type="submit" class="">Clear all
+                                            notifications</button>
+                                    </form>
+                                </li>
+                            @else
+                                <p class="text-xs p-2">No notification to display</p>
                             @endif
 
                             @foreach (auth()->user()->unreadNotifications as $notification)

@@ -10,6 +10,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\MentionController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\PrivateMessageController;
 use App\Http\Controllers\PrivateMessageRepliyController;
@@ -152,7 +153,6 @@ Route::middleware('auth', 'web')->group(function () {
     Route::post('/private-messages/{conversation}/{userId}', [PrivateMessageRepliyController::class, 'store'])->name('pm.reply');
     Route::post('/mark-messages-as-read', [PrivateMessageController::class, 'markMessagesAsRead'])->name('mark-messages-as-read');
 
-
     // Report system routes
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
@@ -179,6 +179,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/search', [UserController::class, 'search'])->name('users.search');
     Route::post('/mention', [App\Http\Controllers\MentionController::class, 'mention'])->name('mention');
     Route::get('/mark-as-read', [App\Http\Controllers\MentionController::class, 'markAsRead'])->name('mark-as-read');
+    Route::delete('/clear-all-notifications', [MentionController::class, 'clearAllNotifications'])->name('clear-all-notifications');
 });
 
 Route::get('/online-users', [ForumController::class, 'showOnlineUsers'])->name('online-users');
