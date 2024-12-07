@@ -23,6 +23,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->timestamp('banned_until')->nullable();
+            $table->timestamp('banned_until')->nullable();
         });
     }
 };
